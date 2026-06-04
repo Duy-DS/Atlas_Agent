@@ -1,0 +1,51 @@
+# 1. Moi truong ao va Cache cua Python
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# 2. File tam cua Jupyter Notebook
+.ipynb_checkpoints/
+
+# 3. Du lieu
+# Chan tat ca cac file ben trong cac tang du lieu de tranh lam phinh to repo
+*.csv
+*.json
+*.parquet
+*.snappy
+*.delta/
+
+
+
+# 5. Cau hinh bao mat va IDE
+.env
+.vscode/
+.idea/
+.DS_Store
+
+.pytest_tmp/
+.tmp_runtime/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+dist/
+
+Thumbs.db
+
+# Bỏ qua file text chứa thông tin môi trường cục bộ
+virtual_enviroment.txt
+virtual_enviroment.md
+
+*.pdf
+*.docx
+
+# chặn tất cả file từ thư mục Article
+Article/* 
+
+#Chăn tất cả file từ thư mục Thesis
+Thesis/*
+
+#Chặn tất cả các file từ thư mục Output
+#output/*

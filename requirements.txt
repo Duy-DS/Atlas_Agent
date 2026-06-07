@@ -1,0 +1,15 @@
+# Lõi mô hình & Tốc độ
+vllm==0.4.2
+FlagEmbedding==1.2.10
+
+# Khung LangGraph & RAG
+langchain==0.2.0
+langgraph==0.0.60
+chromadb==0.5.0
+
+# Xử lý dữ liệu
+pandas==2.2.2
+
+# UI cho Dev 5 test
+streamlit==1.35.0
+

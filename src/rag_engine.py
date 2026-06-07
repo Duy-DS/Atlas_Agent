@@ -175,7 +175,7 @@ if __name__ == "__main__":
     # 3. Test Tool tìm kiếm
     print("\n>> Dang test chuc nang Search...")
     test_query = "Giải thưởng cho đội đạt giải Nhất bảng C là bao nhiêu?"
-    result = search_rag_database(test_query)
+    result = search_rag_database.invoke({"query": test_query})
     
     print(f"\n[CAU HOI]: {test_query}")
     print(f"[KET QUA TU RAG]:\n{result}")

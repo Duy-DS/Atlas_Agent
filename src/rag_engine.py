@@ -135,16 +135,15 @@ def ingest_document(file_path: str):
 @tool
 def search_rag_database(query: str) -> str:
     """
-    Search tool to retrieve relevant knowledge from the RAG database.
-    The Agent MUST call this tool when encountering questions that require factual context,
-    specific domain knowledge, or data that is not present in its default memory.
+    Query the database ONLY for specific project guidelines, rules, or competition-related documentation.
+    DO NOT CALL THIS TOOL for basic math, general knowledge, trivia, science, or general history.
+    If the answer can be reasoned without external documents, do not call this tool.
     
     Args:
-        query (str): The search query or keywords to look up.
+        query (str): The specific search query or keywords to look up in the database.
         
     Returns:
-        str: A string containing up to the top 3 most relevant document chunks,
-             separated by dashed lines for easy parsing and synthesis.
+        str: A string containing relevant document chunks.
     """
     # NHIỆM VỤ 1: Tìm ra 3 đoạn chunk input từ RAG Engine
     # (Giả định 'vectorstore' đã được khởi tạo thành công ở Bước 1)

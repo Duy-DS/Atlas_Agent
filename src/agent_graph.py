@@ -52,12 +52,11 @@ def agent_node(state: AgentState):
     if not messages:
         system_instructions = (
             SYSTEM_COT_PROMPT + "\n\n"
-            "ADDITIONAL RULES FOR RESPONDING:\n"
-            "1. TOOLS: You have a tool called 'search_rag_database' to query search context from competition documents.\n"
-            "2. GENERAL KNOWLEDGE: If the question is about general common knowledge (e.g. basic math 1+1, common science, general trivia...) and is not specific to the competition documents, "
-            "you DO NOT need to call the RAG tool. Reason using your internal knowledge and respond directly.\n"
-            "3. FALLBACK REASONING: If the question is general knowledge or if the RAG search returns no relevant results, "
-            "you ARE ALLOWED to use your own internal knowledge to solve the question (you are not constrained by the 'only use information from the document' rule in this case)."
+            "CRITICAL RULES ON TOOL USE:\n"
+            "1. EVALUATE BEFORE CALLING: First, analyze the question to see if it is a general knowledge question, basic arithmetic (e.g. 1+1), logic puzzle, or general trivia. If you can answer it using your own internal knowledge, DO NOT call any tools.\n"
+            "2. CONTEXT ALREADY PROVIDED: If the user's question contains the text/passage or all required information directly in the query, DO NOT call any tools. Answer based on the provided text.\n"
+            "3. ONLY USE RAG WHEN NECESSARY: Call the 'search_rag_database' tool ONLY when the question is about external domain-specific documents, HackAIthon 2026 competition rules, specific guidelines, or details that are not provided and cannot be answered with general knowledge.\n"
+            "4. DIRECT RESPONSE: When not calling tools, you MUST immediately output the final JSON response with your reasoning and answer."
         )
         messages = [
             SystemMessage(content=system_instructions),

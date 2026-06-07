@@ -48,19 +48,21 @@ CHROMA_PATH = BASE_DIR / "chroma_db"
 
 # Tự động chọn thiết bị (ưu tiên GPU nếu có)
 device = "cuda" if torch.cuda.is_available() else "cpu"
-print(f"[*] Đang khởi tạo RAG Engine trên thiết bị: {device.upper()}")
+print(f"[*] [RAG Engine] Khoi tao thiet bi: {device.upper()}")
 
 # Khởi tạo Embedding Model BGE-m3 thông qua Langchain
-print("[*] Đang tải mô hình BGE-m3 via Langchain...")
+print("[*] Dang tai mo hinh BGE-m3 via Langchain...")
 try:
+    from langchain_huggingface import HuggingFaceEmbeddings
     embeddings = HuggingFaceEmbeddings(
         model_name="BAAI/bge-m3",
         model_kwargs={'device': device},
-        encode_kwargs={'normalize_embeddings': True} # Khuyến nghị bật chuẩn hóa cho BGE-m3
+        encode_kwargs={'normalize_embeddings': True}
     )
 except Exception as error:
-    print(f"[!] Không tải được BGE-m3 via Langchain ({error}). Dùng fallback embedding local.")
+    print(f"[!] Khong tai duoc BGE-m3 via Langchain ({error}). Dung fallback embedding local.")
     embeddings = _FallbackEmbeddings()
+
 
 # Khởi tạo Vector Database
 vectorstore = Chroma(
@@ -79,7 +81,7 @@ def ingest_document(file_path: str):
     """
     path = Path(file_path)
     if not path.exists():
-        print(f"[!] Lỗi: Không tìm thấy file {file_path}")
+        print(f"[!] Loi: Khong tim thay file {file_path}")
         return
 
     # 1. Đọc file
@@ -94,11 +96,11 @@ def ingest_document(file_path: str):
     )
     chunks = text_splitter.split_documents(documents)
     
-    print(f"[*] Đã chia tài liệu thành {len(chunks)} chunks. Tiến hành nhúng vào ChromaDB...")
+    print(f"[*] Da chia tai lieu thanh {len(chunks)} chunks. Tien hanh nhung vao ChromaDB...")
 
     # 3. Lưu vào Vector DB (Tự động tính toán vector và lưu xuống ổ cứng)
     vectorstore.add_documents(chunks)
-    print("[+] Hoàn tất nạp dữ liệu!")
+    print("[+] Hoan tat nap du lieu!")
 
 # =====================================================================
 # BƯỚC 3: TOOL TRA CỨU CƠ BẢN (KHÔNG RERANK)
@@ -136,7 +138,7 @@ def search_rag_database(query: str) -> str:
 # =====================================================================
 
 if __name__ == "__main__":
-    print("\n--- BẮT ĐẦU UNIT TEST LANGCHAIN RAG ---")
+    print("\n--- BAT DAU UNIT TEST LANGCHAIN RAG ---")
     
     # 1. Tạo mock data sạch sẽ (không lặp từ)
     mock_file = BASE_DIR / "data" / "mock_knowledge.txt"
@@ -151,15 +153,15 @@ if __name__ == "__main__":
         )
             
     # 2. Nạp dữ liệu
-    print("\n>> Đang test nạp dữ liệu...")
+    print("\n>> Dang test nap du lieu...")
     ingest_document(str(mock_file))
     
     # 3. Test Tool tìm kiếm
-    print("\n>> Đang test chức năng Search...")
+    print("\n>> Dang test chuc nang Search...")
     test_query = "Giải thưởng cho đội đạt giải Nhất bảng C là bao nhiêu?"
     result = search_rag_database(test_query)
     
-    print(f"\n[CÂU HỎI]: {test_query}")
-    print(f"[KẾT QUẢ TỪ RAG]:\n{result}")
-    print("\n--- UNIT TEST HOÀN TẤT ---")
+    print(f"\n[CAU HOI]: {test_query}")
+    print(f"[KET QUA TU RAG]:\n{result}")
+    print("\n--- UNIT TEST HOAN TAT ---")
 

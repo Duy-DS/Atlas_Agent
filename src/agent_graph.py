@@ -35,7 +35,7 @@ class AgentState(TypedDict):
     answer: str
 
 def retrieve_node(state: AgentState):
-    print(">> Đang truy vấn RAG Database...")
+    print(">> [Retrieve] Dang truy van RAG Database...")
     try:
         context = search_rag_database.invoke({"query": state["question"]})
     except Exception:
@@ -43,7 +43,7 @@ def retrieve_node(state: AgentState):
     return {"context": context}
 
 def reasoning_node(state: AgentState):
-    print(">> Đang gọi LLM để lập luận...")
+    print(">> [Reason] Dang goi LLM de lap luan...")
     messages = [
         {"role": "system", "content": SYSTEM_COT_PROMPT},
         {"role": "user", "content": f"<Ngữ cảnh tài liệu>\n{state['context']}\n\nCâu hỏi: {state['question']}"}
@@ -68,8 +68,8 @@ def reasoning_node(state: AgentState):
         reasoning = data.get("reasoning", "Không tìm thấy lý do suy luận.")
         answer = data.get("answer", "N/A")
     except Exception as e:
-        print(f"[!] Lỗi khi gọi LLM hoặc parse JSON: {e}")
-        reasoning = f"Lỗi xảy ra trong quá trình gọi mô hình: {str(e)}"
+        print(f"[!] Loi khi goi LLM hoac parse JSON: {e}")
+        reasoning = f"Loi xay ra trong qua trinh goi mo hinh: {str(e)}"
         answer = "N/A"
         
     return {

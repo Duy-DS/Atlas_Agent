@@ -1,8 +1,17 @@
+import sys
+import io
+
+# Cấu hình encoding UTF-8 cho Windows console để tránh UnicodeEncodeError
+if sys.platform.startswith("win"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 import os
 import hashlib
 import math
 import torch
 from pathlib import Path
+
 
 # Import các module từ hệ sinh thái Langchain
 from langchain_huggingface import HuggingFaceEmbeddings

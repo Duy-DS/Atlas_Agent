@@ -1,3 +1,11 @@
+import sys
+import io
+
+# Cấu hình encoding UTF-8 cho Windows console để tránh UnicodeEncodeError
+if sys.platform.startswith("win"):
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
 import json
 from typing import TypedDict
 from langgraph.graph import StateGraph, END

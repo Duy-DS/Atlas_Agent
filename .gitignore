@@ -49,3 +49,10 @@ Thesis/*
 
 #Chặn tất cả các file từ thư mục Output
 #output/*
+chroma_db/*
+docs/*
+data/*
+test_agent.py
+rag_engine_v1.py
+rag_engine_v2.py
+

@@ -14,6 +14,7 @@ from langchain_openai import ChatOpenAI
 from langchain_groq import ChatGroq
 import os
 from dotenv import load_dotenv
+from langchain_core.messages import SystemMessage, HumanMessage, ToolMessage, AIMessage
 from src.system_prompt import SYSTEM_COT_PROMPT
 from src.rag_engine import search_rag_database
 
@@ -36,62 +37,107 @@ else:
         temperature=0.1
     )
 
+# Ràng buộc công cụ RAG với LLM
+llm_with_tools = llm.bind_tools([search_rag_database])
 
 class AgentState(TypedDict):
     question: str
-    context: str
+    messages: list
     reasoning: str
     answer: str
 
-def retrieve_node(state: AgentState):
-    print(">> [Retrieve] Dang truy van RAG Database...")
-    try:
-        context = search_rag_database.invoke({"query": state["question"]})
-    except Exception:
-        context = search_rag_database(state["question"])
-    return {"context": context}
+def agent_node(state: AgentState):
+    print(">> [Agent] Dang xu ly cau hoi...")
+    messages = state.get("messages", [])
+    if not messages:
+        # Nhắc nhở LLM trong System Prompt rằng nó có quyền gọi hoặc không gọi tool
+        system_instructions = (
+            SYSTEM_COT_PROMPT + "\n\n"
+            "QUY TẮC SỬ DỤNG CÔNG CỤ (TOOLS):\n"
+            "1. Bạn có công cụ 'search_rag_database' để tra cứu tài liệu cuộc thi.\n"
+            "2. Nếu câu hỏi yêu cầu kiến thức đặc thù của tài liệu cuộc thi, hãy sử dụng công cụ đó.\n"
+            "3. Nếu câu hỏi là kiến thức chung (ví dụ: toán học cơ bản 1+1, lịch sử phổ thông, khoa học...), "
+            "hãy tự suy luận và trả lời trực tiếp mà KHÔNG cần gọi công cụ."
+        )
+        messages = [
+            SystemMessage(content=system_instructions),
+            HumanMessage(content=state["question"])
+        ]
+    
+    response = llm_with_tools.invoke(messages)
+    return {"messages": messages + [response]}
 
-def reasoning_node(state: AgentState):
-    print(">> [Reason] Dang goi LLM de lap luan...")
-    messages = [
-        {"role": "system", "content": SYSTEM_COT_PROMPT},
-        {"role": "user", "content": f"<Ngữ cảnh tài liệu>\n{state['context']}\n\nCâu hỏi: {state['question']}"}
-    ]
+def tool_node(state: AgentState):
+    print(">> [Tool] LLM yeu cau goi tool RAG Database...")
+    last_message = state["messages"][-1]
+    messages = state["messages"]
+    new_messages = []
+    
+    for tool_call in last_message.tool_calls:
+        if tool_call["name"] == "search_rag_database":
+            query = tool_call["args"].get("query", "")
+            print(f"   -> Dang truy van RAG voi tu khoa: '{query}'")
+            try:
+                result = search_rag_database.invoke({"query": query})
+            except Exception as e:
+                result = f"Loi khi truy van database: {e}"
+            
+            new_messages.append(
+                ToolMessage(
+                    content=result,
+                    tool_call_id=tool_call["id"]
+                )
+            )
+            
+    return {"messages": messages + new_messages}
+
+def should_continue(state: AgentState):
+    last_message = state["messages"][-1]
+    if last_message.tool_calls:
+        return "call_tool"
+    return "parse_answer"
+
+def parse_answer_node(state: AgentState):
+    print(">> [Parse] Dang trich xuat dap an cuoi cung...")
+    last_message = state["messages"][-1]
+    response_content = last_message.content.strip()
     
     try:
-        response = llm.invoke(messages)
-        response_content = response.content.strip()
-        
-        # Thử parse JSON từ phản hồi của LLM
+        data = json.loads(response_content)
+    except json.JSONDecodeError:
+        clean_content = response_content
+        if clean_content.startswith("```json"):
+            clean_content = clean_content[7:]
+        if clean_content.endswith("```"):
+            clean_content = clean_content[:-3]
         try:
-            data = json.loads(response_content)
-        except json.JSONDecodeError:
-            # Xử lý trường hợp LLM bọc JSON trong Markdown block (```json ... ```)
-            clean_content = response_content
-            if clean_content.startswith("```json"):
-                clean_content = clean_content[7:]
-            if clean_content.endswith("```"):
-                clean_content = clean_content[:-3]
             data = json.loads(clean_content.strip())
+        except Exception:
+            data = {
+                "reasoning": f"Khong the parse JSON tu dong. Noi dung thiet lap: {response_content}",
+                "answer": "N/A"
+            }
             
-        reasoning = data.get("reasoning", "Không tìm thấy lý do suy luận.")
-        answer = data.get("answer", "N/A")
-    except Exception as e:
-        print(f"[!] Loi khi goi LLM hoac parse JSON: {e}")
-        reasoning = f"Loi xay ra trong qua trinh goi mo hinh: {str(e)}"
-        answer = "N/A"
-        
     return {
-        "reasoning": reasoning,
-        "answer": answer
+        "reasoning": data.get("reasoning", "Không tìm thấy lý do suy luận."),
+        "answer": data.get("answer", "N/A")
     }
 
-
 workflow = StateGraph(AgentState)
-workflow.add_node("Retrieve", retrieve_node)
-workflow.add_node("Reason", reasoning_node)
-workflow.set_entry_point("Retrieve")
-workflow.add_edge("Retrieve", "Reason")
-workflow.add_edge("Reason", END)
+workflow.add_node("Agent", agent_node)
+workflow.add_node("Tool", tool_node)
+workflow.add_node("Parse", parse_answer_node)
 
-app_graph = workflow.compile()
+workflow.set_entry_point("Agent")
+workflow.add_conditional_edges(
+    "Agent",
+    should_continue,
+    {
+        "call_tool": "Tool",
+        "parse_answer": "Parse"
+    }
+)
+workflow.add_edge("Tool", "Agent")
+workflow.add_edge("Parse", END)
+
+app_graph = workflow.compile()

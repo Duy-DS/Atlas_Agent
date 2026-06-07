@@ -24,20 +24,19 @@ Dự án được xây dựng với các mục tiêu chính:
 
 ## 2. Bối Cảnh Đề Bài:
 
-Tên cuộc thi: Vietnamese Student HackAIthon 2026
-Bảng: C - INNOVATOR
-Vòng: Vòng 1
-Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết
-kế AI Agent xử lý đa tác vụ.
-Định dạng đầu vào: Đọc public_test.csv hoặc private_test.csv tại /data
-Định dạng đầu ra:
-
-- Docker Container: Docker hub.
-- Ghi file pred.csv vào /output với hai cột: qid,answer (A/B/C/D).
-- Github chứa code và các chạy reproduce kết quả trong container.
-- Tài liệu thuyết minh phương pháp: Định dạng tuỳ chọn với mục tiêu thể hiện
-  được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.
-  Thời hạn nộp bài: 02/6/2026 - 23/6/2026.
+Tên cuộc thi: Vietnamese Student HackAIthon 2026  
+Bảng: C - INNOVATOR  
+Vòng: Vòng 1  
+Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết.  
+kế AI Agent xử lý đa tác vụ.  
+Định dạng đầu vào: Đọc public_test.csv hoặc private_test.csv tại /data  
+Định dạng đầu ra:  
+- Docker Container: Docker hub.  
+- Ghi file pred.csv vào /output với hai cột: qid,answer (A/B/C/D).  
+- Github chứa code và các chạy reproduce kết quả trong container.  
+- Tài liệu thuyết minh phương pháp: Định dạng tuỳ chọn với mục tiêu thể hiện.  
+  được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.  
+  Thời hạn nộp bài: 02/6/2026 - 23/6/2026.  
 
 ## 3. Kiến Trúc Tổng Quan
 

@@ -56,5 +56,7 @@ data/*
 test_agent.py
 rag_engine_v1.py
 rag_engine_v2.py
+test/
+
 
 

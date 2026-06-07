@@ -1,2 +1,13 @@
 langgraph
 langchain_openai
+chromadb 
+sentence-transformers 
+transformers 
+torch 
+pathlib
+langchain==1.2.17
+langchain-community==0.4.1
+langchain-huggingface==1.2.2
+langchain.text_splitter
+langchain-groq
+

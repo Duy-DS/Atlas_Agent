@@ -158,35 +158,5 @@ def search_rag_database(query: str) -> str:
     
     return f"THÔNG TIN TRA CỨU ĐƯỢC TỪ RAG:\n{context_str}"
 
-# =====================================================================
-# BƯỚC 4: KIỂM THỬ ĐỘC LẬP (UNIT TEST)
-# =====================================================================
 
-if __name__ == "__main__":
-    print("\n--- BAT DAU UNIT TEST LANGCHAIN RAG ---")
-    
-    # 1. Tạo mock data sạch sẽ (không lặp từ)
-    mock_file = BASE_DIR / "data" / "mock_knowledge.txt"
-    mock_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(mock_file, "w", encoding="utf-8") as f:
-        f.write(
-            "Thông tin cuộc thi HackAIthon 2026: Cuộc thi có 3 bảng đấu. "
-            "Đối với Bảng C (Innovator), các đội sẽ xây dựng AI Agent có khả năng tự luận logic. "
-            "Cơ cấu giải thưởng của Bảng C vô cùng hấp dẫn. Giải thưởng Bảng C HackAIthon gồm 20 triệu VNĐ cho đội xuất sắc đạt giải Nhất. "
-            "Giải Nhì nhận được 15 triệu VNĐ và Giải Ba là 10 triệu VNĐ."
-        )
-            
-    # 2. Nạp dữ liệu
-    print("\n>> Dang test nap du lieu...")
-    ingest_document(str(mock_file))
-    
-    # 3. Test Tool tìm kiếm
-    print("\n>> Dang test chuc nang Search...")
-    test_query = "Giải thưởng cho đội đạt giải Nhất bảng C là bao nhiêu?"
-    result = search_rag_database.invoke({"query": test_query})
-    
-    print(f"\n[CAU HOI]: {test_query}")
-    print(f"[KET QUA TU RAG]:\n{result}")
-    print("\n--- UNIT TEST HOAN TAT ---")
 

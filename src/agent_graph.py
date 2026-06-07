@@ -2,15 +2,31 @@ import json
 from typing import TypedDict
 from langgraph.graph import StateGraph, END
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
+import os
+from dotenv import load_dotenv
 from src.system_prompt import SYSTEM_COT_PROMPT
 from src.rag_engine import search_rag_database
 
-llm = ChatOpenAI(
-    model="qwen-8b",
-    api_key="sk-local-dev", 
-    base_url="http://localhost:8000/v1",
-    temperature=0.1
-)
+load_dotenv()
+
+# Tự động chọn Groq nếu có API Key, ngược lại fallback về local LLM (vLLM/Ollama)
+if os.getenv("GROQ_API_KEY"):
+    print("[*] Đang cấu hình LLM sử dụng Groq API...")
+    llm = ChatGroq(
+        model="llama-3.1-8b-instant",  # Hoặc model khác tùy bạn chọn
+        groq_api_key=os.getenv("GROQ_API_KEY"),
+        temperature=0.1
+    )
+else:
+    print("[*] Không tìm thấy GROQ_API_KEY trong file .env, dùng local LLM...")
+    llm = ChatOpenAI(
+        model="qwen-8b",
+        api_key="sk-local-dev", 
+        base_url="http://localhost:8000/v1",
+        temperature=0.1
+    )
+
 
 class AgentState(TypedDict):
     question: str

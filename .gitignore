@@ -49,3 +49,6 @@ Thesis/*
 
 #Chặn tất cả các file từ thư mục Output
 #output/*
+
+src/test_graph.py
+

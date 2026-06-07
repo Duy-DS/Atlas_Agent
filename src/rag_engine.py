@@ -46,22 +46,38 @@ class _FallbackEmbeddings:
 BASE_DIR = Path(__file__).resolve().parent.parent
 CHROMA_PATH = BASE_DIR / "chroma_db"
 
+# Khởi động dotenv để đọc file .env
+from dotenv import load_dotenv
+load_dotenv()
+
 # Tự động chọn thiết bị (ưu tiên GPU nếu có)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"[*] [RAG Engine] Khoi tao thiet bi: {device.upper()}")
 
-# Khởi tạo Embedding Model BGE-m3 thông qua Langchain
-print("[*] Dang tai mo hinh BGE-m3 via Langchain...")
-try:
-    from langchain_huggingface import HuggingFaceEmbeddings
-    embeddings = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-m3",
-        model_kwargs={'device': device},
-        encode_kwargs={'normalize_embeddings': True}
-    )
-except Exception as error:
-    print(f"[!] Khong tai duoc BGE-m3 via Langchain ({error}). Dung fallback embedding local.")
-    embeddings = _FallbackEmbeddings()
+# Lựa chọn Embedding: Online (HF Inference API) hoặc Local siêu nhẹ (all-MiniLM-L6-v2)
+hf_token = os.getenv("HF_TOKEN")
+if hf_token:
+    print("[*] Dang su dung online HuggingFace Inference API de sinh embedding (Khong tai file weight)...")
+    try:
+        from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+        embeddings = HuggingFaceInferenceAPIEmbeddings(
+            api_key=hf_token,
+            model_name="BAAI/bge-m3"
+        )
+    except Exception as e:
+        print(f"[!] Loi khi goi HuggingFace Inference API ({e}). Chuyen sang fallback.")
+        embeddings = _FallbackEmbeddings()
+else:
+    print("[!] Khong tim thay HF_TOKEN trong file .env.")
+    print("[*] Dang su dung local embedding sieu nhe 'all-MiniLM-L6-v2' (chi ~80MB, tai ve trong vai giay)...")
+    try:
+        embeddings = HuggingFaceEmbeddings(
+            model_name="sentence-transformers/all-MiniLM-L6-v2",
+            model_kwargs={'device': device}
+        )
+    except Exception as error:
+        print(f"[!] Khong khoi dong duoc all-MiniLM-L6-v2 ({error}). Dung fallback TF-IDF local.")
+        embeddings = _FallbackEmbeddings()
 
 
 # Khởi tạo Vector Database

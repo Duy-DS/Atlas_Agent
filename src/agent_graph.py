@@ -53,11 +53,12 @@ def agent_node(state: AgentState):
         # Nhắc nhở LLM trong System Prompt rằng nó có quyền gọi hoặc không gọi tool
         system_instructions = (
             SYSTEM_COT_PROMPT + "\n\n"
-            "QUY TẮC SỬ DỤNG CÔNG CỤ (TOOLS):\n"
-            "1. Bạn có công cụ 'search_rag_database' để tra cứu tài liệu cuộc thi.\n"
-            "2. Nếu câu hỏi yêu cầu kiến thức đặc thù của tài liệu cuộc thi, hãy sử dụng công cụ đó.\n"
-            "3. Nếu câu hỏi là kiến thức chung (ví dụ: toán học cơ bản 1+1, lịch sử phổ thông, khoa học...), "
-            "hãy tự suy luận và trả lời trực tiếp mà KHÔNG cần gọi công cụ."
+            "QUY TẮC BỔ SUNG KHI TRẢ LỜI:\n"
+            "1. CÔNG CỤ (TOOLS): Bạn có công cụ 'search_rag_database' để tra cứu tài liệu cuộc thi.\n"
+            "2. KIẾN THỨC CHUNG: Nếu câu hỏi là kiến thức phổ thông chung (ví dụ: toán học cơ bản 1+1, đố vui, khoa học phổ thông...) và không có trong tài liệu cuộc thi, "
+            "bạn KHÔNG cần gọi công cụ RAG. Hãy tự suy luận dựa trên kiến thức của mình và trả lời trực tiếp.\n"
+            "3. LUẬN ĐIỂM: Nếu câu hỏi là kiến thức chung hoặc khi RAG không tìm thấy thông tin nào liên quan, "
+            "bạn ĐƯỢC PHÉP sử dụng kiến thức chung sẵn có để giải quyết câu hỏi (không bị giới hạn bởi quy tắc 'chỉ sử dụng thông tin từ tài liệu')."
         )
         messages = [
             SystemMessage(content=system_instructions),
@@ -102,6 +103,7 @@ def parse_answer_node(state: AgentState):
     last_message = state["messages"][-1]
     response_content = last_message.content.strip()
     
+    data = None
     try:
         data = json.loads(response_content)
     except json.JSONDecodeError:
@@ -110,13 +112,30 @@ def parse_answer_node(state: AgentState):
             clean_content = clean_content[7:]
         if clean_content.endswith("```"):
             clean_content = clean_content[:-3]
-        try:
-            data = json.loads(clean_content.strip())
-        except Exception:
-            data = {
-                "reasoning": f"Khong the parse JSON tu dong. Noi dung thiet lap: {response_content}",
-                "answer": "N/A"
-            }
+        clean_content = clean_content.strip()
+        
+        # Thử sửa lỗi JSON bị cắt cụt (thiếu dấu ngoặc đóng)
+        if not clean_content.endswith("}"):
+            try:
+                data = json.loads(clean_content + "}")
+            except Exception:
+                try:
+                    data = json.loads(clean_content + '"}')
+                except Exception:
+                    data = None
+                    
+        if data is None:
+            try:
+                data = json.loads(clean_content)
+            except Exception:
+                # Trích xuất bằng regex nếu parse lỗi hoàn toàn
+                import re
+                answer_match = re.search(r'"answer"\s*:\s*"([A-D])"', clean_content, re.IGNORECASE)
+                reasoning_match = re.search(r'"reasoning"\s*:\s*"([^"]+)"', clean_content)
+                data = {
+                    "reasoning": reasoning_match.group(1) if reasoning_match else f"Khong the parse JSON. Content thiet lap: {response_content}",
+                    "answer": answer_match.group(1) if answer_match else "N/A"
+                }
             
     return {
         "reasoning": data.get("reasoning", "Không tìm thấy lý do suy luận."),

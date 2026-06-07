@@ -1,0 +1,81 @@
+qid,question,A,B,C,D
+1,Nếu x + 5 = 12 thì x bằng bao nhiêu?,5,6,7,8
+2,Giá trị của 3^2 + 4^2 là bao nhiêu?,12,25,49,7
+3,Một tam giác vuông có hai cạnh góc vuông dài 6 và 8. Cạnh huyền dài bao nhiêu?,10,12,14,48
+4,"Trung bình cộng của 2, 4, 6, 8 là bao nhiêu?",4,5,6,7
+5,Số nào là số nguyên tố?,21,27,29,39
+6,"Nếu một món hàng giảm giá 20% từ 500.000 đồng, giá sau giảm là bao nhiêu?",400.000 đồng,420.000 đồng,450.000 đồng,480.000 đồng
+7,Nghiệm của phương trình 2x - 3 = 9 là gì?,3,4,5,6
+8,"Diện tích hình tròn bán kính 3 là bao nhiêu, lấy pi = 3,14?","9,42","18,84","28,26","56,52"
+9,Nếu log10(x) = 2 thì x bằng bao nhiêu?,10,20,100,1000
+10,"Dãy số 2, 6, 12, 20, 30 có quy luật cộng lần lượt 4, 6, 8, 10. Số tiếp theo là gì?",36,40,42,44
+11,Đơn vị đo lực trong hệ SI là gì?,Joule,Newton,Watt,Pascal
+12,Công thức tính vận tốc trung bình là gì?,v = s/t,v = t/s,v = m/a,v = F/s
+13,Một vật khối lượng 2 kg chịu gia tốc 3 m/s^2. Lực tác dụng là bao nhiêu?,"1,5 N",5 N,6 N,9 N
+14,Dạng năng lượng mà vật có do chuyển động được gọi là gì?,Thế năng,Nhiệt năng,Động năng,Điện năng
+15,Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^6 m/s,3 x 10^8 m/s,3 x 10^10 m/s
+16,"Khi điện trở không đổi, nếu hiệu điện thế tăng gấp đôi thì cường độ dòng điện thay đổi thế nào?",Giảm một nửa,Không đổi,Tăng gấp đôi,Tăng gấp bốn
+17,Một máy thực hiện công 600 J trong 3 giây. Công suất là bao nhiêu?,100 W,200 W,300 W,1800 W
+18,Hiện tượng ánh sáng đổi hướng khi đi từ môi trường này sang môi trường khác gọi là gì?,Phản xạ,Khúc xạ,Tán sắc,Giao thoa
+19,Ký hiệu hóa học của nguyên tố Natri là gì?,Na,N,Ni,Ne
+20,Phân tử nước có công thức hóa học là gì?,CO2,H2O,O2,NaCl
+21,pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Bazơ,Trung tính,Muối
+22,Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Proton,Neutron,Electron,Ion
+23,Chất nào sau đây là muối ăn thông thường?,NaCl,HCl,NaOH,CaCO3
+24,Phản ứng giữa axit và bazơ thường tạo ra gì?,Muối và nước,Kim loại và khí oxy,Đường và nước,Chất béo và muối
+25,Số oxi hóa của H trong H2O thường là bao nhiêu?,-1,0,+1,+2
+26,Khí nào chiếm tỉ lệ lớn nhất trong không khí khô?,Oxy,Nitơ,Carbon dioxide,Hydro
+27,Bào quan nào được xem là nơi tạo năng lượng chính của tế bào?,Ribosome,Ti thể,Lục lạp,Nhân tế bào
+28,ADN là vật chất mang thông tin gì?,Di truyền,Nhiệt lượng,Áp suất,Âm thanh
+29,Quá trình cây xanh sử dụng ánh sáng để tổng hợp chất hữu cơ gọi là gì?,Hô hấp,Quang hợp,Tiêu hóa,Lên men
+30,Hệ cơ quan nào chịu trách nhiệm vận chuyển máu trong cơ thể người?,Hệ tiêu hóa,Hệ tuần hoàn,Hệ thần kinh,Hệ hô hấp
+31,Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Mô,Cơ quan,Tế bào,Hệ cơ quan
+32,"Ở người, cặp nhiễm sắc thể giới tính của nam thường là gì?",XX,XY,YY,XO
+33,Enzyme có vai trò chính là gì trong phản ứng sinh học?,Tăng tốc độ phản ứng,Làm giảm nhiệt độ cơ thể,Lưu trữ mỡ,Tạo ánh sáng
+34,Cơ quan nào trao đổi khí oxy và carbon dioxide trong cơ thể người?,Tim,Gan,Phổi,Dạ dày
+35,"Năm 1945, Việt Nam tuyên bố độc lập tại địa điểm nào?",Huế,Sài Gòn,Quảng trường Ba Đình,Đà Nẵng
+36,Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1954,1968,1975
+37,Nhà Trần nổi tiếng với chiến thắng chống quân xâm lược nào?,Mông - Nguyên,Thanh,Minh,Pháp
+38,Phong trào Đông Du gắn với nhân vật lịch sử nào?,Phan Bội Châu,Nguyễn Trãi,Trần Hưng Đạo,Lý Thường Kiệt
+39,Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Pháp,Anh,Đức,Nhật Bản
+40,Sự kiện nào đánh dấu kết thúc Chiến tranh thế giới thứ hai ở châu Âu?,Đức Quốc xã đầu hàng,Trận Trân Châu Cảng,Cách mạng tháng Mười,Hiệp định Genève
+41,Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Trãi,Lê Lợi,Quang Trung,Nguyễn Du
+42,Hiệp định Genève về Đông Dương được ký năm nào?,1945,1954,1973,1975
+43,Thủ đô của Nhật Bản là thành phố nào?,Seoul,Tokyo,Kyoto,Osaka
+44,Sông dài nhất thế giới thường được nhắc đến là sông nào?,Amazon,Nile,Mekong,Danube
+45,Châu lục nào có diện tích lớn nhất thế giới?,Châu Phi,Châu Á,Châu Âu,Châu Đại Dương
+46,Việt Nam nằm ở khu vực nào của châu Á?,Đông Á,Nam Á,Đông Nam Á,Trung Á
+47,Đỉnh núi cao nhất Việt Nam là gì?,Bạch Mã,Fansipan,Ba Vì,Langbiang
+48,Đại dương nào lớn nhất thế giới?,Đại Tây Dương,Ấn Độ Dương,Bắc Băng Dương,Thái Bình Dương
+49,Kinh tuyến gốc đi qua đài thiên văn nào?,Greenwich,Paris,Tokyo,New York
+50,Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Phi,Châu Âu,Châu Mỹ
+51,"Trong Python, kiểu dữ liệu nào dùng để lưu cặp key-value?",list,tuple,dict,set
+52,Lệnh nào thường dùng để cài thư viện Python từ PyPI?,git install,pip install,python build,venv add
+53,"Trong lập trình, vòng lặp dùng để làm gì?",Lưu mật khẩu,Lặp lại một khối lệnh,Xóa hệ điều hành,Tăng dung lượng RAM
+54,Git dùng chủ yếu để làm gì?,Thiết kế giao diện,Quản lý phiên bản mã nguồn,Chạy mô hình AI,Tạo cơ sở dữ liệu
+55,HTTP status code 404 thường có nghĩa là gì?,Thành công,Không tìm thấy tài nguyên,Lỗi máy chủ,Không có quyền truy cập
+56,"Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",SELECT,PUSH,COMMIT,PRINT
+57,Docker container giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Tăng độ phân giải màn hình,Thay thế hoàn toàn Git,Tự động viết code không lỗi
+58,"Trong Python, biểu thức len([1, 2, 3]) trả về gì?",1,2,3,4
+59,REST API thường sử dụng định dạng dữ liệu nào để trao đổi?,JSON,PNG,MP3,ZIP
+60,Độ phức tạp thời gian của tìm kiếm nhị phân trên mảng đã sắp xếp là gì?,O(1),O(log n),O(n),O(n^2)
+61,"Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Chỉ lưu ảnh,Mã hóa mật khẩu,Tạo giao diện web
+62,Overfitting xảy ra khi nào?,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,Mô hình không chạy được vì thiếu RAM,Dữ liệu bị nén thành file zip,API trả về mã 404
+63,Embedding thường dùng để biểu diễn dữ liệu văn bản dưới dạng gì?,Vector số,Ảnh màu,Âm thanh,Mã HTML
+64,RAG là viết tắt phổ biến của khái niệm nào?,Retrieval-Augmented Generation,Random Access Graph,Recursive Agent Generator,Ranked Answer Grid
+65,Metric accuracy được tính dựa trên yếu tố nào?,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số dòng code,Dung lượng file Docker,Số lần gọi API
+66,"Trong bài toán phân loại A/B/C/D, đầu ra hợp lệ nên là gì?","Một trong bốn nhãn A, B, C, D",Một đoạn văn dài,Một file ảnh,Một số thực bất kỳ
+67,Reranker trong hệ thống truy hồi thường làm gì?,Sắp xếp lại các tài liệu ứng viên theo mức liên quan,Tạo mật khẩu mới,Nén mô hình thành ảnh,Xóa dữ liệu train
+68,Hallucination trong LLM là hiện tượng gì?,Mô hình tạo thông tin sai hoặc không có căn cứ,Mô hình chạy nhanh hơn,Máy tính phát âm thanh,Dữ liệu được mã hóa
+69,"Nếu tất cả mèo đều là động vật và Mimi là mèo, kết luận nào đúng?",Mimi là động vật,Mimi là thực vật,Mimi là đồ vật,Không thể biết Mimi có tồn tại
+70,"Một người nói: 'Nếu trời mưa thì đường ướt'. Hôm nay đường không ướt. Theo logic, kết luận hợp lý nhất là gì?",Trời chắc chắn mưa,Trời không mưa,Đường ướt hơn,Không thể đi học
+71,"Dãy chữ A, C, F, J, O có khoảng cách tăng lần lượt 2, 3, 4, 5. Chữ tiếp theo là gì?",S,T,U,V
+72,"Có 3 hộp: một hộp toàn táo, một hộp toàn cam, một hộp trộn. Tất cả nhãn đều sai. Nếu rút một quả từ hộp nhãn 'trộn' và thấy táo, hộp đó thật ra chứa gì?",Toàn táo,Toàn cam,Trộn,Không xác định
+73,"Nếu hôm nay là thứ Ba, sau 10 ngày nữa là thứ mấy?",Thứ Năm,Thứ Sáu,Thứ Bảy,Chủ Nhật
+74,Một số chia hết cho 6 thì chắc chắn chia hết cho những số nào?,2 và 3,2 và 5,3 và 5,4 và 6
+75,Choose the correct plural form of 'child'.,childs,children,childes,childrens
+76,Choose the sentence in present perfect tense.,I eat breakfast.,I ate breakfast.,I have eaten breakfast.,I will eat breakfast.
+77,What is the synonym of 'rapid'?,slow,quick,heavy,silent
+78,Choose the correct word: She ___ to school every day.,go,goes,going,gone
+79,Which word is an adjective?,beauty,beautiful,beautifully,beautify
+80,Choose the best translation of 'machine learning'.,Học máy,Máy học sinh,Máy đang học bài,Học bằng máy chiếu

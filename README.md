@@ -71,7 +71,7 @@ kế AI Agent xử lý đa tác vụ.
 
 File input dự kiến đặt tại:
 
-** /data/public_test.csv **
+**/data/public_test.csv**
 
 Format dự kiến:
 
@@ -88,7 +88,7 @@ qid,question,A,B,C,D
 
 File output cần được ghi tại:
 
-** /output/pred.csv **
+**/output/pred.csv**
 
 Format dự kiến:
 

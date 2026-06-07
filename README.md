@@ -24,20 +24,19 @@ Dự án được xây dựng với các mục tiêu chính:
 
 ## 2. Bối Cảnh Đề Bài:
 
-Tên cuộc thi: Vietnamese Student HackAIthon 2026
-Bảng: C - INNOVATOR
-Vòng: Vòng 1
-Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết
-kế AI Agent xử lý đa tác vụ.
-Định dạng đầu vào: Đọc public_test.csv hoặc private_test.csv tại /data
-Định dạng đầu ra:
-
-- Docker Container: Docker hub.
-- Ghi file pred.csv vào /output với hai cột: qid,answer (A/B/C/D).
-- Github chứa code và các chạy reproduce kết quả trong container.
-- Tài liệu thuyết minh phương pháp: Định dạng tuỳ chọn với mục tiêu thể hiện
-  được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.
-  Thời hạn nộp bài: 02/6/2026 - 23/6/2026.
+Tên cuộc thi: Vietnamese Student HackAIthon 2026  
+Bảng: C - INNOVATOR  
+Vòng: Vòng 1  
+Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết.  
+kế AI Agent xử lý đa tác vụ.  
+Định dạng đầu vào: Đọc public_test.csv hoặc private_test.csv tại /data  
+Định dạng đầu ra:  
+- Docker Container: Docker hub.  
+- Ghi file pred.csv vào /output với hai cột: qid,answer (A/B/C/D).  
+- Github chứa code và các chạy reproduce kết quả trong container.  
+- Tài liệu thuyết minh phương pháp: Định dạng tuỳ chọn với mục tiêu thể hiện.  
+  được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.  
+  Thời hạn nộp bài: 02/6/2026 - 23/6/2026.  
 
 ## 3. Kiến Trúc Tổng Quan
 
@@ -48,6 +47,7 @@ kế AI Agent xử lý đa tác vụ.
 ## 5. Phân Công Thành Viên
 
 |Thành Viên|Vai trò|Công việc|
+|---|---|---|
 |Lê Phước Thành|Tech Lead & MLOps Engineer|Khởi tạo Project & Git Workflow, Đóng gói môi trường (Docker), Xây dựng luồng I/O (Entry-point), Review Pull Request (Core Quality Control)|
 |Trần Chí Vỹ|LangGraph Architect|Dựng State Machine, Tích hợp Tool Calling, Kỹ sư Prompt (Prompt Engineering)|
 |Nguyễn Tấn Duy|Data & RAG Engineer|Dựng Vector Database, Xây dựng Pipeline Embedding, Hoàn thiện Tool Tìm kiếm|
@@ -70,37 +70,31 @@ kế AI Agent xử lý đa tác vụ.
 
 File input dự kiến đặt tại:
 
-/data/public_test.csv
+**/data/public_test.csv**
 
-Format dự kiến:
-
-qid,question,A,B,C,D
-
-Ví Dụ:
-
-qid,question,A,B,C,D
-1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á
-2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001
+Format dự kiến:  
+qid,question,A,B,C,D  
+Ví Dụ:  
+qid,question,A,B,C,D  
+1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á  
+2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001  
 
 ### 7.2 Định Dạng Dữ Liệu Đầu Ra
 
 File output cần được ghi tại:
 
-/output/pred.csv
+**/output/pred.csv**
 
-Format dự kiến:
-
+Format dự kiến:  
 qid,answer
 1,A
 2,C
-3,D
-
-Quy định:
-
-Cột qid phải giữ nguyên từ file input.
-Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.
-Không được để trống đáp án.
-Không ghi thêm reasoning hoặc log vào file output.
+3,D  
+Quy định:  
+Cột qid phải giữ nguyên từ file input.  
+Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.  
+Không được để trống đáp án.  
+Không ghi thêm reasoning hoặc log vào file output.  
 
 ## 8. Cách Chạy Project
 

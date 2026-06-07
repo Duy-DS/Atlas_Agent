@@ -72,17 +72,12 @@ File input dự kiến đặt tại:
 
 **/data/public_test.csv**
 
-Format dự kiến:
-
-qid,question,A,B,C,D
-
-Ví Dụ:
-
-qid,question,A,B,C,D
-
-1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á
-
-2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001
+Format dự kiến:  
+qid,question,A,B,C,D  
+Ví Dụ:  
+qid,question,A,B,C,D  
+1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á  
+2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001  
 
 ### 7.2 Định Dạng Dữ Liệu Đầu Ra
 
@@ -90,22 +85,16 @@ File output cần được ghi tại:
 
 **/output/pred.csv**
 
-Format dự kiến:
-
+Format dự kiến:  
 qid,answer
 1,A
 2,C
-3,D
-
-Quy định:
-
-Cột qid phải giữ nguyên từ file input.
-
-Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.
-
-Không được để trống đáp án.
-
-Không ghi thêm reasoning hoặc log vào file output.
+3,D  
+Quy định:  
+Cột qid phải giữ nguyên từ file input.  
+Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.  
+Không được để trống đáp án.  
+Không ghi thêm reasoning hoặc log vào file output.  
 
 ## 8. Cách Chạy Project
 

@@ -48,6 +48,7 @@ kế AI Agent xử lý đa tác vụ.
 ## 5. Phân Công Thành Viên
 
 |Thành Viên|Vai trò|Công việc|
+|---|---|---|
 |Lê Phước Thành|Tech Lead & MLOps Engineer|Khởi tạo Project & Git Workflow, Đóng gói môi trường (Docker), Xây dựng luồng I/O (Entry-point), Review Pull Request (Core Quality Control)|
 |Trần Chí Vỹ|LangGraph Architect|Dựng State Machine, Tích hợp Tool Calling, Kỹ sư Prompt (Prompt Engineering)|
 |Nguyễn Tấn Duy|Data & RAG Engineer|Dựng Vector Database, Xây dựng Pipeline Embedding, Hoàn thiện Tool Tìm kiếm|

@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  ollama: 
+    image: ollama/ollama:latest 
+    container_name: ollama
+    restart: unless_stopped
+
+    ports: 
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+
+  ollama-pull:
+    image: curlimages/curl:latest
+    depends_on:
+      - ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "until curl -s http://ollama:11434/api/tags > /dev/null; do
+         echo 'Waiting for Ollama...';
+         sleep 2;
+       done;
+       curl -X POST http://ollama:11434/api/pull
+       -H 'Content-Type: application/json'
+       -d '{\"name\":\"qwen3.5:0.8b\"}'"
+
+  app:
+    build: .
+    container_name: agent-app
+    depends_on:
+      - ollama
+      - ollama-pull
+    volumes:
+      - ./data:/data:ro
+      - ./chroma-data:/app/chroma-data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - MODEL_NAME=qwen3.5:0.8b
+      - APP_MODE=python
+    ports:
+      - "8501:8501"

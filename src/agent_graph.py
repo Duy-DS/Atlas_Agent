@@ -50,15 +50,14 @@ def agent_node(state: AgentState):
     print(">> [Agent] Dang xu ly cau hoi...")
     messages = state.get("messages", [])
     if not messages:
-        # Nhắc nhở LLM trong System Prompt rằng nó có quyền gọi hoặc không gọi tool
         system_instructions = (
             SYSTEM_COT_PROMPT + "\n\n"
-            "QUY TẮC BỔ SUNG KHI TRẢ LỜI:\n"
-            "1. CÔNG CỤ (TOOLS): Bạn có công cụ 'search_rag_database' để tra cứu tài liệu cuộc thi.\n"
-            "2. KIẾN THỨC CHUNG: Nếu câu hỏi là kiến thức phổ thông chung (ví dụ: toán học cơ bản 1+1, đố vui, khoa học phổ thông...) và không có trong tài liệu cuộc thi, "
-            "bạn KHÔNG cần gọi công cụ RAG. Hãy tự suy luận dựa trên kiến thức của mình và trả lời trực tiếp.\n"
-            "3. LUẬN ĐIỂM: Nếu câu hỏi là kiến thức chung hoặc khi RAG không tìm thấy thông tin nào liên quan, "
-            "bạn ĐƯỢC PHÉP sử dụng kiến thức chung sẵn có để giải quyết câu hỏi (không bị giới hạn bởi quy tắc 'chỉ sử dụng thông tin từ tài liệu')."
+            "ADDITIONAL RULES FOR RESPONDING:\n"
+            "1. TOOLS: You have a tool called 'search_rag_database' to query search context from competition documents.\n"
+            "2. GENERAL KNOWLEDGE: If the question is about general common knowledge (e.g. basic math 1+1, common science, general trivia...) and is not specific to the competition documents, "
+            "you DO NOT need to call the RAG tool. Reason using your internal knowledge and respond directly.\n"
+            "3. FALLBACK REASONING: If the question is general knowledge or if the RAG search returns no relevant results, "
+            "you ARE ALLOWED to use your own internal knowledge to solve the question (you are not constrained by the 'only use information from the document' rule in this case)."
         )
         messages = [
             SystemMessage(content=system_instructions),
@@ -137,9 +136,21 @@ def parse_answer_node(state: AgentState):
                     "answer": answer_match.group(1) if answer_match else "N/A"
                 }
             
+    raw_answer = data.get("answer", "A") if data else "A"
+    clean_answer = str(raw_answer).strip().upper()
+    
+    # Tìm chữ cái A, B, C, hoặc D xuất hiện trong chuỗi đáp án của LLM
+    import re
+    match = re.search(r'([A-D])', clean_answer)
+    if match:
+        final_answer = match.group(1)
+    else:
+        # Mặc định fallback là A nếu hoàn toàn không có thông tin hợp lệ
+        final_answer = "A"
+            
     return {
-        "reasoning": data.get("reasoning", "Không tìm thấy lý do suy luận."),
-        "answer": data.get("answer", "N/A")
+        "reasoning": data.get("reasoning", "Không tìm thấy lý do suy luận.") if data else "Không thể phân tích lập luận.",
+        "answer": final_answer
     }
 
 workflow = StateGraph(AgentState)

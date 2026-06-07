@@ -135,16 +135,16 @@ def ingest_document(file_path: str):
 @tool
 def search_rag_database(query: str) -> str:
     """
-    Công cụ tìm kiếm thông tin chuyên sâu từ cơ sở dữ liệu tri thức (RAG).
-    Main Agent CẦN gọi công cụ này khi gặp các câu hỏi cần bối cảnh thực tế, 
-    thông tin chuyên môn, hoặc dữ liệu đặc thù không có sẵn trong bộ nhớ.
+    Search tool to retrieve relevant knowledge from the RAG database.
+    The Agent MUST call this tool when encountering questions that require factual context,
+    specific domain knowledge, or data that is not present in its default memory.
     
     Args:
-        query (str): Câu hỏi hoặc từ khóa cần tra cứu.
+        query (str): The search query or keywords to look up.
         
     Returns:
-        str: Chuỗi văn bản chứa Top 3 đoạn thông tin liên quan nhất, 
-             được phân cách bởi dấu gạch ngang để dễ dàng tổng hợp.
+        str: A string containing up to the top 3 most relevant document chunks,
+             separated by dashed lines for easy parsing and synthesis.
     """
     # NHIỆM VỤ 1: Tìm ra 3 đoạn chunk input từ RAG Engine
     # (Giả định 'vectorstore' đã được khởi tạo thành công ở Bước 1)

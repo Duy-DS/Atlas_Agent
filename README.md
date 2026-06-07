@@ -71,7 +71,7 @@ kế AI Agent xử lý đa tác vụ.
 
 File input dự kiến đặt tại:
 
-/data/public_test.csv
+** /data/public_test.csv **
 
 Format dự kiến:
 
@@ -80,6 +80,7 @@ qid,question,A,B,C,D
 Ví Dụ:
 
 qid,question,A,B,C,D
+
 1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á
 2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001
 
@@ -87,7 +88,7 @@ qid,question,A,B,C,D
 
 File output cần được ghi tại:
 
-/output/pred.csv
+** /output/pred.csv **
 
 Format dự kiến:
 

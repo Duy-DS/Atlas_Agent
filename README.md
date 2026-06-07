@@ -82,6 +82,7 @@ Ví Dụ:
 qid,question,A,B,C,D
 
 1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á
+
 2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001
 
 ### 7.2 Định Dạng Dữ Liệu Đầu Ra
@@ -100,8 +101,11 @@ qid,answer
 Quy định:
 
 Cột qid phải giữ nguyên từ file input.
+
 Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.
+
 Không được để trống đáp án.
+
 Không ghi thêm reasoning hoặc log vào file output.
 
 ## 8. Cách Chạy Project

@@ -19,16 +19,48 @@ class AgentState(TypedDict):
     answer: str
 
 def retrieve_node(state: AgentState):
-    context = search_rag_database(state["question"])
+    print(">> Đang truy vấn RAG Database...")
+    try:
+        context = search_rag_database.invoke({"query": state["question"]})
+    except Exception:
+        context = search_rag_database(state["question"])
     return {"context": context}
 
 def reasoning_node(state: AgentState):
-    print("DEBUG: Đang gọi LLM (Mock mode)...")
-    # Thay vì gọi llm.invoke(), ta trả về kết quả giả
+    print(">> Đang gọi LLM để lập luận...")
+    messages = [
+        {"role": "system", "content": SYSTEM_COT_PROMPT},
+        {"role": "user", "content": f"<Ngữ cảnh tài liệu>\n{state['context']}\n\nCâu hỏi: {state['question']}"}
+    ]
+    
+    try:
+        response = llm.invoke(messages)
+        response_content = response.content.strip()
+        
+        # Thử parse JSON từ phản hồi của LLM
+        try:
+            data = json.loads(response_content)
+        except json.JSONDecodeError:
+            # Xử lý trường hợp LLM bọc JSON trong Markdown block (```json ... ```)
+            clean_content = response_content
+            if clean_content.startswith("```json"):
+                clean_content = clean_content[7:]
+            if clean_content.endswith("```"):
+                clean_content = clean_content[:-3]
+            data = json.loads(clean_content.strip())
+            
+        reasoning = data.get("reasoning", "Không tìm thấy lý do suy luận.")
+        answer = data.get("answer", "N/A")
+    except Exception as e:
+        print(f"[!] Lỗi khi gọi LLM hoặc parse JSON: {e}")
+        reasoning = f"Lỗi xảy ra trong quá trình gọi mô hình: {str(e)}"
+        answer = "N/A"
+        
     return {
-        "reasoning": "Đây là suy luận giả lập. Đồ thị của mày đã chạy thông luồng thành công!",
-        "answer": "B"
-    }   
+        "reasoning": reasoning,
+        "answer": answer
+    }
+
 
 workflow = StateGraph(AgentState)
 workflow.add_node("Retrieve", retrieve_node)

@@ -1,0 +1,11 @@
+.git
+.agents
+.codex
+__pycache__
+*.pyc
+.venv
+.env
+ollama-data
+chroma-data
+chroma_db
+output

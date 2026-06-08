@@ -37,6 +37,7 @@ services:
       - PYTHONUNBUFFERED=1
       - OLLAMA_BASE_URL=http://ollama:11434
       - MODEL_NAME=qwen3.5:0.8b
-      - APP_MODE=python
+      - APP_MODE=streamlit
+      - STREAMLIT_SCRIPT=/app/streamlit_chat.py
     ports:
       - "8501:8501"

@@ -1,4 +1,4 @@
-# Huong dan build va chay Ollama bang Docker Compose
+# Huong dan build va chay Ollama bang Docker Compose tren Linux
 
 Tai lieu nay danh cho nguoi vua nhan source code cua project va muon build, start he thong len bang Docker Compose.
 
@@ -216,6 +216,45 @@ docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
 ```
 
 Neu lenh test nay thanh cong thi chay lai GPU mode. Neu chua muon cai toolkit, hay chay CPU mode va bo `-f docker-compose.gpu.yml`.
+
+Neu gap loi sau khi chay `docker run --rm --gpus all ... nvidia-smi`:
+
+```text
+nvidia-container-cli: initialization error: load library failed: libnvidia-ml.so.1: cannot open shared object file: no such file or directory
+```
+
+Loi nay khac voi loi thieu runtime `nvidia`. Docker da goi duoc NVIDIA hook/toolkit, nhung NVIDIA driver tren host bi thieu, hong, hoac chua load duoc thu vien NVML. `libnvidia-ml.so.1` phai co tren may Linux host. Kiem tra tren host:
+
+```bash
+nvidia-smi
+ldconfig -p | grep libnvidia-ml
+```
+
+Neu `nvidia-smi` tren host cung loi, cai lai NVIDIA driver bang driver Ubuntu khuyen nghi roi reboot:
+
+```bash
+ubuntu-drivers devices
+sudo ubuntu-drivers autoinstall
+sudo reboot
+```
+
+Sau khi reboot, kiem tra lai:
+
+```bash
+nvidia-smi
+ldconfig -p | grep libnvidia-ml
+docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
+```
+
+Neu `nvidia-smi` tren host chay duoc nhung Docker van bao loi `libnvidia-ml.so.1`, cau hinh lai NVIDIA runtime cho Docker:
+
+```bash
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
+```
+
+Neu test Docker GPU thanh cong thi chay lai GPU mode. Neu can chay tam thoi, dung CPU mode va bo `-f docker-compose.gpu.yml`.
 
 Neu model chua xuat hien trong `ollama list`, xem log service pull model:
 

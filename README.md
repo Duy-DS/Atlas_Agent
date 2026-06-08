@@ -38,9 +38,34 @@ kế AI Agent xử lý đa tác vụ.
   được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.  
   Thời hạn nộp bài: 02/6/2026 - 23/6/2026.  
 
-## 3. Kiến Trúc Tổng Quan
+## 3. Kiến Trúc Tổng Quan  
+Hệ thống dự kiến bao gồm các thành phần chính:
 
-### 3.1. Các Thành Phần Chính
+Input CSV
+    ↓
+Preprocessing
+    ↓
+LangGraph Agent
+    ↓
+Main LLM
+    ↓
+Tool Calling / RAG Search
+    ↓
+Reasoning & Answer Selection
+    ↓
+Output pred.csv  
+### 3.1. Các Thành Phần Chính  
+|Thành Phần|Vai Trò|  
+|---|---|  
+|Main LLM|Mô hình ngôn ngữ lớn dùng để suy luận và chọn đáp án|  
+|LangGraph|Điều phối luồng xử lý Agent theo dạng state machine|  
+|Tool Calling|Cho phép Agent gọi công cụ khi cần thêm thông tin|  
+|RAG Pipeline|Truy xuất dữ liệu liên quan để hỗ trợ suy luận|  
+|Vector Database|Lưu trữ embedding phục vụ truy xuất|  
+|Reranker|Sắp xếp lại kết quả truy xuất để giảm nhiễu|  
+|vLLM|Tăng tốc inference cho mô hình|  
+|Docker|Đóng gói môi trường chạy thống nhất|  
+
 
 ## 4. Công Nghệ Sử Dụng
 
@@ -54,14 +79,28 @@ kế AI Agent xử lý đa tác vụ.
 |Nguyễn Công Chí|Model Optimizer|Nén Mô Hình (Quantization), Khởi chạy vLLM, Tối ưu Batching|
 |Đường Minh Đức|QA, UI Tester & Technical Writer|Xây dựng Dữ liệu Kiểm thử, Dựng Web UI Test Local, Soạn Thuyết Minh Phương Pháp|
 
-## 6. Cài Đặt Môi Trường
+## 6. Cài Đặt Môi Trường  
+### 6.1 Clone Repo  
+```
+git clone https://github.com/Duy-DS/Atlas_Agent.git cd Atlas_Agent
 
-### 6.1 Clone Repo
+```  
+### 6.2 Tạo Virtual Environment  
+```
+python -m venv .venv 
+source .venv/bin/activate
 
-### 6.2 Tạo Virtual Environment
+```  
+Trên Windows:  
+```
+python -m venv .venv
+.venv\Scripts\activate
+```  
 
-### 6.3 Cài Đặt Thư Viện
-
+### 6.3 Cài Đặt Thư Viện  
+```
+pip install -r requirements.txt  
+```  
 ### 6.4 Cấu Hình Biến Môi Trường
 
 ## 7. Chuẩn Dữ Liệu Đầu Vào và Đầu Ra

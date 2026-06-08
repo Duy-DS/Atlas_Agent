@@ -4,10 +4,10 @@ services:
   ollama: 
     image: ollama/ollama:latest 
     container_name: ollama
-    restart: unless_stopped
+    restart: unless-stopped
 
     ports: 
-      - "11434:11434"
+      - "11435:11434"
     volumes:
       - ./ollama-data:/root/.ollama
 
@@ -16,14 +16,13 @@ services:
     depends_on:
       - ollama
     entrypoint: ["/bin/sh", "-c"]
-    command: >
-      "until curl -s http://ollama:11434/api/tags > /dev/null; do
-         echo 'Waiting for Ollama...';
-         sleep 2;
-       done;
-       curl -X POST http://ollama:11434/api/pull
-       -H 'Content-Type: application/json'
-       -d '{\"name\":\"qwen3.5:0.8b\"}'"
+    command:
+      - |
+        until curl -s http://ollama:11434/api/tags > /dev/null; do
+          echo 'Waiting for Ollama...';
+          sleep 2;
+        done;
+        curl -fsS -X POST http://ollama:11434/api/pull -H 'Content-Type: application/json' -d '{"name":"qwen3.5:0.8b"}'
 
   app:
     build: .

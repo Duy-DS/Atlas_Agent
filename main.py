@@ -10,7 +10,7 @@ PUBLIC_TEST_PATH = DATA_DIR / "public_test.csv"
 PRIVATE_TEST_PATH = DATA_DIR / "private_test.csv"
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-MODEL_NAME = os.getenv("MODEL_NAME", "qwen3:0.6b")
+MODEL_NAME = os.getenv("MODEL_NAME", "qwen3.5:0.8b")
 
 
 def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:

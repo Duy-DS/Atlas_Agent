@@ -74,7 +74,7 @@ docker compose up -d ollama ollama-pull
 Lenh tren se:
 
 - Start container `ollama`
-- Mo port `11434` ra host
+- Mo port `11435` ra host va map vao port `11434` trong container
 - Luu model vao thu muc `ollama-data`
 - Tu dong pull model `qwen3.5:0.8b` bang service `ollama-pull`
 
@@ -119,7 +119,7 @@ docker compose -f docker-compose.yml -f docker-compose.gpu.yml ps
 Kiem tra Ollama API tu may host:
 
 ```bash
-curl http://localhost:11434/api/tags
+curl http://localhost:11435/api/tags
 ```
 
 Kiem tra model trong container Ollama:
@@ -178,6 +178,44 @@ data/private_test.csv
 ```
 
 Neu GPU mode bao loi khong tim thay GPU, hay kiem tra lai NVIDIA driver va NVIDIA Container Toolkit tren may host.
+
+Neu gap loi sau:
+
+```text
+Error response from daemon: could not select device driver "nvidia" with capabilities: [[gpu]]
+```
+
+Thuong la do host da co NVIDIA driver nhung Docker chua cai/cau hinh NVIDIA Container Toolkit. Kiem tra nhanh:
+
+```bash
+nvidia-smi
+docker info | grep -i runtimes
+dpkg -l nvidia-container-toolkit nvidia-container-runtime libnvidia-container1
+```
+
+Neu `nvidia-smi` tren host chay duoc nhung `docker info` khong co runtime `nvidia`, cai NVIDIA Container Toolkit tren Ubuntu:
+
+```bash
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey \
+  | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+
+curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
+  | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
+  | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
+sudo apt update
+sudo apt install -y nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+```
+
+Sau do test Docker co thay GPU chua:
+
+```bash
+docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
+```
+
+Neu lenh test nay thanh cong thi chay lai GPU mode. Neu chua muon cai toolkit, hay chay CPU mode va bo `-f docker-compose.gpu.yml`.
 
 Neu model chua xuat hien trong `ollama list`, xem log service pull model:
 

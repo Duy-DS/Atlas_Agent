@@ -112,7 +112,7 @@ docker run --gpus all \
   ngu_lao_tinh/atlas_agent:v1.0
 ```
 
-Sau khi tiến trình chạy xong, mở thư mục /output trên máy tính của mình để kiểm tra file pred.csv.
+Sau khi tiến trình chạy xong, mở thư mục /output trên máy tính của mình để kiểm tra file pred.csv
 
 ---
 

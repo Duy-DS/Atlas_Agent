@@ -45,6 +45,9 @@ services:
       - MODEL_NAME=${MODEL_NAME:-qwen3.5:0.8b}
       - BATCH_SIZE=${BATCH_SIZE:-20}
       - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}
+      - WEB_SEARCH_ENABLED=${WEB_SEARCH_ENABLED:-false}
+      - WEB_SEARCH_PROVIDER=${WEB_SEARCH_PROVIDER:-duckduckgo}
+      - WEB_SEARCH_ENDPOINT=${WEB_SEARCH_ENDPOINT:-}
       - APP_MODE=python
     ports:
       - "8501:8501"

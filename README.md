@@ -42,17 +42,17 @@ Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng cá
 ## 📐 Kiến Trúc Tổng Quan  
 Hệ thống dự kiến bao gồm các thành phần chính:
 
-Input CSV
+Input CSV  
     ↓
-Preprocessing
+Preprocessing  
     ↓
-LangGraph Agent
+LangGraph Agent  
     ↓
-Main LLM
+Main LLM  
     ↓
-Tool Calling / RAG Search
+Tool Calling / RAG Search  
     ↓
-Reasoning & Answer Selection
+Reasoning & Answer Selection  
     ↓
 Output pred.csv  
 ### Các Thành Phần Chính  

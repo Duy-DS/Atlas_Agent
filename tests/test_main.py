@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import main
+from agents.web_search import StaticWebSearch
 
 
 class MainOutputTest(unittest.TestCase):
@@ -58,6 +59,16 @@ class MainOutputTest(unittest.TestCase):
                         {"qid": "1", "answer": "A"},
                         {"qid": "2", "answer": "B"},
                         {"qid": "3", "answer": "C"},
+                    ],
+                )
+            audit_path = output_path.with_name("pred_audit.csv")
+            with audit_path.open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [
+                        {"qid": "1", "answer": "A", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
+                        {"qid": "2", "answer": "B", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
+                        {"qid": "3", "answer": "C", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
                     ],
                 )
 
@@ -137,6 +148,71 @@ class MainOutputTest(unittest.TestCase):
 
         with patch.object(main, "agent", return_value=prose_output):
             self.assertEqual(main.predict_batch([row]), {"1": "C"})
+
+
+    def test_audit_marks_current_questions_as_needing_search(self):
+        row = {"qid": "9", "question": "CEO hiện nay là ai?", "A": "a", "B": "b", "C": "c", "D": "d"}
+
+        audit = main.build_audit_rows([row], {"9": "A"})
+
+        self.assertEqual(audit, [{"qid": "9", "answer": "A", "confidence": "0.40", "needs_search": "true", "search_used": "false"}])
+
+
+    def test_audit_marks_search_used_qids(self):
+        row = {"qid": "9", "question": "CEO hiện nay là ai?", "A": "a", "B": "b", "C": "c", "D": "d"}
+
+        audit = main.build_audit_rows([row], {"9": "A"}, {"9"})
+
+        self.assertEqual(audit, [{"qid": "9", "answer": "A", "confidence": "0.40", "needs_search": "true", "search_used": "true"}])
+
+
+    def test_run_searches_rows_marked_needs_search_when_search_enabled(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "1,CEO hiện nay là ai?,a,b,c,d\n",
+                encoding="utf-8",
+            )
+            search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web: đáp án là C."})
+            calls = []
+
+            def fake_agent(prompt):
+                calls.append(prompt)
+                if "Nguon canh web" in prompt or "Ngu canh web" in prompt:
+                    return "qid,answer\n1,C\n"
+                return "qid,answer\n1,A\n"
+
+            with patch.object(main, "agent", fake_agent):
+                main.run(input_path=input_path, output_path=output_path, batch_size=1, search_client=search)
+
+            with output_path.open(newline="", encoding="utf-8") as f:
+                self.assertEqual(list(csv.DictReader(f)), [{"qid": "1", "answer": "C"}])
+            with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [{"qid": "1", "answer": "C", "confidence": "0.40", "needs_search": "true", "search_used": "true"}],
+                )
+
+
+    def test_run_reads_utf8_sig_csv_with_bom_header(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "\ufeffqid,question,A,B,C,D\n"
+                "1,one,a,b,c,d\n",
+                encoding="utf-8",
+            )
+
+            with patch.object(main, "agent", return_value="qid,answer\n1,A\n"):
+                main.run(input_path=input_path, output_path=output_path, batch_size=1)
+
+            with output_path.open(newline="", encoding="utf-8") as f:
+                self.assertEqual(list(csv.DictReader(f)), [{"qid": "1", "answer": "A"}])
 
 
 

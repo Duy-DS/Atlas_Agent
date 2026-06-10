@@ -5,10 +5,14 @@ from io import StringIO
 from pathlib import Path
 
 from agents.agent import agent
+from agents.search_router import should_search
+from agents.web_search import WebSearchClient, default_web_search
+from agents.web_search_graph import build_web_search_graph
 
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
 PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
+AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
 VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
 ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|N/A)\b", re.IGNORECASE | re.DOTALL)
 ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$", re.IGNORECASE)
@@ -17,11 +21,11 @@ DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
 
 
 def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+    return path.read_text(encoding="utf-8-sig")
 
 
 def question_ids(csv_text: str) -> list[str]:
-    reader = csv.DictReader(StringIO(csv_text))
+    reader = csv.DictReader(StringIO(csv_text.lstrip("\ufeff")))
     return [row["qid"] for row in reader if row.get("qid")]
 
 
@@ -54,6 +58,10 @@ def build_predictions(question_csv: str, model_output: str) -> list[dict[str, st
         {"qid": qid, "answer": answers.get(qid, "N/A")}
         for qid in question_ids(question_csv)
     ]
+
+
+def normalize_row(row: dict[str, str]) -> dict[str, str]:
+    return {(key or "").lstrip("\ufeff"): value for key, value in row.items()}
 
 
 def rows_to_prompt(rows: list[dict[str, str]]) -> str:
@@ -110,11 +118,53 @@ def predict_single_retry(row: dict[str, str]) -> str:
     return answers.get(qid, "N/A")
 
 
+
+def answer_with_search_context(row: dict[str, str], context: str) -> str:
+    prompt = (
+        "Dung ngu canh web de tra loi cau hoi. Chi tra ve CSV qid,answer. "
+        "Khong phan tich. answer chi la A, B, C, D hoac N/A.\n\n"
+        f"Ngu canh web:\n{context}\n\n"
+        + rows_to_prompt([row])
+    )
+    model_output = agent(prompt)
+    answers = apply_single_row_fallback(row, model_output, parse_model_answers(model_output))
+    return answers.get(row.get("qid", ""), "N/A")
+
+
+def predict_with_search_details(row: dict[str, str], search_client: WebSearchClient, answer: str = "N/A") -> tuple[str, bool]:
+    graph = build_web_search_graph(search_client, answer_with_search_context)
+    result = graph.invoke({"row": row, "answer": answer})
+    search_used = bool(result.get("search_context"))
+    return result.get("final_answer", answer), search_used
+
+
+def predict_with_search(row: dict[str, str], search_client: WebSearchClient, answer: str = "N/A") -> str:
+    final_answer, _ = predict_with_search_details(row, search_client, answer)
+    return final_answer
+
 def retry_bad_rows(rows: list[dict[str, str]], answers: dict[str, str]) -> dict[str, str]:
     bad_rows = [row for row in rows if answers.get(row.get("qid", ""), "N/A") == "N/A"]
     for row in bad_rows:
         qid = row.get("qid", "")
         answers[qid] = predict_single_retry(row)
+    return answers
+
+
+def apply_web_search(
+    rows: list[dict[str, str]],
+    answers: dict[str, str],
+    search_client: WebSearchClient,
+    search_used_qids: set[str],
+) -> dict[str, str]:
+    for row in rows:
+        qid = row.get("qid", "")
+        current_answer = answers.get(qid, "N/A")
+        if not should_search(row, current_answer):
+            continue
+        searched_answer, search_used = predict_with_search_details(row, search_client, current_answer)
+        if search_used:
+            search_used_qids.add(qid)
+            answers[qid] = searched_answer
     return answers
 
 
@@ -126,24 +176,70 @@ def write_predictions(rows: list[dict[str, str]], output_path: Path) -> None:
         writer.writerows(rows)
 
 
+
+def confidence_for(row: dict[str, str], answer: str) -> str:
+    if answer == "N/A":
+        return "0.00"
+    if should_search(row, answer):
+        return "0.40"
+    return "0.90"
+
+
+def build_audit_rows(
+    source_rows: list[dict[str, str]],
+    answers: dict[str, str],
+    search_used_qids: set[str] | None = None,
+) -> list[dict[str, str]]:
+    search_used_qids = search_used_qids or set()
+    audit_rows = []
+    for row in source_rows:
+        qid = row["qid"]
+        answer = answers.get(qid, "N/A")
+        audit_rows.append(
+            {
+                "qid": qid,
+                "answer": answer,
+                "confidence": confidence_for(row, answer),
+                "needs_search": "true" if should_search(row, answer) else "false",
+                "search_used": "true" if qid in search_used_qids else "false",
+            }
+        )
+    return audit_rows
+
+
+def write_audit(rows: list[dict[str, str]], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["qid", "answer", "confidence", "needs_search", "search_used"])
+        writer.writeheader()
+        writer.writerows(rows)
+
 def run(
     input_path: Path = PUBLIC_QUESTION,
     output_path: Path = PREDICTION_OUTPUT,
     batch_size: int = DEFAULT_BATCH_SIZE,
+    search_client: WebSearchClient | None = None,
+    audit_output_path: Path | None = None,
 ) -> Path:
-    with input_path.open(newline="", encoding="utf-8") as f:
-        source_rows = [row for row in csv.DictReader(f) if row.get("qid")]
+    with input_path.open(newline="", encoding="utf-8-sig") as f:
+        source_rows = [normalize_row(row) for row in csv.DictReader(f)]
+        source_rows = [row for row in source_rows if row.get("qid")]
+
+    search_client = search_client or default_web_search()
 
     answers: dict[str, str] = {}
+    search_used_qids: set[str] = set()
     for batch in batched(source_rows, batch_size):
         batch_answers = predict_batch(batch)
-        answers.update(retry_bad_rows(batch, batch_answers))
+        batch_answers = retry_bad_rows(batch, batch_answers)
+        answers.update(apply_web_search(batch, batch_answers, search_client, search_used_qids))
 
     output_rows = [
         {"qid": row["qid"], "answer": answers.get(row["qid"], "N/A")}
         for row in source_rows
     ]
     write_predictions(output_rows, output_path)
+    write_audit(build_audit_rows(source_rows, answers, search_used_qids), audit_output_path or output_path.with_name("pred_audit.csv"))
     return output_path
 
 

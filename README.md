@@ -1,9 +1,11 @@
-# Atlas_Agent
+# Atlas_Agent - Giải Pháp Trợ Lý Ảo Đa Tác Vụ
 
-Atlas Agent là một AI Agent được thiết kế từ mô hình ngôn ngữ lớn để xử lý đa tác vụ trong khuôn khổ cuộc thi Vietnamese Student HackAIthon 2026.
+**Atlas Agent** là một AI Agent được thiết kế từ mô hình ngôn ngữ lớn để xử lý đa tác vụ trong khuôn khổ cuộc thi Vietnamese Student HackAIthon 2026.  
 
-Dự án hướng đến việc xây dựng một hệ thống AI Agent có khả năng:
 
+## 📖 Giới thiệu dự án  
+**Atlas_Agent** là một hệ thống AI Agent thông minh được thiết kế đặc biệt để giải quyết các bài toán trắc nghiệm phức tạp. Thay vì áp dụng phương pháp đoán mò hay học vẹt (hard-code), Atlas_Agent sử dụng kiến trúc đồ thị trạng thái (State Graph) kết hợp với kỹ thuật suy luận chuỗi (Chain-of-Thought / ReAct) để tự động đọc hiểu, tìm kiếm ngữ cảnh, và đưa ra quyết định logic nhất.
+Dự án hướng đến việc xây dựng một hệ thống AI Agent có khả năng:  
 - Đọc và phân tích câu hỏi đầu vào.
 - Suy luận để chọn đáp án phù hợp.
 - Gọi công cụ hỗ trợ khi cần thiết.
@@ -26,9 +28,9 @@ Dự án được xây dựng với các mục tiêu chính:
 
 Tên cuộc thi: Vietnamese Student HackAIthon 2026  
 Bảng: C - INNOVATOR  
+Đội thi: Ngũ Lão Tinh  
 Vòng: Vòng 1  
-Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết.  
-kế AI Agent xử lý đa tác vụ.  
+Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng các mô hình ngôn ngữ lớn để thiết kế AI Agent xử lý đa tác vụ.  
 Định dạng đầu vào: Đọc public_test.csv hoặc private_test.csv tại /data  
 Định dạng đầu ra:  
 - Docker Container: Docker hub.  

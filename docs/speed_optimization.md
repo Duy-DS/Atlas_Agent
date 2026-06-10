@@ -28,7 +28,7 @@ Voi 2000 cau, so request ly thuyet giam tu 2000 xuong khoang 100 request, chua t
 
 Sau moi batch, chuong trinh parse output CSV va kiem tra tung `qid`.
 
-Cau nao thieu output hoac co answer khong hop le se duoc retry rieng trong batch loi. Cau da co dap an hop le khong bi goi lai.
+Cau nao thieu output hoac co answer khong hop le se duoc retry rieng tung cau dung mot lan voi prompt ep CSV. Cau da co dap an hop le khong bi goi lai. `agent()` khong retry noi bo de tranh retry chong len nhau.
 
 ### 3. Giu system prompt goc cua du an
 

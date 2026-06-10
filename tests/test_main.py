@@ -61,7 +61,7 @@ class MainOutputTest(unittest.TestCase):
                     ],
                 )
 
-    def test_run_retries_missing_or_invalid_rows_one_by_one(self):
+    def test_run_retries_missing_or_invalid_rows_one_by_one_with_one_retry_each(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             input_path = tmp_path / "public_test.csv"
@@ -87,6 +87,8 @@ class MainOutputTest(unittest.TestCase):
                 main.run(input_path=input_path, output_path=output_path, batch_size=3)
 
             self.assertEqual(len(calls), 3)
+            self.assertIn("Chi tra ve dung 2 dong CSV", calls[1])
+            self.assertIn("Chi tra ve dung 2 dong CSV", calls[2])
             self.assertNotIn("1,one", calls[1])
             self.assertIn("2,two", calls[1])
             self.assertNotIn("3,three", calls[1])
@@ -108,21 +110,19 @@ class MainOutputTest(unittest.TestCase):
         self.assertEqual(main.parse_model_answers(output), {"5": "A", "6": "B"})
 
 
-    def test_predict_batch_single_row_forces_csv_when_first_single_attempt_has_no_answer(self):
+    def test_predict_single_retry_uses_one_forced_call(self):
         row = {"qid": "4", "question": "one", "A": "a", "B": "b", "C": "c", "D": "d"}
         calls = []
 
         def fake_agent(prompt):
             calls.append(prompt)
-            if len(calls) == 1:
-                return "qid,answer"
             return "dau ra:\nqid,answer\n1,B"
 
         with patch.object(main, "agent", fake_agent):
-            self.assertEqual(main.predict_batch([row]), {"4": "B"})
+            self.assertEqual(main.predict_single_retry(row), "B")
 
-        self.assertEqual(len(calls), 2)
-        self.assertIn("Chi tra ve dung 2 dong CSV", calls[1])
+        self.assertEqual(len(calls), 1)
+        self.assertIn("Chi tra ve dung 2 dong CSV", calls[0])
 
     def test_predict_batch_single_row_uses_only_valid_answer_when_qid_is_wrong(self):
         row = {"qid": "4", "question": "one", "A": "a", "B": "b", "C": "c", "D": "d"}

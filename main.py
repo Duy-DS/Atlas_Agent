@@ -86,33 +86,35 @@ def force_single_answer_prompt(row: dict[str, str]) -> str:
         + rows_to_prompt([row])
     )
 
+def apply_single_row_fallback(row: dict[str, str], model_output: str, answers: dict[str, str]) -> dict[str, str]:
+    qid = row.get("qid", "")
+    if qid not in answers and len(answers) == 1:
+        answers[qid] = next(iter(answers.values()))
+    if qid not in answers:
+        answers[qid] = extract_single_answer(model_output)
+    return answers
+
+
 def predict_batch(rows: list[dict[str, str]]) -> dict[str, str]:
     model_output = agent(rows_to_prompt(rows))
     answers = parse_model_answers(model_output)
     if len(rows) == 1:
-        qid = rows[0].get("qid", "")
-        if qid not in answers and len(answers) == 1:
-            answers[qid] = next(iter(answers.values()))
-        if qid not in answers:
-            answers[qid] = extract_single_answer(model_output)
-        if answers.get(qid, "N/A") == "N/A":
-            forced_output = agent(force_single_answer_prompt(rows[0]))
-            forced_answers = parse_model_answers(forced_output)
-            if qid in forced_answers:
-                answers[qid] = forced_answers[qid]
-            elif len(forced_answers) == 1:
-                answers[qid] = next(iter(forced_answers.values()))
-            else:
-                answers[qid] = extract_single_answer(forced_output)
+        answers = apply_single_row_fallback(rows[0], model_output, answers)
     return {row["qid"]: answers.get(row["qid"], "N/A") for row in rows if row.get("qid")}
+
+
+def predict_single_retry(row: dict[str, str]) -> str:
+    qid = row.get("qid", "")
+    model_output = agent(force_single_answer_prompt(row))
+    answers = apply_single_row_fallback(row, model_output, parse_model_answers(model_output))
+    return answers.get(qid, "N/A")
 
 
 def retry_bad_rows(rows: list[dict[str, str]], answers: dict[str, str]) -> dict[str, str]:
     bad_rows = [row for row in rows if answers.get(row.get("qid", ""), "N/A") == "N/A"]
     for row in bad_rows:
         qid = row.get("qid", "")
-        retry_answers = predict_batch([row])
-        answers[qid] = retry_answers.get(qid, "N/A")
+        answers[qid] = predict_single_retry(row)
     return answers
 
 

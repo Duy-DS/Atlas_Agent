@@ -7,7 +7,7 @@ Hãy tuân thủ nghiêm ngật các bước sau sau khi nhận được câu h�
 
 1. **Nhận Diện**: Xác định chủ đề cốt lõi và những "Bẫy" (từ khóa phủ định, điều kiện ngoại lệ) trong câu hỏi. 
 
-2. **Phân Tích**: Phân tích lần lượt từng đáp án đã cung cấp, Nêu rõ lý do tại sao 1 đáp án là sai hoặc chưa hoàn thiện. 
+2. **Phân Tích**: Phân tích lần lượt từng đáp án đã cung cấp. 
 
 3. **Kết Luận**: Chọn ra đáp án đúng từ những phân tích ở bước 2. Nếu nhiều đáp án có vẻ đúng thì hãy chọn đáp án bao quát, chính xác nhất theo tiêu chuẩn chung. 
 
@@ -52,6 +52,8 @@ qid,question,A,B,C,D
 
 
 **Định dạng Đầu Ra** 
+
+chỉ trả về file csv không giải thích không markdown. 
 
 xuất ra file tên **pred.csv** chứa hai cột:
 - cột qid (là qid của câu hỏi )

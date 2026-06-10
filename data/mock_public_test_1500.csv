@@ -1,0 +1,1501 @@
+﻿qid,question,A,B,C,D
+1,Tính 50 - 21.,21,34,29,31
+2,Tính 8 x 6.,54,14,48,56
+3,Tính 171 / 9.,20,18,9,19
+4,"Nếu x + 3 = 27, x bằng bao nhiêu?",27,23,25,24
+5,"Nếu 6x + 2 = 122, x bằng bao nhiêu?",122,21,20,19
+6,"Diện tích hình tròn bán kính 10, lấy pi = 3,14, là bao nhiêu?",100,62.8,317.14,314.0
+7,"Trung bình cộng của 25, 12, 42, 40 là bao nhiêu?",119,30.75,29.75,28.75
+8,Tính 43 + 20.,62,63,64,860
+9,Tính 31 - 21.,21,15,12,10
+10,Tính 7 x 5.,42,35,40,12
+11,Tính 60 / 6.,10,11,9,6
+12,"Nếu x + 7 = 32, x bằng bao nhiêu?",24,25,26,32
+13,"Nếu 6x + 10 = 40, x bằng bao nhiêu?",6,5,4,40
+14,"Diện tích hình tròn bán kính 15, lấy pi = 3,14, là bao nhiêu?",709.64,94.2,225,706.5
+15,"Trung bình cộng của 20, 47, 6, 12 là bao nhiêu?",21.25,22.25,20.25,85
+16,Tính 69 + 8.,77,76,552,78
+17,Tính 42 - 30.,17,30,14,12
+18,Tính 7 x 12.,96,91,19,84
+19,Tính 24 / 2.,12,2,11,13
+20,"Nếu 9x + 2 = 110, x bằng bao nhiêu?",110,11,12,13
+21,"Diện tích hình tròn bán kính 11, lấy pi = 3,14, là bao nhiêu?",383.08,69.08,121,379.94
+22,"Trung bình cộng của 9, 50, 7, 26 là bao nhiêu?",23,92,22.0,24.0
+23,Tính 83 + 17.,101,100,99,1411
+24,Tính 71 - 65.,11,8,6,65
+25,Tính 4 x 5.,9,20,25,24
+26,Tính 204 / 12.,12,17,18,16
+27,"Nếu x + 11 = 27, x bằng bao nhiêu?",17,16,15,27
+28,"Nếu 3x + 15 = 63, x bằng bao nhiêu?",16,15,17,63
+29,"Diện tích hình tròn bán kính 9, lấy pi = 3,14, là bao nhiêu?",81,257.48,254.34,56.52
+30,"Trung bình cộng của 41, 28, 23, 33 là bao nhiêu?",125,31.25,32.25,30.25
+31,Tính 33 + 64.,2112,98,96,97
+32,Tính 66 - 10.,58,56,10,61
+33,Tính 228 / 12.,20,12,19,18
+34,"Nếu x + 6 = 17, x bằng bao nhiêu?",17,10,12,11
+35,"Nếu 7x + 9 = 30, x bằng bao nhiêu?",4,2,3,30
+36,"Diện tích hình tròn bán kính 6, lấy pi = 3,14, là bao nhiêu?",36,37.68,116.18,113.04
+37,"Trung bình cộng của 46, 1, 43, 44 là bao nhiêu?",34.5,33.5,32.5,134
+38,Tính 77 + 67.,145,143,5159,144
+39,Tính 70 - 49.,49,21,23,26
+40,Tính 55 / 5.,11,10,5,12
+41,"Nếu x + 4 = 14, x bằng bao nhiêu?",10,11,9,14
+42,"Nếu 3x + 4 = 64, x bằng bao nhiêu?",21,20,19,64
+43,"Trung bình cộng của 25, 42, 48, 31 là bao nhiêu?",36.5,35.5,37.5,146
+44,Tính 72 + 38.,109,111,2736,110
+45,Tính 64 - 58.,6,58,11,8
+46,Tính 12 x 6.,84,72,78,18
+47,"Nếu x + 12 = 39, x bằng bao nhiêu?",28,26,39,27
+48,"Nếu 4x + 2 = 34, x bằng bao nhiêu?",34,7,8,9
+49,"Trung bình cộng của 46, 23, 11, 31 là bao nhiêu?",27.75,111,28.75,26.75
+50,Tính 29 + 40.,69,70,1160,68
+51,Tính 68 - 51.,22,51,19,17
+52,Tính 6 x 8.,56,54,14,48
+53,Tính 50 / 10.,6,5,4,10
+54,"Nếu x + 7 = 23, x bằng bao nhiêu?",15,17,23,16
+55,"Nếu 4x + 4 = 36, x bằng bao nhiêu?",8,36,9,7
+56,"Trung bình cộng của 35, 40, 16, 20 là bao nhiêu?",26.75,111,28.75,27.75
+57,Tính 32 + 88.,2816,121,120,119
+58,Tính 35 - 21.,14,16,19,21
+59,Tính 10 x 2.,20,30,22,12
+60,"Nếu x + 15 = 30, x bằng bao nhiêu?",30,15,16,14
+61,"Nếu 5x + 8 = 103, x bằng bao nhiêu?",20,19,103,18
+62,"Diện tích hình tròn bán kính 4, lấy pi = 3,14, là bao nhiêu?",53.38,16,50.24,25.12
+63,"Trung bình cộng của 45, 36, 4, 39 là bao nhiêu?",124,32.0,31,30.0
+64,Tính 68 + 38.,107,105,106,2584
+65,Tính 79 - 54.,27,30,54,25
+66,Tính 8 x 5.,40,48,13,45
+67,"Nếu x + 11 = 31, x bằng bao nhiêu?",21,20,19,31
+68,"Nếu 9x + 9 = 72, x bằng bao nhiêu?",7,72,8,6
+69,"Diện tích hình tròn bán kính 14, lấy pi = 3,14, là bao nhiêu?",615.44,196,87.92,618.58
+70,"Trung bình cộng của 6, 19, 10, 46 là bao nhiêu?",81,20.25,21.25,19.25
+71,Tính 88 + 69.,6072,158,157,156
+72,Tính 61 - 13.,53,13,50,48
+73,Tính 13 x 3.,16,39,42,52
+74,Tính 18 / 6.,4,2,6,3
+75,"Nếu x + 4 = 26, x bằng bao nhiêu?",26,21,23,22
+76,"Nếu 9x + 15 = 96, x bằng bao nhiêu?",9,8,10,96
+77,"Diện tích hình tròn bán kính 3, lấy pi = 3,14, là bao nhiêu?",9,31.4,28.26,18.84
+78,"Trung bình cộng của 1, 48, 19, 8 là bao nhiêu?",20.0,76,19,18.0
+79,Tính 22 + 34.,57,748,55,56
+80,Tính 30 - 25.,25,5,7,10
+81,Tính 6 x 3.,21,18,9,24
+82,"Nếu x + 12 = 41, x bằng bao nhiêu?",30,29,28,41
+83,"Nếu 2x + 5 = 11, x bằng bao nhiêu?",4,2,3,11
+84,"Diện tích hình tròn bán kính 12, lấy pi = 3,14, là bao nhiêu?",144,455.3,75.36,452.16
+85,"Trung bình cộng của 32, 30, 39, 6 là bao nhiêu?",107,25.75,26.75,27.75
+86,Tính 88 + 44.,3872,131,132,133
+87,Tính 59 - 49.,49,10,15,12
+88,Tính 8 x 10.,88,90,80,18
+89,Tính 27 / 9.,4,9,3,2
+90,"Nếu x + 17 = 21, x bằng bao nhiêu?",21,5,4,3
+91,"Nếu 4x + 15 = 51, x bằng bao nhiêu?",51,8,10,9
+92,"Trung bình cộng của 47, 38, 49, 10 là bao nhiêu?",144,35.0,37.0,36
+93,Tính 82 + 52.,134,133,135,4264
+94,Tính 81 - 69.,69,14,17,12
+95,Tính 21 / 3.,8,6,7,3
+96,"Nếu 4x + 8 = 80, x bằng bao nhiêu?",17,19,80,18
+97,"Trung bình cộng của 8, 2, 38, 24 là bao nhiêu?",17.0,18,19.0,72
+98,Tính 65 - 10.,10,57,55,60
+99,Tính 12 x 10.,120,132,130,22
+100,Tính 15 / 3.,6,5,3,4
+101,"Nếu x + 2 = 18, x bằng bao nhiêu?",18,16,17,15
+102,"Nếu 6x + 4 = 58, x bằng bao nhiêu?",10,9,8,58
+103,"Trung bình cộng của 8, 45, 35, 29 là bao nhiêu?",117,30.25,28.25,29.25
+104,Tính 70 + 30.,99,100,2100,101
+105,Tính 37 - 12.,27,25,30,12
+106,Tính 14 x 3.,42,56,17,45
+107,Tính 63 / 7.,9,10,7,8
+108,"Nếu x + 12 = 24, x bằng bao nhiêu?",13,24,12,11
+109,"Nếu 5x + 12 = 57, x bằng bao nhiêu?",10,9,8,57
+110,"Trung bình cộng của 39, 35, 13, 25 là bao nhiêu?",112,29.0,28,27.0
+111,Tính 60 + 87.,5220,148,146,147
+112,Tính 59 - 50.,11,14,9,50
+113,Tính 4 x 8.,12,36,40,32
+114,"Nếu x + 9 = 39, x bằng bao nhiêu?",39,30,29,31
+115,"Nếu 7x + 6 = 90, x bằng bao nhiêu?",11,13,90,12
+116,"Trung bình cộng của 12, 11, 28, 38 là bao nhiêu?",89,21.25,22.25,23.25
+117,Tính 5 + 48.,54,52,53,240
+118,Tính 85 - 11.,79,76,74,11
+119,Tính 13 x 6.,84,91,19,78
+120,Tính 45 / 3.,14,16,15,3
+121,"Nếu x + 7 = 11, x bằng bao nhiêu?",11,3,4,5
+122,"Nếu 4x + 7 = 55, x bằng bao nhiêu?",55,11,12,13
+123,"Trung bình cộng của 46, 33, 50, 7 là bao nhiêu?",34,33.0,35.0,136
+124,Tính 62 + 76.,138,137,139,4712
+125,Tính 66 - 42.,42,24,29,26
+126,Tính 6 x 10.,70,16,60,66
+127,Tính 126 / 9.,15,13,14,9
+128,"Nếu 8x + 11 = 155, x bằng bao nhiêu?",19,155,18,17
+129,"Trung bình cộng của 31, 1, 24, 18 là bao nhiêu?",17.5,18.5,74,19.5
+130,Tính 11 + 73.,85,803,84,83
+131,Tính 29 - 22.,9,22,7,12
+132,Tính 9 x 7.,70,63,16,72
+133,"Nếu x + 7 = 16, x bằng bao nhiêu?",10,16,9,8
+134,"Nếu 3x + 13 = 64, x bằng bao nhiêu?",18,64,17,16
+135,"Diện tích hình tròn bán kính 8, lấy pi = 3,14, là bao nhiêu?",200.96,64,204.1,50.24
+136,"Trung bình cộng của 40, 2, 42, 36 là bao nhiêu?",30,120,29.0,31.0
+137,Tính 85 + 51.,135,137,4335,136
+138,Tính 85 - 72.,18,13,15,72
+139,Tính 3 x 5.,20,15,18,8
+140,Tính 88 / 8.,11,10,8,12
+141,"Nếu x + 19 = 36, x bằng bao nhiêu?",16,17,18,36
+142,"Nếu 2x + 13 = 31, x bằng bao nhiêu?",9,8,31,10
+143,"Trung bình cộng của 5, 10, 36, 2 là bao nhiêu?",12.25,53,13.25,14.25
+144,Tính 44 + 90.,133,135,134,3960
+145,Tính 74 - 36.,43,36,38,40
+146,Tính 11 x 12.,143,23,144,132
+147,Tính 96 / 8.,12,11,8,13
+148,"Nếu x + 16 = 40, x bằng bao nhiêu?",40,25,24,23
+149,"Nếu 8x + 5 = 109, x bằng bao nhiêu?",12,14,13,109
+150,"Trung bình cộng của 28, 22, 31, 3 là bao nhiêu?",21,84,20.0,22.0
+151,Tính 2 + 33.,34,66,35,36
+152,Tính 72 - 13.,64,61,13,59
+153,Tính 72 / 6.,11,13,6,12
+154,"Nếu x + 3 = 11, x bằng bao nhiêu?",9,11,8,7
+155,"Nếu 2x + 2 = 22, x bằng bao nhiêu?",9,22,10,11
+156,"Trung bình cộng của 30, 23, 26, 45 là bao nhiêu?",30.0,124,32.0,31
+157,Tính 22 + 57.,79,78,80,1254
+158,Tính 48 - 3.,3,50,47,45
+159,Tính 14 x 6.,20,90,84,98
+160,Tính 64 / 4.,4,15,16,17
+161,"Nếu x + 11 = 33, x bằng bao nhiêu?",22,21,33,23
+162,"Nếu 9x + 5 = 113, x bằng bao nhiêu?",11,113,12,13
+163,"Trung bình cộng của 22, 12, 42, 28 là bao nhiêu?",104,26,25.0,27.0
+164,Tính 70 + 43.,113,114,3010,112
+165,Tính 41 - 15.,26,31,15,28
+166,Tính 44 / 4.,12,10,11,4
+167,"Nếu x + 18 = 32, x bằng bao nhiêu?",32,14,15,13
+168,"Nếu 6x + 4 = 28, x bằng bao nhiêu?",28,5,3,4
+169,"Trung bình cộng của 35, 39, 17, 50 là bao nhiêu?",34.25,36.25,141,35.25
+170,Tính 43 + 5.,48,215,47,49
+171,Tính 79 - 21.,60,21,63,58
+172,Tính 9 x 4.,45,13,36,40
+173,Tính 170 / 10.,17,18,16,10
+174,"Nếu x + 10 = 38, x bằng bao nhiêu?",38,29,28,27
+175,"Nếu 4x + 13 = 85, x bằng bao nhiêu?",19,18,85,17
+176,"Diện tích hình tròn bán kính 7, lấy pi = 3,14, là bao nhiêu?",43.96,157.0,49,153.86
+177,"Trung bình cộng của 22, 6, 4, 13 là bao nhiêu?",45,11.25,10.25,12.25
+178,Tính 69 + 3.,73,207,71,72
+179,Tính 43 - 16.,32,16,29,27
+180,Tính 7 x 3.,28,21,24,10
+181,Tính 60 / 10.,10,7,6,5
+182,"Nếu x + 14 = 40, x bằng bao nhiêu?",40,27,26,25
+183,"Nếu 3x + 11 = 56, x bằng bao nhiêu?",56,16,15,14
+184,"Trung bình cộng của 33, 2, 5, 33 là bao nhiêu?",73,19.25,18.25,17.25
+185,Tính 72 + 55.,127,128,126,3960
+186,Tính 84 - 60.,26,60,29,24
+187,Tính 6 x 5.,36,35,30,11
+188,Tính 28 / 4.,8,4,7,6
+189,"Nếu x + 19 = 28, x bằng bao nhiêu?",10,9,8,28
+190,"Nếu 7x + 11 = 151, x bằng bao nhiêu?",19,151,21,20
+191,"Trung bình cộng của 50, 24, 17, 38 là bao nhiêu?",31.25,32.25,129,33.25
+192,Tính 71 + 71.,141,143,142,5041
+193,Tính 78 - 33.,50,45,47,33
+194,Tính 8 x 11.,19,96,88,99
+195,Tính 33 / 11.,11,3,4,2
+196,"Nếu x + 9 = 18, x bằng bao nhiêu?",8,18,10,9
+197,"Nếu 2x + 1 = 39, x bằng bao nhiêu?",19,18,20,39
+198,"Trung bình cộng của 7, 24, 44, 30 là bao nhiêu?",25.25,105,27.25,26.25
+199,Tính 73 + 86.,160,159,158,6278
+200,Tính 83 - 8.,77,75,80,8
+201,Tính 2 x 10.,22,20,12,30
+202,Tính 39 / 3.,13,14,3,12
+203,"Nếu x + 20 = 24, x bằng bao nhiêu?",24,4,3,5
+204,"Nếu 2x + 7 = 19, x bằng bao nhiêu?",19,5,7,6
+205,"Trung bình cộng của 33, 23, 20, 37 là bao nhiêu?",28.25,29.25,113,27.25
+206,Tính 59 + 6.,65,64,66,354
+207,Tính 53 - 12.,43,12,46,41
+208,Tính 15 x 11.,26,176,180,165
+209,"Nếu x + 3 = 15, x bằng bao nhiêu?",15,13,12,11
+210,"Nếu 7x + 3 = 87, x bằng bao nhiêu?",87,13,12,11
+211,"Trung bình cộng của 7, 24, 1, 45 là bao nhiêu?",18.25,20.25,19.25,77
+212,Tính 16 + 60.,77,960,76,75
+213,Tính 84 - 56.,56,30,33,28
+214,"Nếu x + 8 = 32, x bằng bao nhiêu?",32,25,23,24
+215,"Nếu 4x + 8 = 64, x bằng bao nhiêu?",15,14,13,64
+216,"Diện tích hình tròn bán kính 5, lấy pi = 3,14, là bao nhiêu?",25,78.5,81.64,31.4
+217,"Trung bình cộng của 10, 40, 12, 25 là bao nhiêu?",22.75,21.75,20.75,87
+218,Tính 69 + 2.,138,72,71,70
+219,Tính 41 - 30.,13,30,16,11
+220,Tính 13 x 12.,25,156,169,168
+221,"Nếu x + 10 = 18, x bằng bao nhiêu?",8,7,9,18
+222,"Nếu 2x + 10 = 48, x bằng bao nhiêu?",18,48,19,20
+223,"Trung bình cộng của 42, 37, 43, 23 là bao nhiêu?",35.25,36.25,37.25,145
+224,Tính 37 + 9.,45,46,47,333
+225,Tính 87 - 43.,46,43,49,44
+226,Tính 2 x 8.,10,18,16,24
+227,"Nếu x + 9 = 27, x bằng bao nhiêu?",19,18,27,17
+228,"Nếu 8x + 8 = 40, x bằng bao nhiêu?",4,5,3,40
+229,"Trung bình cộng của 23, 39, 19, 11 là bao nhiêu?",23,22.0,24.0,92
+230,Tính 28 + 34.,63,62,61,952
+231,Tính 53 - 31.,27,31,24,22
+232,Tính 11 x 4.,44,48,55,15
+233,"Nếu x + 19 = 41, x bằng bao nhiêu?",22,41,21,23
+234,"Nếu 5x + 15 = 90, x bằng bao nhiêu?",14,90,16,15
+235,"Trung bình cộng của 19, 25, 42, 2 là bao nhiêu?",22,23.0,88,21.0
+236,Tính 74 + 3.,78,76,222,77
+237,Tính 78 - 47.,47,36,33,31
+238,Tính 12 x 8.,20,104,96,108
+239,Tính 48 / 4.,11,13,4,12
+240,"Nếu x + 12 = 14, x bằng bao nhiêu?",2,3,1,14
+241,"Nếu 3x + 2 = 20, x bằng bao nhiêu?",5,20,6,7
+242,"Trung bình cộng của 3, 35, 22, 18 là bao nhiêu?",18.5,20.5,78,19.5
+243,Tính 21 + 28.,49,588,48,50
+244,Tính 74 - 51.,23,51,28,25
+245,Tính 153 / 9.,9,16,17,18
+246,"Nếu x + 18 = 34, x bằng bao nhiêu?",15,16,34,17
+247,"Nếu 5x + 15 = 115, x bằng bao nhiêu?",115,21,20,19
+248,"Trung bình cộng của 42, 33, 23, 14 là bao nhiêu?",29.0,27.0,112,28
+249,Tính 31 + 4.,35,124,36,34
+250,Tính 75 - 57.,23,20,18,57
+251,Tính 5 x 4.,25,20,9,24
+252,Tính 24 / 4.,5,7,4,6
+253,"Nếu x + 13 = 32, x bằng bao nhiêu?",32,18,20,19
+254,"Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",list,tuple,set,dict
+255,"Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",UPDATE,DELETE,INSERT,SELECT
+256,HTTP status code 404 thường có nghĩa là gì?,Không tìm thấy tài nguyên,Không có quyền truy cập,Thành công,Lỗi máy chủ
+257,HTTP status code 200 thường biểu thị điều gì?,Lỗi máy chủ,Chuyển hướng vĩnh viễn,Không tìm thấy,Yêu cầu thành công
+258,Git được dùng chủ yếu để làm gì?,Tạo cơ sở dữ liệu vật lý,Thiết kế ảnh,Nén video,Quản lý phiên bản mã nguồn
+259,Docker giúp ích chính ở điểm nào?,Thay thế hệ điều hành,Đóng gói ứng dụng và môi trường chạy,Tự động sửa mọi lỗi,Tăng tốc màn hình
+260,JSON là định dạng thường dùng để làm gì?,Biên dịch kernel,Vẽ ảnh vector duy nhất,Trao đổi dữ liệu có cấu trúc,Lưu âm thanh nén
+261,HTML dùng chủ yếu để làm gì?,Quản lý tiến trình CPU,Mã hóa ổ cứng,Huấn luyện mô hình,Cấu trúc nội dung trang web
+262,CSS dùng chủ yếu để làm gì?,Tạo API,Biên dịch Python,Định dạng giao diện trang web,Truy vấn database
+263,REST API thường trao đổi dữ liệu qua giao thức nào?,FTP thuần túy,SMTP,Bluetooth,HTTP
+264,"Trong Python, len([1,2,3]) trả về gì?",4,1,2,3
+265,"Trong lập trình, vòng lặp dùng để làm gì?",Tắt trình biên dịch,Xóa toàn bộ RAM,Tạo mật khẩu mặc định,Lặp lại một khối lệnh
+266,Biến trong lập trình dùng để làm gì?,Vẽ giao diện tự động,Lưu trữ giá trị,Tăng tốc internet,Xóa dữ liệu ổ cứng
+267,Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Âm thanh,Video,Bảng,Ảnh bitmap
+268,Primary key trong database dùng để làm gì?,Xóa index,Tạo màu chữ,Nén bảng,Định danh duy nhất một bản ghi
+269,Cloud computing nghĩa là gì?,Một loại màn hình,Cung cấp tài nguyên tính toán qua mạng,Một ngôn ngữ lập trình,Máy tính chỉ chạy khi trời mưa
+270,RAM là bộ nhớ như thế nào?,Bộ nhớ chỉ đọc vĩnh viễn,Chuẩn mạng không dây,Thiết bị xuất hình,Bộ nhớ truy cập tạm thời
+271,SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Không cần hệ điều hành,Có nhiều dây cáp hơn,Luôn chạy bằng pin,Không dùng đĩa cơ quay
+272,DNS có chức năng chính là gì?,Nén file ảnh,Phân giải tên miền thành địa chỉ IP,Tạo giao diện người dùng,Chạy container
+273,Firewall dùng để làm gì?,Tạo bảng tính,Tăng độ sáng màn hình,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc
+274,"[Công nghệ 2] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",dict,set,list,tuple
+275,"[Công nghệ 2] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",INSERT,UPDATE,DELETE,SELECT
+276,[Công nghệ 2] HTTP status code 404 thường có nghĩa là gì?,Không có quyền truy cập,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên
+277,[Công nghệ 2] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Không tìm thấy,Lỗi máy chủ,Chuyển hướng vĩnh viễn
+278,[Công nghệ 2] Git được dùng chủ yếu để làm gì?,Thiết kế ảnh,Quản lý phiên bản mã nguồn,Tạo cơ sở dữ liệu vật lý,Nén video
+279,[Công nghệ 2] Docker giúp ích chính ở điểm nào?,Tăng tốc màn hình,Thay thế hệ điều hành,Đóng gói ứng dụng và môi trường chạy,Tự động sửa mọi lỗi
+280,[Công nghệ 2] JSON là định dạng thường dùng để làm gì?,Biên dịch kernel,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Vẽ ảnh vector duy nhất
+281,[Công nghệ 2] HTML dùng chủ yếu để làm gì?,Mã hóa ổ cứng,Quản lý tiến trình CPU,Cấu trúc nội dung trang web,Huấn luyện mô hình
+282,[Công nghệ 2] CSS dùng chủ yếu để làm gì?,Định dạng giao diện trang web,Truy vấn database,Tạo API,Biên dịch Python
+283,[Công nghệ 2] REST API thường trao đổi dữ liệu qua giao thức nào?,Bluetooth,HTTP,SMTP,FTP thuần túy
+284,"[Công nghệ 2] Trong Python, len([1,2,3]) trả về gì?",3,1,2,4
+285,"[Công nghệ 2] Trong lập trình, vòng lặp dùng để làm gì?",Tạo mật khẩu mặc định,Tắt trình biên dịch,Lặp lại một khối lệnh,Xóa toàn bộ RAM
+286,[Công nghệ 2] Biến trong lập trình dùng để làm gì?,Tăng tốc internet,Xóa dữ liệu ổ cứng,Vẽ giao diện tự động,Lưu trữ giá trị
+287,[Công nghệ 2] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Bảng,Video,Ảnh bitmap,Âm thanh
+288,[Công nghệ 2] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Nén bảng,Tạo màu chữ,Xóa index
+289,[Công nghệ 2] Cloud computing nghĩa là gì?,Cung cấp tài nguyên tính toán qua mạng,Máy tính chỉ chạy khi trời mưa,Một loại màn hình,Một ngôn ngữ lập trình
+290,[Công nghệ 2] RAM là bộ nhớ như thế nào?,Thiết bị xuất hình,Chuẩn mạng không dây,Bộ nhớ chỉ đọc vĩnh viễn,Bộ nhớ truy cập tạm thời
+291,[Công nghệ 2] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Luôn chạy bằng pin,Không cần hệ điều hành,Không dùng đĩa cơ quay,Có nhiều dây cáp hơn
+292,[Công nghệ 2] DNS có chức năng chính là gì?,Tạo giao diện người dùng,Phân giải tên miền thành địa chỉ IP,Chạy container,Nén file ảnh
+293,[Công nghệ 2] Firewall dùng để làm gì?,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc,Tạo bảng tính,Tăng độ sáng màn hình
+294,"[Công nghệ 3] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,dict,list,set
+295,"[Công nghệ 3] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",INSERT,UPDATE,DELETE,SELECT
+296,[Công nghệ 3] HTTP status code 404 thường có nghĩa là gì?,Thành công,Không tìm thấy tài nguyên,Không có quyền truy cập,Lỗi máy chủ
+297,[Công nghệ 3] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Chuyển hướng vĩnh viễn,Không tìm thấy,Lỗi máy chủ
+298,[Công nghệ 3] Git được dùng chủ yếu để làm gì?,Nén video,Tạo cơ sở dữ liệu vật lý,Thiết kế ảnh,Quản lý phiên bản mã nguồn
+299,[Công nghệ 3] Docker giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Tăng tốc màn hình,Thay thế hệ điều hành,Tự động sửa mọi lỗi
+300,[Công nghệ 3] JSON là định dạng thường dùng để làm gì?,Biên dịch kernel,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Vẽ ảnh vector duy nhất
+301,[Công nghệ 3] HTML dùng chủ yếu để làm gì?,Cấu trúc nội dung trang web,Quản lý tiến trình CPU,Mã hóa ổ cứng,Huấn luyện mô hình
+302,[Công nghệ 3] CSS dùng chủ yếu để làm gì?,Định dạng giao diện trang web,Truy vấn database,Tạo API,Biên dịch Python
+303,[Công nghệ 3] REST API thường trao đổi dữ liệu qua giao thức nào?,SMTP,HTTP,Bluetooth,FTP thuần túy
+304,"[Công nghệ 3] Trong Python, len([1,2,3]) trả về gì?",3,2,1,4
+305,"[Công nghệ 3] Trong lập trình, vòng lặp dùng để làm gì?",Tắt trình biên dịch,Lặp lại một khối lệnh,Xóa toàn bộ RAM,Tạo mật khẩu mặc định
+306,[Công nghệ 3] Biến trong lập trình dùng để làm gì?,Tăng tốc internet,Xóa dữ liệu ổ cứng,Lưu trữ giá trị,Vẽ giao diện tự động
+307,[Công nghệ 3] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Ảnh bitmap,Video,Bảng,Âm thanh
+308,[Công nghệ 3] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Tạo màu chữ,Xóa index,Nén bảng
+309,[Công nghệ 3] Cloud computing nghĩa là gì?,Một loại màn hình,Cung cấp tài nguyên tính toán qua mạng,Một ngôn ngữ lập trình,Máy tính chỉ chạy khi trời mưa
+310,[Công nghệ 3] RAM là bộ nhớ như thế nào?,Bộ nhớ truy cập tạm thời,Bộ nhớ chỉ đọc vĩnh viễn,Thiết bị xuất hình,Chuẩn mạng không dây
+311,[Công nghệ 3] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Có nhiều dây cáp hơn,Không dùng đĩa cơ quay,Không cần hệ điều hành,Luôn chạy bằng pin
+312,[Công nghệ 3] DNS có chức năng chính là gì?,Nén file ảnh,Phân giải tên miền thành địa chỉ IP,Tạo giao diện người dùng,Chạy container
+313,[Công nghệ 3] Firewall dùng để làm gì?,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình,Chuyển văn bản thành giọng nói,Tạo bảng tính
+314,"[Công nghệ 4] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,list,dict,set
+315,"[Công nghệ 4] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",SELECT,INSERT,UPDATE,DELETE
+316,[Công nghệ 4] HTTP status code 404 thường có nghĩa là gì?,Không có quyền truy cập,Không tìm thấy tài nguyên,Thành công,Lỗi máy chủ
+317,[Công nghệ 4] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Lỗi máy chủ,Không tìm thấy,Chuyển hướng vĩnh viễn
+318,[Công nghệ 4] Git được dùng chủ yếu để làm gì?,Nén video,Quản lý phiên bản mã nguồn,Tạo cơ sở dữ liệu vật lý,Thiết kế ảnh
+319,[Công nghệ 4] Docker giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Tăng tốc màn hình,Tự động sửa mọi lỗi,Thay thế hệ điều hành
+320,[Công nghệ 4] JSON là định dạng thường dùng để làm gì?,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Biên dịch kernel,Vẽ ảnh vector duy nhất
+321,[Công nghệ 4] HTML dùng chủ yếu để làm gì?,Huấn luyện mô hình,Mã hóa ổ cứng,Quản lý tiến trình CPU,Cấu trúc nội dung trang web
+322,[Công nghệ 4] CSS dùng chủ yếu để làm gì?,Truy vấn database,Định dạng giao diện trang web,Tạo API,Biên dịch Python
+323,[Công nghệ 4] REST API thường trao đổi dữ liệu qua giao thức nào?,HTTP,SMTP,Bluetooth,FTP thuần túy
+324,"[Công nghệ 4] Trong Python, len([1,2,3]) trả về gì?",4,2,3,1
+325,"[Công nghệ 4] Trong lập trình, vòng lặp dùng để làm gì?",Lặp lại một khối lệnh,Tạo mật khẩu mặc định,Xóa toàn bộ RAM,Tắt trình biên dịch
+326,[Công nghệ 4] Biến trong lập trình dùng để làm gì?,Vẽ giao diện tự động,Xóa dữ liệu ổ cứng,Lưu trữ giá trị,Tăng tốc internet
+327,[Công nghệ 4] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Bảng,Ảnh bitmap,Âm thanh,Video
+328,[Công nghệ 4] Primary key trong database dùng để làm gì?,Tạo màu chữ,Nén bảng,Xóa index,Định danh duy nhất một bản ghi
+329,[Công nghệ 4] Cloud computing nghĩa là gì?,Cung cấp tài nguyên tính toán qua mạng,Một ngôn ngữ lập trình,Một loại màn hình,Máy tính chỉ chạy khi trời mưa
+330,[Công nghệ 4] RAM là bộ nhớ như thế nào?,Chuẩn mạng không dây,Thiết bị xuất hình,Bộ nhớ truy cập tạm thời,Bộ nhớ chỉ đọc vĩnh viễn
+331,[Công nghệ 4] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Luôn chạy bằng pin,Không dùng đĩa cơ quay,Không cần hệ điều hành,Có nhiều dây cáp hơn
+332,[Công nghệ 4] DNS có chức năng chính là gì?,Phân giải tên miền thành địa chỉ IP,Nén file ảnh,Tạo giao diện người dùng,Chạy container
+333,[Công nghệ 4] Firewall dùng để làm gì?,Chuyển văn bản thành giọng nói,Tăng độ sáng màn hình,Tạo bảng tính,Kiểm soát lưu lượng mạng theo quy tắc
+334,"[Công nghệ 5] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",dict,set,list,tuple
+335,"[Công nghệ 5] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",UPDATE,DELETE,INSERT,SELECT
+336,[Công nghệ 5] HTTP status code 404 thường có nghĩa là gì?,Không có quyền truy cập,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên
+337,[Công nghệ 5] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Lỗi máy chủ,Chuyển hướng vĩnh viễn,Không tìm thấy
+338,[Công nghệ 5] Git được dùng chủ yếu để làm gì?,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn,Nén video,Thiết kế ảnh
+339,[Công nghệ 5] Docker giúp ích chính ở điểm nào?,Tự động sửa mọi lỗi,Thay thế hệ điều hành,Đóng gói ứng dụng và môi trường chạy,Tăng tốc màn hình
+340,[Công nghệ 5] JSON là định dạng thường dùng để làm gì?,Lưu âm thanh nén,Vẽ ảnh vector duy nhất,Biên dịch kernel,Trao đổi dữ liệu có cấu trúc
+341,[Công nghệ 5] HTML dùng chủ yếu để làm gì?,Cấu trúc nội dung trang web,Huấn luyện mô hình,Mã hóa ổ cứng,Quản lý tiến trình CPU
+342,[Công nghệ 5] CSS dùng chủ yếu để làm gì?,Tạo API,Truy vấn database,Định dạng giao diện trang web,Biên dịch Python
+343,[Công nghệ 5] REST API thường trao đổi dữ liệu qua giao thức nào?,Bluetooth,SMTP,FTP thuần túy,HTTP
+344,"[Công nghệ 5] Trong Python, len([1,2,3]) trả về gì?",3,2,1,4
+345,"[Công nghệ 5] Trong lập trình, vòng lặp dùng để làm gì?",Tắt trình biên dịch,Lặp lại một khối lệnh,Tạo mật khẩu mặc định,Xóa toàn bộ RAM
+346,[Công nghệ 5] Biến trong lập trình dùng để làm gì?,Vẽ giao diện tự động,Tăng tốc internet,Lưu trữ giá trị,Xóa dữ liệu ổ cứng
+347,[Công nghệ 5] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Bảng,Video,Ảnh bitmap,Âm thanh
+348,[Công nghệ 5] Primary key trong database dùng để làm gì?,Tạo màu chữ,Xóa index,Nén bảng,Định danh duy nhất một bản ghi
+349,[Công nghệ 5] Cloud computing nghĩa là gì?,Một ngôn ngữ lập trình,Một loại màn hình,Máy tính chỉ chạy khi trời mưa,Cung cấp tài nguyên tính toán qua mạng
+350,[Công nghệ 5] RAM là bộ nhớ như thế nào?,Bộ nhớ chỉ đọc vĩnh viễn,Chuẩn mạng không dây,Thiết bị xuất hình,Bộ nhớ truy cập tạm thời
+351,[Công nghệ 5] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Có nhiều dây cáp hơn,Không dùng đĩa cơ quay,Luôn chạy bằng pin,Không cần hệ điều hành
+352,[Công nghệ 5] DNS có chức năng chính là gì?,Chạy container,Tạo giao diện người dùng,Nén file ảnh,Phân giải tên miền thành địa chỉ IP
+353,[Công nghệ 5] Firewall dùng để làm gì?,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình,Tạo bảng tính,Chuyển văn bản thành giọng nói
+354,"[Công nghệ 6] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",set,list,dict,tuple
+355,"[Công nghệ 6] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",INSERT,DELETE,UPDATE,SELECT
+356,[Công nghệ 6] HTTP status code 404 thường có nghĩa là gì?,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên,Không có quyền truy cập
+357,[Công nghệ 6] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Không tìm thấy,Lỗi máy chủ,Chuyển hướng vĩnh viễn
+358,[Công nghệ 6] Git được dùng chủ yếu để làm gì?,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn,Thiết kế ảnh,Nén video
+359,[Công nghệ 6] Docker giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Thay thế hệ điều hành,Tăng tốc màn hình,Tự động sửa mọi lỗi
+360,[Công nghệ 6] JSON là định dạng thường dùng để làm gì?,Trao đổi dữ liệu có cấu trúc,Vẽ ảnh vector duy nhất,Biên dịch kernel,Lưu âm thanh nén
+361,[Công nghệ 6] HTML dùng chủ yếu để làm gì?,Huấn luyện mô hình,Cấu trúc nội dung trang web,Mã hóa ổ cứng,Quản lý tiến trình CPU
+362,[Công nghệ 6] CSS dùng chủ yếu để làm gì?,Định dạng giao diện trang web,Truy vấn database,Tạo API,Biên dịch Python
+363,[Công nghệ 6] REST API thường trao đổi dữ liệu qua giao thức nào?,HTTP,SMTP,Bluetooth,FTP thuần túy
+364,"[Công nghệ 6] Trong Python, len([1,2,3]) trả về gì?",1,4,3,2
+365,"[Công nghệ 6] Trong lập trình, vòng lặp dùng để làm gì?",Tạo mật khẩu mặc định,Tắt trình biên dịch,Lặp lại một khối lệnh,Xóa toàn bộ RAM
+366,[Công nghệ 6] Biến trong lập trình dùng để làm gì?,Xóa dữ liệu ổ cứng,Lưu trữ giá trị,Vẽ giao diện tự động,Tăng tốc internet
+367,[Công nghệ 6] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Âm thanh,Video,Bảng,Ảnh bitmap
+368,[Công nghệ 6] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Xóa index,Nén bảng,Tạo màu chữ
+369,[Công nghệ 6] Cloud computing nghĩa là gì?,Một loại màn hình,Máy tính chỉ chạy khi trời mưa,Một ngôn ngữ lập trình,Cung cấp tài nguyên tính toán qua mạng
+370,[Công nghệ 6] RAM là bộ nhớ như thế nào?,Thiết bị xuất hình,Chuẩn mạng không dây,Bộ nhớ truy cập tạm thời,Bộ nhớ chỉ đọc vĩnh viễn
+371,[Công nghệ 6] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Có nhiều dây cáp hơn,Không dùng đĩa cơ quay,Luôn chạy bằng pin,Không cần hệ điều hành
+372,[Công nghệ 6] DNS có chức năng chính là gì?,Chạy container,Tạo giao diện người dùng,Phân giải tên miền thành địa chỉ IP,Nén file ảnh
+373,[Công nghệ 6] Firewall dùng để làm gì?,Tạo bảng tính,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình
+374,"[Công nghệ 7] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,set,dict,list
+375,"[Công nghệ 7] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",DELETE,SELECT,INSERT,UPDATE
+376,[Công nghệ 7] HTTP status code 404 thường có nghĩa là gì?,Không có quyền truy cập,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên
+377,[Công nghệ 7] HTTP status code 200 thường biểu thị điều gì?,Không tìm thấy,Yêu cầu thành công,Chuyển hướng vĩnh viễn,Lỗi máy chủ
+378,[Công nghệ 7] Git được dùng chủ yếu để làm gì?,Thiết kế ảnh,Nén video,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn
+379,[Công nghệ 7] Docker giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Tự động sửa mọi lỗi,Tăng tốc màn hình,Thay thế hệ điều hành
+380,[Công nghệ 7] JSON là định dạng thường dùng để làm gì?,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Vẽ ảnh vector duy nhất,Biên dịch kernel
+381,[Công nghệ 7] HTML dùng chủ yếu để làm gì?,Mã hóa ổ cứng,Quản lý tiến trình CPU,Cấu trúc nội dung trang web,Huấn luyện mô hình
+382,[Công nghệ 7] CSS dùng chủ yếu để làm gì?,Truy vấn database,Định dạng giao diện trang web,Biên dịch Python,Tạo API
+383,[Công nghệ 7] REST API thường trao đổi dữ liệu qua giao thức nào?,SMTP,HTTP,Bluetooth,FTP thuần túy
+384,"[Công nghệ 7] Trong Python, len([1,2,3]) trả về gì?",2,3,4,1
+385,"[Công nghệ 7] Trong lập trình, vòng lặp dùng để làm gì?",Lặp lại một khối lệnh,Tắt trình biên dịch,Tạo mật khẩu mặc định,Xóa toàn bộ RAM
+386,[Công nghệ 7] Biến trong lập trình dùng để làm gì?,Tăng tốc internet,Vẽ giao diện tự động,Xóa dữ liệu ổ cứng,Lưu trữ giá trị
+387,[Công nghệ 7] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Ảnh bitmap,Video,Âm thanh,Bảng
+388,[Công nghệ 7] Primary key trong database dùng để làm gì?,Nén bảng,Xóa index,Tạo màu chữ,Định danh duy nhất một bản ghi
+389,[Công nghệ 7] Cloud computing nghĩa là gì?,Một ngôn ngữ lập trình,Cung cấp tài nguyên tính toán qua mạng,Máy tính chỉ chạy khi trời mưa,Một loại màn hình
+390,[Công nghệ 7] RAM là bộ nhớ như thế nào?,Bộ nhớ chỉ đọc vĩnh viễn,Bộ nhớ truy cập tạm thời,Thiết bị xuất hình,Chuẩn mạng không dây
+391,[Công nghệ 7] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Có nhiều dây cáp hơn,Luôn chạy bằng pin,Không cần hệ điều hành,Không dùng đĩa cơ quay
+392,[Công nghệ 7] DNS có chức năng chính là gì?,Tạo giao diện người dùng,Chạy container,Nén file ảnh,Phân giải tên miền thành địa chỉ IP
+393,[Công nghệ 7] Firewall dùng để làm gì?,Tăng độ sáng màn hình,Chuyển văn bản thành giọng nói,Tạo bảng tính,Kiểm soát lưu lượng mạng theo quy tắc
+394,"[Công nghệ 8] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,set,list,dict
+395,"[Công nghệ 8] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",SELECT,INSERT,UPDATE,DELETE
+396,[Công nghệ 8] HTTP status code 404 thường có nghĩa là gì?,Không có quyền truy cập,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên
+397,[Công nghệ 8] HTTP status code 200 thường biểu thị điều gì?,Không tìm thấy,Chuyển hướng vĩnh viễn,Yêu cầu thành công,Lỗi máy chủ
+398,[Công nghệ 8] Git được dùng chủ yếu để làm gì?,Quản lý phiên bản mã nguồn,Nén video,Tạo cơ sở dữ liệu vật lý,Thiết kế ảnh
+399,[Công nghệ 8] Docker giúp ích chính ở điểm nào?,Thay thế hệ điều hành,Tăng tốc màn hình,Đóng gói ứng dụng và môi trường chạy,Tự động sửa mọi lỗi
+400,[Công nghệ 8] JSON là định dạng thường dùng để làm gì?,Biên dịch kernel,Vẽ ảnh vector duy nhất,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc
+401,[Công nghệ 8] HTML dùng chủ yếu để làm gì?,Quản lý tiến trình CPU,Huấn luyện mô hình,Mã hóa ổ cứng,Cấu trúc nội dung trang web
+402,[Công nghệ 8] CSS dùng chủ yếu để làm gì?,Tạo API,Truy vấn database,Biên dịch Python,Định dạng giao diện trang web
+403,[Công nghệ 8] REST API thường trao đổi dữ liệu qua giao thức nào?,SMTP,HTTP,Bluetooth,FTP thuần túy
+404,"[Công nghệ 8] Trong Python, len([1,2,3]) trả về gì?",4,2,1,3
+405,"[Công nghệ 8] Trong lập trình, vòng lặp dùng để làm gì?",Tắt trình biên dịch,Lặp lại một khối lệnh,Xóa toàn bộ RAM,Tạo mật khẩu mặc định
+406,[Công nghệ 8] Biến trong lập trình dùng để làm gì?,Lưu trữ giá trị,Vẽ giao diện tự động,Xóa dữ liệu ổ cứng,Tăng tốc internet
+407,[Công nghệ 8] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Âm thanh,Video,Bảng,Ảnh bitmap
+408,[Công nghệ 8] Primary key trong database dùng để làm gì?,Xóa index,Nén bảng,Định danh duy nhất một bản ghi,Tạo màu chữ
+409,[Công nghệ 8] Cloud computing nghĩa là gì?,Cung cấp tài nguyên tính toán qua mạng,Máy tính chỉ chạy khi trời mưa,Một ngôn ngữ lập trình,Một loại màn hình
+410,[Công nghệ 8] RAM là bộ nhớ như thế nào?,Bộ nhớ truy cập tạm thời,Thiết bị xuất hình,Bộ nhớ chỉ đọc vĩnh viễn,Chuẩn mạng không dây
+411,[Công nghệ 8] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Không dùng đĩa cơ quay,Luôn chạy bằng pin,Có nhiều dây cáp hơn,Không cần hệ điều hành
+412,[Công nghệ 8] DNS có chức năng chính là gì?,Tạo giao diện người dùng,Nén file ảnh,Phân giải tên miền thành địa chỉ IP,Chạy container
+413,[Công nghệ 8] Firewall dùng để làm gì?,Tạo bảng tính,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình
+414,"[Công nghệ 9] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",dict,set,list,tuple
+415,"[Công nghệ 9] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",UPDATE,DELETE,INSERT,SELECT
+416,[Công nghệ 9] HTTP status code 404 thường có nghĩa là gì?,Không tìm thấy tài nguyên,Lỗi máy chủ,Không có quyền truy cập,Thành công
+417,[Công nghệ 9] HTTP status code 200 thường biểu thị điều gì?,Chuyển hướng vĩnh viễn,Yêu cầu thành công,Không tìm thấy,Lỗi máy chủ
+418,[Công nghệ 9] Git được dùng chủ yếu để làm gì?,Nén video,Quản lý phiên bản mã nguồn,Thiết kế ảnh,Tạo cơ sở dữ liệu vật lý
+419,[Công nghệ 9] Docker giúp ích chính ở điểm nào?,Tự động sửa mọi lỗi,Tăng tốc màn hình,Thay thế hệ điều hành,Đóng gói ứng dụng và môi trường chạy
+420,[Công nghệ 9] JSON là định dạng thường dùng để làm gì?,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Vẽ ảnh vector duy nhất,Biên dịch kernel
+421,[Công nghệ 9] HTML dùng chủ yếu để làm gì?,Quản lý tiến trình CPU,Huấn luyện mô hình,Cấu trúc nội dung trang web,Mã hóa ổ cứng
+422,[Công nghệ 9] CSS dùng chủ yếu để làm gì?,Biên dịch Python,Truy vấn database,Định dạng giao diện trang web,Tạo API
+423,[Công nghệ 9] REST API thường trao đổi dữ liệu qua giao thức nào?,SMTP,Bluetooth,FTP thuần túy,HTTP
+424,"[Công nghệ 9] Trong Python, len([1,2,3]) trả về gì?",1,3,2,4
+425,"[Công nghệ 9] Trong lập trình, vòng lặp dùng để làm gì?",Xóa toàn bộ RAM,Tạo mật khẩu mặc định,Tắt trình biên dịch,Lặp lại một khối lệnh
+426,[Công nghệ 9] Biến trong lập trình dùng để làm gì?,Xóa dữ liệu ổ cứng,Lưu trữ giá trị,Vẽ giao diện tự động,Tăng tốc internet
+427,[Công nghệ 9] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Ảnh bitmap,Video,Âm thanh,Bảng
+428,[Công nghệ 9] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Xóa index,Tạo màu chữ,Nén bảng
+429,[Công nghệ 9] Cloud computing nghĩa là gì?,Một loại màn hình,Cung cấp tài nguyên tính toán qua mạng,Máy tính chỉ chạy khi trời mưa,Một ngôn ngữ lập trình
+430,[Công nghệ 9] RAM là bộ nhớ như thế nào?,Chuẩn mạng không dây,Bộ nhớ truy cập tạm thời,Bộ nhớ chỉ đọc vĩnh viễn,Thiết bị xuất hình
+431,[Công nghệ 9] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Không cần hệ điều hành,Luôn chạy bằng pin,Có nhiều dây cáp hơn,Không dùng đĩa cơ quay
+432,[Công nghệ 9] DNS có chức năng chính là gì?,Phân giải tên miền thành địa chỉ IP,Chạy container,Nén file ảnh,Tạo giao diện người dùng
+433,[Công nghệ 9] Firewall dùng để làm gì?,Tăng độ sáng màn hình,Tạo bảng tính,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc
+434,"[Công nghệ 10] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",list,set,dict,tuple
+435,"[Công nghệ 10] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",INSERT,DELETE,SELECT,UPDATE
+436,[Công nghệ 10] HTTP status code 404 thường có nghĩa là gì?,Lỗi máy chủ,Không có quyền truy cập,Thành công,Không tìm thấy tài nguyên
+437,[Công nghệ 10] HTTP status code 200 thường biểu thị điều gì?,Lỗi máy chủ,Chuyển hướng vĩnh viễn,Không tìm thấy,Yêu cầu thành công
+438,[Công nghệ 10] Git được dùng chủ yếu để làm gì?,Thiết kế ảnh,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn,Nén video
+439,[Công nghệ 10] Docker giúp ích chính ở điểm nào?,Tự động sửa mọi lỗi,Tăng tốc màn hình,Thay thế hệ điều hành,Đóng gói ứng dụng và môi trường chạy
+440,[Công nghệ 10] JSON là định dạng thường dùng để làm gì?,Trao đổi dữ liệu có cấu trúc,Biên dịch kernel,Vẽ ảnh vector duy nhất,Lưu âm thanh nén
+441,[Công nghệ 10] HTML dùng chủ yếu để làm gì?,Mã hóa ổ cứng,Huấn luyện mô hình,Quản lý tiến trình CPU,Cấu trúc nội dung trang web
+442,[Công nghệ 10] CSS dùng chủ yếu để làm gì?,Biên dịch Python,Tạo API,Truy vấn database,Định dạng giao diện trang web
+443,[Công nghệ 10] REST API thường trao đổi dữ liệu qua giao thức nào?,Bluetooth,SMTP,FTP thuần túy,HTTP
+444,"[Công nghệ 10] Trong Python, len([1,2,3]) trả về gì?",2,1,3,4
+445,"[Công nghệ 10] Trong lập trình, vòng lặp dùng để làm gì?",Tạo mật khẩu mặc định,Lặp lại một khối lệnh,Tắt trình biên dịch,Xóa toàn bộ RAM
+446,[Công nghệ 10] Biến trong lập trình dùng để làm gì?,Xóa dữ liệu ổ cứng,Tăng tốc internet,Lưu trữ giá trị,Vẽ giao diện tự động
+447,[Công nghệ 10] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Video,Bảng,Âm thanh,Ảnh bitmap
+448,[Công nghệ 10] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Tạo màu chữ,Xóa index,Nén bảng
+449,[Công nghệ 10] Cloud computing nghĩa là gì?,Cung cấp tài nguyên tính toán qua mạng,Máy tính chỉ chạy khi trời mưa,Một ngôn ngữ lập trình,Một loại màn hình
+450,[Công nghệ 10] RAM là bộ nhớ như thế nào?,Bộ nhớ truy cập tạm thời,Bộ nhớ chỉ đọc vĩnh viễn,Chuẩn mạng không dây,Thiết bị xuất hình
+451,[Công nghệ 10] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Không dùng đĩa cơ quay,Luôn chạy bằng pin,Không cần hệ điều hành,Có nhiều dây cáp hơn
+452,[Công nghệ 10] DNS có chức năng chính là gì?,Tạo giao diện người dùng,Nén file ảnh,Chạy container,Phân giải tên miền thành địa chỉ IP
+453,[Công nghệ 10] Firewall dùng để làm gì?,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc,Tạo bảng tính,Tăng độ sáng màn hình
+454,"[Công nghệ 11] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,list,dict,set
+455,"[Công nghệ 11] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",INSERT,SELECT,DELETE,UPDATE
+456,[Công nghệ 11] HTTP status code 404 thường có nghĩa là gì?,Thành công,Lỗi máy chủ,Không tìm thấy tài nguyên,Không có quyền truy cập
+457,[Công nghệ 11] HTTP status code 200 thường biểu thị điều gì?,Yêu cầu thành công,Chuyển hướng vĩnh viễn,Lỗi máy chủ,Không tìm thấy
+458,[Công nghệ 11] Git được dùng chủ yếu để làm gì?,Nén video,Thiết kế ảnh,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn
+459,[Công nghệ 11] Docker giúp ích chính ở điểm nào?,Tăng tốc màn hình,Tự động sửa mọi lỗi,Đóng gói ứng dụng và môi trường chạy,Thay thế hệ điều hành
+460,[Công nghệ 11] JSON là định dạng thường dùng để làm gì?,Vẽ ảnh vector duy nhất,Biên dịch kernel,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc
+461,[Công nghệ 11] HTML dùng chủ yếu để làm gì?,Mã hóa ổ cứng,Quản lý tiến trình CPU,Cấu trúc nội dung trang web,Huấn luyện mô hình
+462,[Công nghệ 11] CSS dùng chủ yếu để làm gì?,Truy vấn database,Biên dịch Python,Tạo API,Định dạng giao diện trang web
+463,[Công nghệ 11] REST API thường trao đổi dữ liệu qua giao thức nào?,SMTP,HTTP,FTP thuần túy,Bluetooth
+464,"[Công nghệ 11] Trong Python, len([1,2,3]) trả về gì?",1,3,4,2
+465,"[Công nghệ 11] Trong lập trình, vòng lặp dùng để làm gì?",Xóa toàn bộ RAM,Lặp lại một khối lệnh,Tắt trình biên dịch,Tạo mật khẩu mặc định
+466,[Công nghệ 11] Biến trong lập trình dùng để làm gì?,Lưu trữ giá trị,Vẽ giao diện tự động,Xóa dữ liệu ổ cứng,Tăng tốc internet
+467,[Công nghệ 11] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Video,Âm thanh,Bảng,Ảnh bitmap
+468,[Công nghệ 11] Primary key trong database dùng để làm gì?,Định danh duy nhất một bản ghi,Tạo màu chữ,Xóa index,Nén bảng
+469,[Công nghệ 11] Cloud computing nghĩa là gì?,Một ngôn ngữ lập trình,Cung cấp tài nguyên tính toán qua mạng,Một loại màn hình,Máy tính chỉ chạy khi trời mưa
+470,[Công nghệ 11] RAM là bộ nhớ như thế nào?,Thiết bị xuất hình,Bộ nhớ chỉ đọc vĩnh viễn,Bộ nhớ truy cập tạm thời,Chuẩn mạng không dây
+471,[Công nghệ 11] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Luôn chạy bằng pin,Có nhiều dây cáp hơn,Không dùng đĩa cơ quay,Không cần hệ điều hành
+472,[Công nghệ 11] DNS có chức năng chính là gì?,Nén file ảnh,Phân giải tên miền thành địa chỉ IP,Chạy container,Tạo giao diện người dùng
+473,[Công nghệ 11] Firewall dùng để làm gì?,Chuyển văn bản thành giọng nói,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình,Tạo bảng tính
+474,"[Công nghệ 12] Trong Python, kiểu dữ liệu nào thường dùng để lưu cặp key-value?",tuple,list,set,dict
+475,"[Công nghệ 12] Trong SQL, câu lệnh nào dùng để truy vấn dữ liệu?",DELETE,INSERT,SELECT,UPDATE
+476,[Công nghệ 12] HTTP status code 404 thường có nghĩa là gì?,Thành công,Không tìm thấy tài nguyên,Lỗi máy chủ,Không có quyền truy cập
+477,[Công nghệ 12] HTTP status code 200 thường biểu thị điều gì?,Không tìm thấy,Lỗi máy chủ,Chuyển hướng vĩnh viễn,Yêu cầu thành công
+478,[Công nghệ 12] Git được dùng chủ yếu để làm gì?,Thiết kế ảnh,Tạo cơ sở dữ liệu vật lý,Quản lý phiên bản mã nguồn,Nén video
+479,[Công nghệ 12] Docker giúp ích chính ở điểm nào?,Đóng gói ứng dụng và môi trường chạy,Tăng tốc màn hình,Tự động sửa mọi lỗi,Thay thế hệ điều hành
+480,[Công nghệ 12] JSON là định dạng thường dùng để làm gì?,Lưu âm thanh nén,Trao đổi dữ liệu có cấu trúc,Biên dịch kernel,Vẽ ảnh vector duy nhất
+481,[Công nghệ 12] HTML dùng chủ yếu để làm gì?,Mã hóa ổ cứng,Quản lý tiến trình CPU,Huấn luyện mô hình,Cấu trúc nội dung trang web
+482,[Công nghệ 12] CSS dùng chủ yếu để làm gì?,Biên dịch Python,Tạo API,Định dạng giao diện trang web,Truy vấn database
+483,[Công nghệ 12] REST API thường trao đổi dữ liệu qua giao thức nào?,FTP thuần túy,SMTP,Bluetooth,HTTP
+484,"[Công nghệ 12] Trong Python, len([1,2,3]) trả về gì?",3,1,2,4
+485,"[Công nghệ 12] Trong lập trình, vòng lặp dùng để làm gì?",Xóa toàn bộ RAM,Tắt trình biên dịch,Lặp lại một khối lệnh,Tạo mật khẩu mặc định
+486,[Công nghệ 12] Biến trong lập trình dùng để làm gì?,Xóa dữ liệu ổ cứng,Tăng tốc internet,Lưu trữ giá trị,Vẽ giao diện tự động
+487,[Công nghệ 12] Cơ sở dữ liệu quan hệ thường tổ chức dữ liệu dưới dạng gì?,Bảng,Âm thanh,Video,Ảnh bitmap
+488,[Công nghệ 12] Primary key trong database dùng để làm gì?,Xóa index,Định danh duy nhất một bản ghi,Nén bảng,Tạo màu chữ
+489,[Công nghệ 12] Cloud computing nghĩa là gì?,Cung cấp tài nguyên tính toán qua mạng,Một ngôn ngữ lập trình,Một loại màn hình,Máy tính chỉ chạy khi trời mưa
+490,[Công nghệ 12] RAM là bộ nhớ như thế nào?,Bộ nhớ truy cập tạm thời,Thiết bị xuất hình,Chuẩn mạng không dây,Bộ nhớ chỉ đọc vĩnh viễn
+491,[Công nghệ 12] SSD thường nhanh hơn HDD chủ yếu vì lý do nào?,Không dùng đĩa cơ quay,Không cần hệ điều hành,Có nhiều dây cáp hơn,Luôn chạy bằng pin
+492,[Công nghệ 12] DNS có chức năng chính là gì?,Chạy container,Nén file ảnh,Tạo giao diện người dùng,Phân giải tên miền thành địa chỉ IP
+493,[Công nghệ 12] Firewall dùng để làm gì?,Chuyển văn bản thành giọng nói,Tạo bảng tính,Kiểm soát lưu lượng mạng theo quy tắc,Tăng độ sáng màn hình
+494,"Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Chỉ lưu ảnh,Xóa dữ liệu,Tạo giao diện
+495,Tập validation thường dùng để làm gì?,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Tắt mô hình,Thay thế database
+496,Tập test nên dùng để làm gì?,Huấn luyện đi huấn luyện lại,Lưu log terminal,Tạo file Docker,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện
+497,Overfitting là hiện tượng gì?,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,Mô hình thiếu dữ liệu đầu vào,API trả về 404
+498,Underfitting là hiện tượng gì?,GPU không có driver,Mô hình quá chính xác,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Dữ liệu bị nén
+499,Embedding biểu diễn văn bản dưới dạng gì?,Ảnh PNG,Âm thanh WAV,Mã HTML,Vector số
+500,RAG là viết tắt của gì?,Ranked Answer Gateway,Random Access Graph,Recursive Agent Grid,Retrieval-Augmented Generation
+501,Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Tạo mật khẩu,Xóa dữ liệu,Huấn luyện CPU
+502,Accuracy đo điều gì?,Dung lượng Docker,Số dòng code,Số bảng database,Tỉ lệ dự đoán đúng trên tổng số mẫu
+503,Precision tập trung vào điều gì?,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng,Độ sáng màn hình,Số cột CSV
+504,Recall tập trung vào điều gì?,Tỉ lệ mẫu dương tính thật được tìm ra,Số lần commit,Độ dài README,Dung lượng RAM
+505,Hallucination trong LLM là gì?,Mạng tự ngắt,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ
+506,Prompt engineering là gì?,Tạo bảng trong SQL,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Định dạng ảnh,Tăng điện áp CPU
+507,Classification là bài toán gì?,Dựng giao diện web,Nén video,Xóa file tạm,Gán nhãn cho dữ liệu đầu vào
+508,Regression là bài toán gì?,Tạo nhãn A/B/C/D duy nhất,Mã hóa giao diện,Dự đoán giá trị số liên tục,Chia ổ đĩa
+509,"[AI/Data 2] Trong machine learning, tập train dùng để làm gì?",Xóa dữ liệu,Huấn luyện mô hình,Chỉ lưu ảnh,Tạo giao diện
+510,[AI/Data 2] Tập validation thường dùng để làm gì?,Tắt mô hình,Thay thế database,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Lưu mật khẩu
+511,[AI/Data 2] Tập test nên dùng để làm gì?,Lưu log terminal,Tạo file Docker,Huấn luyện đi huấn luyện lại,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện
+512,[AI/Data 2] Overfitting là hiện tượng gì?,API trả về 404,Máy bị quá nhiệt,Mô hình thiếu dữ liệu đầu vào,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém
+513,[AI/Data 2] Underfitting là hiện tượng gì?,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Dữ liệu bị nén,Mô hình quá chính xác,GPU không có driver
+514,[AI/Data 2] Embedding biểu diễn văn bản dưới dạng gì?,Mã HTML,Vector số,Ảnh PNG,Âm thanh WAV
+515,[AI/Data 2] RAG là viết tắt của gì?,Recursive Agent Grid,Ranked Answer Gateway,Retrieval-Augmented Generation,Random Access Graph
+516,[AI/Data 2] Reranker thường làm gì trong hệ thống truy hồi?,Tạo mật khẩu,Xóa dữ liệu,Huấn luyện CPU,Sắp xếp lại kết quả theo mức liên quan
+517,[AI/Data 2] Accuracy đo điều gì?,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số bảng database,Dung lượng Docker,Số dòng code
+518,[AI/Data 2] Precision tập trung vào điều gì?,Độ sáng màn hình,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Số cột CSV,Tốc độ mạng
+519,[AI/Data 2] Recall tập trung vào điều gì?,Dung lượng RAM,Số lần commit,Tỉ lệ mẫu dương tính thật được tìm ra,Độ dài README
+520,[AI/Data 2] Hallucination trong LLM là gì?,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mạng tự ngắt,Mô hình tạo thông tin sai hoặc không có căn cứ
+521,[AI/Data 2] Prompt engineering là gì?,Tạo bảng trong SQL,Tăng điện áp CPU,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Định dạng ảnh
+522,[AI/Data 2] Classification là bài toán gì?,Xóa file tạm,Nén video,Gán nhãn cho dữ liệu đầu vào,Dựng giao diện web
+523,[AI/Data 2] Regression là bài toán gì?,Mã hóa giao diện,Dự đoán giá trị số liên tục,Chia ổ đĩa,Tạo nhãn A/B/C/D duy nhất
+524,"[AI/Data 3] Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Tạo giao diện,Chỉ lưu ảnh,Xóa dữ liệu
+525,[AI/Data 3] Tập validation thường dùng để làm gì?,Thay thế database,Tắt mô hình,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+526,[AI/Data 3] Tập test nên dùng để làm gì?,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Tạo file Docker,Huấn luyện đi huấn luyện lại,Lưu log terminal
+527,[AI/Data 3] Overfitting là hiện tượng gì?,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,API trả về 404
+528,[AI/Data 3] Underfitting là hiện tượng gì?,Mô hình quá chính xác,GPU không có driver,Dữ liệu bị nén,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu
+529,[AI/Data 3] Embedding biểu diễn văn bản dưới dạng gì?,Mã HTML,Ảnh PNG,Âm thanh WAV,Vector số
+530,[AI/Data 3] RAG là viết tắt của gì?,Recursive Agent Grid,Ranked Answer Gateway,Random Access Graph,Retrieval-Augmented Generation
+531,[AI/Data 3] Reranker thường làm gì trong hệ thống truy hồi?,Xóa dữ liệu,Sắp xếp lại kết quả theo mức liên quan,Huấn luyện CPU,Tạo mật khẩu
+532,[AI/Data 3] Accuracy đo điều gì?,Dung lượng Docker,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số bảng database,Số dòng code
+533,[AI/Data 3] Precision tập trung vào điều gì?,Số cột CSV,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng,Độ sáng màn hình
+534,[AI/Data 3] Recall tập trung vào điều gì?,Dung lượng RAM,Số lần commit,Độ dài README,Tỉ lệ mẫu dương tính thật được tìm ra
+535,[AI/Data 3] Hallucination trong LLM là gì?,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ,Mô hình chạy nhanh hơn,Mạng tự ngắt
+536,[AI/Data 3] Prompt engineering là gì?,Định dạng ảnh,Tăng điện áp CPU,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tạo bảng trong SQL
+537,[AI/Data 3] Classification là bài toán gì?,Nén video,Gán nhãn cho dữ liệu đầu vào,Dựng giao diện web,Xóa file tạm
+538,[AI/Data 3] Regression là bài toán gì?,Chia ổ đĩa,Tạo nhãn A/B/C/D duy nhất,Mã hóa giao diện,Dự đoán giá trị số liên tục
+539,"[AI/Data 4] Trong machine learning, tập train dùng để làm gì?",Xóa dữ liệu,Chỉ lưu ảnh,Tạo giao diện,Huấn luyện mô hình
+540,[AI/Data 4] Tập validation thường dùng để làm gì?,Thay thế database,Lưu mật khẩu,Tắt mô hình,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+541,[AI/Data 4] Tập test nên dùng để làm gì?,Lưu log terminal,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Huấn luyện đi huấn luyện lại,Tạo file Docker
+542,[AI/Data 4] Overfitting là hiện tượng gì?,API trả về 404,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt
+543,[AI/Data 4] Underfitting là hiện tượng gì?,Dữ liệu bị nén,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Mô hình quá chính xác,GPU không có driver
+544,[AI/Data 4] Embedding biểu diễn văn bản dưới dạng gì?,Âm thanh WAV,Ảnh PNG,Mã HTML,Vector số
+545,[AI/Data 4] RAG là viết tắt của gì?,Ranked Answer Gateway,Random Access Graph,Recursive Agent Grid,Retrieval-Augmented Generation
+546,[AI/Data 4] Reranker thường làm gì trong hệ thống truy hồi?,Xóa dữ liệu,Sắp xếp lại kết quả theo mức liên quan,Tạo mật khẩu,Huấn luyện CPU
+547,[AI/Data 4] Accuracy đo điều gì?,Số bảng database,Dung lượng Docker,Số dòng code,Tỉ lệ dự đoán đúng trên tổng số mẫu
+548,[AI/Data 4] Precision tập trung vào điều gì?,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng,Độ sáng màn hình,Số cột CSV
+549,[AI/Data 4] Recall tập trung vào điều gì?,Tỉ lệ mẫu dương tính thật được tìm ra,Độ dài README,Số lần commit,Dung lượng RAM
+550,[AI/Data 4] Hallucination trong LLM là gì?,Mạng tự ngắt,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ
+551,[AI/Data 4] Prompt engineering là gì?,Tăng điện áp CPU,Định dạng ảnh,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tạo bảng trong SQL
+552,[AI/Data 4] Classification là bài toán gì?,Nén video,Xóa file tạm,Dựng giao diện web,Gán nhãn cho dữ liệu đầu vào
+553,[AI/Data 4] Regression là bài toán gì?,Mã hóa giao diện,Tạo nhãn A/B/C/D duy nhất,Chia ổ đĩa,Dự đoán giá trị số liên tục
+554,"[AI/Data 5] Trong machine learning, tập train dùng để làm gì?",Xóa dữ liệu,Tạo giao diện,Huấn luyện mô hình,Chỉ lưu ảnh
+555,[AI/Data 5] Tập validation thường dùng để làm gì?,Thay thế database,Tắt mô hình,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+556,[AI/Data 5] Tập test nên dùng để làm gì?,Lưu log terminal,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Huấn luyện đi huấn luyện lại,Tạo file Docker
+557,[AI/Data 5] Overfitting là hiện tượng gì?,Mô hình thiếu dữ liệu đầu vào,API trả về 404,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém
+558,[AI/Data 5] Underfitting là hiện tượng gì?,Dữ liệu bị nén,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,GPU không có driver,Mô hình quá chính xác
+559,[AI/Data 5] Embedding biểu diễn văn bản dưới dạng gì?,Mã HTML,Âm thanh WAV,Vector số,Ảnh PNG
+560,[AI/Data 5] RAG là viết tắt của gì?,Random Access Graph,Retrieval-Augmented Generation,Ranked Answer Gateway,Recursive Agent Grid
+561,[AI/Data 5] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Tạo mật khẩu,Xóa dữ liệu,Huấn luyện CPU
+562,[AI/Data 5] Accuracy đo điều gì?,Số dòng code,Dung lượng Docker,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số bảng database
+563,[AI/Data 5] Precision tập trung vào điều gì?,Tốc độ mạng,Độ sáng màn hình,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Số cột CSV
+564,[AI/Data 5] Recall tập trung vào điều gì?,Tỉ lệ mẫu dương tính thật được tìm ra,Dung lượng RAM,Độ dài README,Số lần commit
+565,[AI/Data 5] Hallucination trong LLM là gì?,Mô hình tạo thông tin sai hoặc không có căn cứ,Ổ cứng tự nén,Mạng tự ngắt,Mô hình chạy nhanh hơn
+566,[AI/Data 5] Prompt engineering là gì?,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tạo bảng trong SQL,Định dạng ảnh,Tăng điện áp CPU
+567,[AI/Data 5] Classification là bài toán gì?,Dựng giao diện web,Gán nhãn cho dữ liệu đầu vào,Nén video,Xóa file tạm
+568,[AI/Data 5] Regression là bài toán gì?,Mã hóa giao diện,Chia ổ đĩa,Dự đoán giá trị số liên tục,Tạo nhãn A/B/C/D duy nhất
+569,"[AI/Data 6] Trong machine learning, tập train dùng để làm gì?",Chỉ lưu ảnh,Xóa dữ liệu,Huấn luyện mô hình,Tạo giao diện
+570,[AI/Data 6] Tập validation thường dùng để làm gì?,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Tắt mô hình,Thay thế database
+571,[AI/Data 6] Tập test nên dùng để làm gì?,Lưu log terminal,Tạo file Docker,Huấn luyện đi huấn luyện lại,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện
+572,[AI/Data 6] Overfitting là hiện tượng gì?,Máy bị quá nhiệt,API trả về 404,Mô hình thiếu dữ liệu đầu vào,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém
+573,[AI/Data 6] Underfitting là hiện tượng gì?,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Dữ liệu bị nén,Mô hình quá chính xác,GPU không có driver
+574,[AI/Data 6] Embedding biểu diễn văn bản dưới dạng gì?,Vector số,Mã HTML,Ảnh PNG,Âm thanh WAV
+575,[AI/Data 6] RAG là viết tắt của gì?,Recursive Agent Grid,Ranked Answer Gateway,Random Access Graph,Retrieval-Augmented Generation
+576,[AI/Data 6] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Xóa dữ liệu,Huấn luyện CPU,Tạo mật khẩu
+577,[AI/Data 6] Accuracy đo điều gì?,Số bảng database,Số dòng code,Dung lượng Docker,Tỉ lệ dự đoán đúng trên tổng số mẫu
+578,[AI/Data 6] Precision tập trung vào điều gì?,Số cột CSV,Tốc độ mạng,Độ sáng màn hình,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính
+579,[AI/Data 6] Recall tập trung vào điều gì?,Độ dài README,Số lần commit,Dung lượng RAM,Tỉ lệ mẫu dương tính thật được tìm ra
+580,[AI/Data 6] Hallucination trong LLM là gì?,Mô hình chạy nhanh hơn,Mô hình tạo thông tin sai hoặc không có căn cứ,Ổ cứng tự nén,Mạng tự ngắt
+581,[AI/Data 6] Prompt engineering là gì?,Định dạng ảnh,Tăng điện áp CPU,Tạo bảng trong SQL,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp
+582,[AI/Data 6] Classification là bài toán gì?,Dựng giao diện web,Nén video,Gán nhãn cho dữ liệu đầu vào,Xóa file tạm
+583,[AI/Data 6] Regression là bài toán gì?,Dự đoán giá trị số liên tục,Mã hóa giao diện,Tạo nhãn A/B/C/D duy nhất,Chia ổ đĩa
+584,"[AI/Data 7] Trong machine learning, tập train dùng để làm gì?",Chỉ lưu ảnh,Huấn luyện mô hình,Xóa dữ liệu,Tạo giao diện
+585,[AI/Data 7] Tập validation thường dùng để làm gì?,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Lưu mật khẩu,Thay thế database,Tắt mô hình
+586,[AI/Data 7] Tập test nên dùng để làm gì?,Huấn luyện đi huấn luyện lại,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Lưu log terminal,Tạo file Docker
+587,[AI/Data 7] Overfitting là hiện tượng gì?,Mô hình thiếu dữ liệu đầu vào,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,API trả về 404,Máy bị quá nhiệt
+588,[AI/Data 7] Underfitting là hiện tượng gì?,Mô hình quá chính xác,GPU không có driver,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Dữ liệu bị nén
+589,[AI/Data 7] Embedding biểu diễn văn bản dưới dạng gì?,Mã HTML,Vector số,Âm thanh WAV,Ảnh PNG
+590,[AI/Data 7] RAG là viết tắt của gì?,Recursive Agent Grid,Ranked Answer Gateway,Retrieval-Augmented Generation,Random Access Graph
+591,[AI/Data 7] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Xóa dữ liệu,Huấn luyện CPU,Tạo mật khẩu
+592,[AI/Data 7] Accuracy đo điều gì?,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số dòng code,Dung lượng Docker,Số bảng database
+593,[AI/Data 7] Precision tập trung vào điều gì?,Độ sáng màn hình,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng,Số cột CSV
+594,[AI/Data 7] Recall tập trung vào điều gì?,Tỉ lệ mẫu dương tính thật được tìm ra,Số lần commit,Dung lượng RAM,Độ dài README
+595,[AI/Data 7] Hallucination trong LLM là gì?,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ,Mạng tự ngắt
+596,[AI/Data 7] Prompt engineering là gì?,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tạo bảng trong SQL,Định dạng ảnh,Tăng điện áp CPU
+597,[AI/Data 7] Classification là bài toán gì?,Gán nhãn cho dữ liệu đầu vào,Dựng giao diện web,Nén video,Xóa file tạm
+598,[AI/Data 7] Regression là bài toán gì?,Mã hóa giao diện,Dự đoán giá trị số liên tục,Chia ổ đĩa,Tạo nhãn A/B/C/D duy nhất
+599,"[AI/Data 8] Trong machine learning, tập train dùng để làm gì?",Chỉ lưu ảnh,Huấn luyện mô hình,Tạo giao diện,Xóa dữ liệu
+600,[AI/Data 8] Tập validation thường dùng để làm gì?,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Tắt mô hình,Thay thế database,Lưu mật khẩu
+601,[AI/Data 8] Tập test nên dùng để làm gì?,Lưu log terminal,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Tạo file Docker,Huấn luyện đi huấn luyện lại
+602,[AI/Data 8] Overfitting là hiện tượng gì?,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,API trả về 404
+603,[AI/Data 8] Underfitting là hiện tượng gì?,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Mô hình quá chính xác,GPU không có driver,Dữ liệu bị nén
+604,[AI/Data 8] Embedding biểu diễn văn bản dưới dạng gì?,Âm thanh WAV,Ảnh PNG,Vector số,Mã HTML
+605,[AI/Data 8] RAG là viết tắt của gì?,Retrieval-Augmented Generation,Recursive Agent Grid,Random Access Graph,Ranked Answer Gateway
+606,[AI/Data 8] Reranker thường làm gì trong hệ thống truy hồi?,Tạo mật khẩu,Huấn luyện CPU,Xóa dữ liệu,Sắp xếp lại kết quả theo mức liên quan
+607,[AI/Data 8] Accuracy đo điều gì?,Dung lượng Docker,Tỉ lệ dự đoán đúng trên tổng số mẫu,Số bảng database,Số dòng code
+608,[AI/Data 8] Precision tập trung vào điều gì?,Độ sáng màn hình,Số cột CSV,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng
+609,[AI/Data 8] Recall tập trung vào điều gì?,Độ dài README,Số lần commit,Tỉ lệ mẫu dương tính thật được tìm ra,Dung lượng RAM
+610,[AI/Data 8] Hallucination trong LLM là gì?,Mạng tự ngắt,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ,Mô hình chạy nhanh hơn
+611,[AI/Data 8] Prompt engineering là gì?,Tăng điện áp CPU,Tạo bảng trong SQL,Định dạng ảnh,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp
+612,[AI/Data 8] Classification là bài toán gì?,Dựng giao diện web,Gán nhãn cho dữ liệu đầu vào,Xóa file tạm,Nén video
+613,[AI/Data 8] Regression là bài toán gì?,Tạo nhãn A/B/C/D duy nhất,Mã hóa giao diện,Chia ổ đĩa,Dự đoán giá trị số liên tục
+614,"[AI/Data 9] Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Chỉ lưu ảnh,Xóa dữ liệu,Tạo giao diện
+615,[AI/Data 9] Tập validation thường dùng để làm gì?,Lưu mật khẩu,Thay thế database,Tắt mô hình,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+616,[AI/Data 9] Tập test nên dùng để làm gì?,Huấn luyện đi huấn luyện lại,Lưu log terminal,Tạo file Docker,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện
+617,[AI/Data 9] Overfitting là hiện tượng gì?,API trả về 404,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém
+618,[AI/Data 9] Underfitting là hiện tượng gì?,Mô hình quá chính xác,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Dữ liệu bị nén,GPU không có driver
+619,[AI/Data 9] Embedding biểu diễn văn bản dưới dạng gì?,Vector số,Mã HTML,Ảnh PNG,Âm thanh WAV
+620,[AI/Data 9] RAG là viết tắt của gì?,Recursive Agent Grid,Ranked Answer Gateway,Retrieval-Augmented Generation,Random Access Graph
+621,[AI/Data 9] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Xóa dữ liệu,Tạo mật khẩu,Huấn luyện CPU
+622,[AI/Data 9] Accuracy đo điều gì?,Số bảng database,Số dòng code,Tỉ lệ dự đoán đúng trên tổng số mẫu,Dung lượng Docker
+623,[AI/Data 9] Precision tập trung vào điều gì?,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Độ sáng màn hình,Tốc độ mạng,Số cột CSV
+624,[AI/Data 9] Recall tập trung vào điều gì?,Số lần commit,Độ dài README,Tỉ lệ mẫu dương tính thật được tìm ra,Dung lượng RAM
+625,[AI/Data 9] Hallucination trong LLM là gì?,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ,Mạng tự ngắt,Mô hình chạy nhanh hơn
+626,[AI/Data 9] Prompt engineering là gì?,Tạo bảng trong SQL,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tăng điện áp CPU,Định dạng ảnh
+627,[AI/Data 9] Classification là bài toán gì?,Gán nhãn cho dữ liệu đầu vào,Nén video,Dựng giao diện web,Xóa file tạm
+628,[AI/Data 9] Regression là bài toán gì?,Tạo nhãn A/B/C/D duy nhất,Dự đoán giá trị số liên tục,Chia ổ đĩa,Mã hóa giao diện
+629,"[AI/Data 10] Trong machine learning, tập train dùng để làm gì?",Xóa dữ liệu,Huấn luyện mô hình,Chỉ lưu ảnh,Tạo giao diện
+630,[AI/Data 10] Tập validation thường dùng để làm gì?,Thay thế database,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Tắt mô hình,Lưu mật khẩu
+631,[AI/Data 10] Tập test nên dùng để làm gì?,Tạo file Docker,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Huấn luyện đi huấn luyện lại,Lưu log terminal
+632,[AI/Data 10] Overfitting là hiện tượng gì?,API trả về 404,Mô hình thiếu dữ liệu đầu vào,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,Máy bị quá nhiệt
+633,[AI/Data 10] Underfitting là hiện tượng gì?,Mô hình quá chính xác,Dữ liệu bị nén,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,GPU không có driver
+634,[AI/Data 10] Embedding biểu diễn văn bản dưới dạng gì?,Âm thanh WAV,Mã HTML,Ảnh PNG,Vector số
+635,[AI/Data 10] RAG là viết tắt của gì?,Retrieval-Augmented Generation,Ranked Answer Gateway,Recursive Agent Grid,Random Access Graph
+636,[AI/Data 10] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Tạo mật khẩu,Huấn luyện CPU,Xóa dữ liệu
+637,[AI/Data 10] Accuracy đo điều gì?,Số bảng database,Dung lượng Docker,Số dòng code,Tỉ lệ dự đoán đúng trên tổng số mẫu
+638,[AI/Data 10] Precision tập trung vào điều gì?,Độ sáng màn hình,Số cột CSV,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng
+639,[AI/Data 10] Recall tập trung vào điều gì?,Độ dài README,Dung lượng RAM,Số lần commit,Tỉ lệ mẫu dương tính thật được tìm ra
+640,[AI/Data 10] Hallucination trong LLM là gì?,Mô hình tạo thông tin sai hoặc không có căn cứ,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mạng tự ngắt
+641,[AI/Data 10] Prompt engineering là gì?,Tăng điện áp CPU,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tạo bảng trong SQL,Định dạng ảnh
+642,[AI/Data 10] Classification là bài toán gì?,Nén video,Xóa file tạm,Dựng giao diện web,Gán nhãn cho dữ liệu đầu vào
+643,[AI/Data 10] Regression là bài toán gì?,Chia ổ đĩa,Tạo nhãn A/B/C/D duy nhất,Dự đoán giá trị số liên tục,Mã hóa giao diện
+644,"[AI/Data 11] Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Xóa dữ liệu,Tạo giao diện,Chỉ lưu ảnh
+645,[AI/Data 11] Tập validation thường dùng để làm gì?,Thay thế database,Lưu mật khẩu,Tắt mô hình,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+646,[AI/Data 11] Tập test nên dùng để làm gì?,Tạo file Docker,Lưu log terminal,Huấn luyện đi huấn luyện lại,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện
+647,[AI/Data 11] Overfitting là hiện tượng gì?,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt,API trả về 404
+648,[AI/Data 11] Underfitting là hiện tượng gì?,GPU không có driver,Dữ liệu bị nén,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Mô hình quá chính xác
+649,[AI/Data 11] Embedding biểu diễn văn bản dưới dạng gì?,Vector số,Âm thanh WAV,Ảnh PNG,Mã HTML
+650,[AI/Data 11] RAG là viết tắt của gì?,Retrieval-Augmented Generation,Recursive Agent Grid,Ranked Answer Gateway,Random Access Graph
+651,[AI/Data 11] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Huấn luyện CPU,Tạo mật khẩu,Xóa dữ liệu
+652,[AI/Data 11] Accuracy đo điều gì?,Số dòng code,Dung lượng Docker,Số bảng database,Tỉ lệ dự đoán đúng trên tổng số mẫu
+653,[AI/Data 11] Precision tập trung vào điều gì?,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Tốc độ mạng,Độ sáng màn hình,Số cột CSV
+654,[AI/Data 11] Recall tập trung vào điều gì?,Dung lượng RAM,Độ dài README,Tỉ lệ mẫu dương tính thật được tìm ra,Số lần commit
+655,[AI/Data 11] Hallucination trong LLM là gì?,Ổ cứng tự nén,Mô hình chạy nhanh hơn,Mô hình tạo thông tin sai hoặc không có căn cứ,Mạng tự ngắt
+656,[AI/Data 11] Prompt engineering là gì?,Tạo bảng trong SQL,Tăng điện áp CPU,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Định dạng ảnh
+657,[AI/Data 11] Classification là bài toán gì?,Xóa file tạm,Gán nhãn cho dữ liệu đầu vào,Dựng giao diện web,Nén video
+658,[AI/Data 11] Regression là bài toán gì?,Dự đoán giá trị số liên tục,Tạo nhãn A/B/C/D duy nhất,Chia ổ đĩa,Mã hóa giao diện
+659,"[AI/Data 12] Trong machine learning, tập train dùng để làm gì?",Xóa dữ liệu,Tạo giao diện,Huấn luyện mô hình,Chỉ lưu ảnh
+660,[AI/Data 12] Tập validation thường dùng để làm gì?,Thay thế database,Tắt mô hình,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+661,[AI/Data 12] Tập test nên dùng để làm gì?,Lưu log terminal,Huấn luyện đi huấn luyện lại,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Tạo file Docker
+662,[AI/Data 12] Overfitting là hiện tượng gì?,Mô hình thiếu dữ liệu đầu vào,Máy bị quá nhiệt,API trả về 404,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém
+663,[AI/Data 12] Underfitting là hiện tượng gì?,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,GPU không có driver,Mô hình quá chính xác,Dữ liệu bị nén
+664,[AI/Data 12] Embedding biểu diễn văn bản dưới dạng gì?,Âm thanh WAV,Ảnh PNG,Vector số,Mã HTML
+665,[AI/Data 12] RAG là viết tắt của gì?,Random Access Graph,Ranked Answer Gateway,Recursive Agent Grid,Retrieval-Augmented Generation
+666,[AI/Data 12] Reranker thường làm gì trong hệ thống truy hồi?,Xóa dữ liệu,Tạo mật khẩu,Huấn luyện CPU,Sắp xếp lại kết quả theo mức liên quan
+667,[AI/Data 12] Accuracy đo điều gì?,Dung lượng Docker,Số bảng database,Số dòng code,Tỉ lệ dự đoán đúng trên tổng số mẫu
+668,[AI/Data 12] Precision tập trung vào điều gì?,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Số cột CSV,Tốc độ mạng,Độ sáng màn hình
+669,[AI/Data 12] Recall tập trung vào điều gì?,Độ dài README,Dung lượng RAM,Số lần commit,Tỉ lệ mẫu dương tính thật được tìm ra
+670,[AI/Data 12] Hallucination trong LLM là gì?,Mạng tự ngắt,Mô hình chạy nhanh hơn,Mô hình tạo thông tin sai hoặc không có căn cứ,Ổ cứng tự nén
+671,[AI/Data 12] Prompt engineering là gì?,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tăng điện áp CPU,Định dạng ảnh,Tạo bảng trong SQL
+672,[AI/Data 12] Classification là bài toán gì?,Gán nhãn cho dữ liệu đầu vào,Xóa file tạm,Dựng giao diện web,Nén video
+673,[AI/Data 12] Regression là bài toán gì?,Dự đoán giá trị số liên tục,Tạo nhãn A/B/C/D duy nhất,Mã hóa giao diện,Chia ổ đĩa
+674,"[AI/Data 13] Trong machine learning, tập train dùng để làm gì?",Huấn luyện mô hình,Tạo giao diện,Chỉ lưu ảnh,Xóa dữ liệu
+675,[AI/Data 13] Tập validation thường dùng để làm gì?,Tắt mô hình,Thay thế database,Lưu mật khẩu,Điều chỉnh và đánh giá mô hình trong quá trình phát triển
+676,[AI/Data 13] Tập test nên dùng để làm gì?,Tạo file Docker,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Huấn luyện đi huấn luyện lại,Lưu log terminal
+677,[AI/Data 13] Overfitting là hiện tượng gì?,Máy bị quá nhiệt,Mô hình thiếu dữ liệu đầu vào,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,API trả về 404
+678,[AI/Data 13] Underfitting là hiện tượng gì?,Dữ liệu bị nén,Mô hình quá chính xác,GPU không có driver,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu
+679,[AI/Data 13] Embedding biểu diễn văn bản dưới dạng gì?,Mã HTML,Âm thanh WAV,Ảnh PNG,Vector số
+680,[AI/Data 13] RAG là viết tắt của gì?,Random Access Graph,Recursive Agent Grid,Ranked Answer Gateway,Retrieval-Augmented Generation
+681,[AI/Data 13] Reranker thường làm gì trong hệ thống truy hồi?,Sắp xếp lại kết quả theo mức liên quan,Huấn luyện CPU,Xóa dữ liệu,Tạo mật khẩu
+682,[AI/Data 13] Accuracy đo điều gì?,Tỉ lệ dự đoán đúng trên tổng số mẫu,Dung lượng Docker,Số dòng code,Số bảng database
+683,[AI/Data 13] Precision tập trung vào điều gì?,Số cột CSV,Tỉ lệ dự đoán dương tính đúng trong các dự đoán dương tính,Độ sáng màn hình,Tốc độ mạng
+684,[AI/Data 13] Recall tập trung vào điều gì?,Dung lượng RAM,Độ dài README,Số lần commit,Tỉ lệ mẫu dương tính thật được tìm ra
+685,[AI/Data 13] Hallucination trong LLM là gì?,Mạng tự ngắt,Mô hình chạy nhanh hơn,Ổ cứng tự nén,Mô hình tạo thông tin sai hoặc không có căn cứ
+686,[AI/Data 13] Prompt engineering là gì?,Tạo bảng trong SQL,Định dạng ảnh,Thiết kế câu lệnh để hướng dẫn mô hình tạo đầu ra phù hợp,Tăng điện áp CPU
+687,[AI/Data 13] Classification là bài toán gì?,Dựng giao diện web,Xóa file tạm,Gán nhãn cho dữ liệu đầu vào,Nén video
+688,[AI/Data 13] Regression là bài toán gì?,Mã hóa giao diện,Tạo nhãn A/B/C/D duy nhất,Dự đoán giá trị số liên tục,Chia ổ đĩa
+689,"[AI/Data 14] Trong machine learning, tập train dùng để làm gì?",Chỉ lưu ảnh,Huấn luyện mô hình,Tạo giao diện,Xóa dữ liệu
+690,[AI/Data 14] Tập validation thường dùng để làm gì?,Điều chỉnh và đánh giá mô hình trong quá trình phát triển,Lưu mật khẩu,Thay thế database,Tắt mô hình
+691,[AI/Data 14] Tập test nên dùng để làm gì?,Lưu log terminal,Đánh giá cuối cùng trên dữ liệu chưa dùng để huấn luyện,Huấn luyện đi huấn luyện lại,Tạo file Docker
+692,[AI/Data 14] Overfitting là hiện tượng gì?,Máy bị quá nhiệt,Mô hình học quá sát dữ liệu huấn luyện và tổng quát kém,API trả về 404,Mô hình thiếu dữ liệu đầu vào
+693,[AI/Data 14] Underfitting là hiện tượng gì?,Mô hình quá đơn giản nên học không đủ quy luật dữ liệu,Mô hình quá chính xác,GPU không có driver,Dữ liệu bị nén
+694,Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền gốc ban đầu,Màu thẻ ATM,Số lượng nhân viên ngân hàng,Tiền lãi đã sinh ra trước đó
+695,Lãi kép khác lãi đơn ở điểm nào?,Không cần thời gian,Luôn bằng 0,Lãi được cộng vào gốc để tiếp tục sinh lãi,Chỉ dùng cho tiền mặt
+696,Ngân sách cá nhân dùng để làm gì?,Đổi mật khẩu ngân hàng,Tự động sinh tiền,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu
+697,Lạm phát là hiện tượng gì?,Tiền biến thành vàng,Thu nhập không thể thay đổi,Mức giá chung tăng theo thời gian,Giá mọi thứ luôn giảm
+698,Tài sản trong kế toán là gì?,Khoản phạt bắt buộc,Mật khẩu tài khoản,Màu sắc hóa đơn,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế
+699,Nợ phải trả là gì?,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi,Mã màu báo cáo,Tên khách hàng
+700,Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Không có giao dịch nào,Tiền ra lớn hơn tiền vào,Tiền vào lớn hơn tiền ra trong kỳ
+701,Đa dạng hóa đầu tư nhằm mục đích gì?,Tăng phí giao dịch,Xóa biến động thị trường,Cam kết không lỗ,Giảm rủi ro tập trung vào một tài sản
+702,Quỹ khẩn cấp nên dùng cho mục đích nào?,Mua sắm tùy hứng liên tục,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết
+703,Tín dụng là gì?,Một loại mật khẩu,Tiền miễn phí vĩnh viễn,Một chuẩn cáp mạng,Khả năng vay và cam kết trả lại theo điều kiện
+704,Bảng cân đối kế toán phản ánh điều gì?,Dự báo thời tiết,Mã nguồn phần mềm,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Số lượt xem video
+705,Doanh thu là gì?,Lỗi phần mềm,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Số lượng mật khẩu,Khoản chi mua hàng
+706,[Tài chính 2] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Màu thẻ ATM,Tiền gốc ban đầu,Số lượng nhân viên ngân hàng,Tiền lãi đã sinh ra trước đó
+707,[Tài chính 2] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Không cần thời gian,Lãi được cộng vào gốc để tiếp tục sinh lãi,Luôn bằng 0
+708,[Tài chính 2] Ngân sách cá nhân dùng để làm gì?,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu,Tự động sinh tiền,Đổi mật khẩu ngân hàng
+709,[Tài chính 2] Lạm phát là hiện tượng gì?,Thu nhập không thể thay đổi,Giá mọi thứ luôn giảm,Mức giá chung tăng theo thời gian,Tiền biến thành vàng
+710,[Tài chính 2] Tài sản trong kế toán là gì?,Mật khẩu tài khoản,Khoản phạt bắt buộc,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn
+711,[Tài chính 2] Nợ phải trả là gì?,Tên khách hàng,Mã màu báo cáo,Tiền đã mất không cần ghi,Nghĩa vụ tài chính cần thanh toán
+712,[Tài chính 2] Dòng tiền dương thường có nghĩa là gì?,Không có giao dịch nào,Tiền ra lớn hơn tiền vào,Tài khoản bị khóa,Tiền vào lớn hơn tiền ra trong kỳ
+713,[Tài chính 2] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Xóa biến động thị trường,Cam kết không lỗ
+714,[Tài chính 2] Quỹ khẩn cấp nên dùng cho mục đích nào?,Mua sắm tùy hứng liên tục,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết
+715,[Tài chính 2] Tín dụng là gì?,Một loại mật khẩu,Tiền miễn phí vĩnh viễn,Một chuẩn cáp mạng,Khả năng vay và cam kết trả lại theo điều kiện
+716,[Tài chính 2] Bảng cân đối kế toán phản ánh điều gì?,Dự báo thời tiết,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Số lượt xem video,Mã nguồn phần mềm
+717,[Tài chính 2] Doanh thu là gì?,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Khoản chi mua hàng,Số lượng mật khẩu,Lỗi phần mềm
+718,[Tài chính 3] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Màu thẻ ATM,Tiền lãi đã sinh ra trước đó,Số lượng nhân viên ngân hàng,Tiền gốc ban đầu
+719,[Tài chính 3] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian,Luôn bằng 0
+720,[Tài chính 3] Ngân sách cá nhân dùng để làm gì?,Tự động sinh tiền,Đổi mật khẩu ngân hàng,Theo dõi thu nhập và chi tiêu,Tăng số giờ trong ngày
+721,[Tài chính 3] Lạm phát là hiện tượng gì?,Giá mọi thứ luôn giảm,Mức giá chung tăng theo thời gian,Tiền biến thành vàng,Thu nhập không thể thay đổi
+722,[Tài chính 3] Tài sản trong kế toán là gì?,Khoản phạt bắt buộc,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn,Mật khẩu tài khoản
+723,[Tài chính 3] Nợ phải trả là gì?,Tên khách hàng,Tiền đã mất không cần ghi,Nghĩa vụ tài chính cần thanh toán,Mã màu báo cáo
+724,[Tài chính 3] Dòng tiền dương thường có nghĩa là gì?,Tiền vào lớn hơn tiền ra trong kỳ,Tài khoản bị khóa,Không có giao dịch nào,Tiền ra lớn hơn tiền vào
+725,[Tài chính 3] Đa dạng hóa đầu tư nhằm mục đích gì?,Xóa biến động thị trường,Giảm rủi ro tập trung vào một tài sản,Cam kết không lỗ,Tăng phí giao dịch
+726,[Tài chính 3] Quỹ khẩn cấp nên dùng cho mục đích nào?,Mua sắm tùy hứng liên tục,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết
+727,[Tài chính 3] Tín dụng là gì?,Tiền miễn phí vĩnh viễn,Khả năng vay và cam kết trả lại theo điều kiện,Một loại mật khẩu,Một chuẩn cáp mạng
+728,[Tài chính 3] Bảng cân đối kế toán phản ánh điều gì?,Dự báo thời tiết,Mã nguồn phần mềm,Số lượt xem video,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm"
+729,[Tài chính 3] Doanh thu là gì?,Số lượng mật khẩu,Lỗi phần mềm,Khoản chi mua hàng,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ
+730,[Tài chính 4] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền gốc ban đầu,Màu thẻ ATM,Số lượng nhân viên ngân hàng,Tiền lãi đã sinh ra trước đó
+731,[Tài chính 4] Lãi kép khác lãi đơn ở điểm nào?,Luôn bằng 0,Chỉ dùng cho tiền mặt,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian
+732,[Tài chính 4] Ngân sách cá nhân dùng để làm gì?,Đổi mật khẩu ngân hàng,Tự động sinh tiền,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu
+733,[Tài chính 4] Lạm phát là hiện tượng gì?,Giá mọi thứ luôn giảm,Tiền biến thành vàng,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi
+734,[Tài chính 4] Tài sản trong kế toán là gì?,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Mật khẩu tài khoản,Màu sắc hóa đơn,Khoản phạt bắt buộc
+735,[Tài chính 4] Nợ phải trả là gì?,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi,Tên khách hàng,Mã màu báo cáo
+736,[Tài chính 4] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Tiền vào lớn hơn tiền ra trong kỳ,Không có giao dịch nào,Tiền ra lớn hơn tiền vào
+737,[Tài chính 4] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Xóa biến động thị trường,Cam kết không lỗ
+738,[Tài chính 4] Quỹ khẩn cấp nên dùng cho mục đích nào?,Chi phí bất ngờ cần thiết,Đầu cơ rủi ro cao,Mua sắm tùy hứng liên tục,Xóa lịch sử giao dịch
+739,[Tài chính 4] Tín dụng là gì?,Khả năng vay và cam kết trả lại theo điều kiện,Một chuẩn cáp mạng,Tiền miễn phí vĩnh viễn,Một loại mật khẩu
+740,[Tài chính 4] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Mã nguồn phần mềm,Dự báo thời tiết,Số lượt xem video
+741,[Tài chính 4] Doanh thu là gì?,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Số lượng mật khẩu,Khoản chi mua hàng,Lỗi phần mềm
+742,[Tài chính 5] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền gốc ban đầu,Màu thẻ ATM,Số lượng nhân viên ngân hàng,Tiền lãi đã sinh ra trước đó
+743,[Tài chính 5] Lãi kép khác lãi đơn ở điểm nào?,Luôn bằng 0,Không cần thời gian,Chỉ dùng cho tiền mặt,Lãi được cộng vào gốc để tiếp tục sinh lãi
+744,[Tài chính 5] Ngân sách cá nhân dùng để làm gì?,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu,Tự động sinh tiền,Đổi mật khẩu ngân hàng
+745,[Tài chính 5] Lạm phát là hiện tượng gì?,Tiền biến thành vàng,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi,Giá mọi thứ luôn giảm
+746,[Tài chính 5] Tài sản trong kế toán là gì?,Màu sắc hóa đơn,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Mật khẩu tài khoản,Khoản phạt bắt buộc
+747,[Tài chính 5] Nợ phải trả là gì?,Mã màu báo cáo,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi,Tên khách hàng
+748,[Tài chính 5] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Không có giao dịch nào,Tiền vào lớn hơn tiền ra trong kỳ,Tiền ra lớn hơn tiền vào
+749,[Tài chính 5] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Xóa biến động thị trường,Cam kết không lỗ
+750,[Tài chính 5] Quỹ khẩn cấp nên dùng cho mục đích nào?,Mua sắm tùy hứng liên tục,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết,Đầu cơ rủi ro cao
+751,[Tài chính 5] Tín dụng là gì?,Tiền miễn phí vĩnh viễn,Một chuẩn cáp mạng,Khả năng vay và cam kết trả lại theo điều kiện,Một loại mật khẩu
+752,[Tài chính 5] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Dự báo thời tiết,Số lượt xem video,Mã nguồn phần mềm
+753,[Tài chính 5] Doanh thu là gì?,Khoản chi mua hàng,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Lỗi phần mềm,Số lượng mật khẩu
+754,[Tài chính 6] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Màu thẻ ATM,Tiền lãi đã sinh ra trước đó,Số lượng nhân viên ngân hàng,Tiền gốc ban đầu
+755,[Tài chính 6] Lãi kép khác lãi đơn ở điểm nào?,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian,Luôn bằng 0,Chỉ dùng cho tiền mặt
+756,[Tài chính 6] Ngân sách cá nhân dùng để làm gì?,Đổi mật khẩu ngân hàng,Theo dõi thu nhập và chi tiêu,Tăng số giờ trong ngày,Tự động sinh tiền
+757,[Tài chính 6] Lạm phát là hiện tượng gì?,Thu nhập không thể thay đổi,Tiền biến thành vàng,Giá mọi thứ luôn giảm,Mức giá chung tăng theo thời gian
+758,[Tài chính 6] Tài sản trong kế toán là gì?,Khoản phạt bắt buộc,Màu sắc hóa đơn,Mật khẩu tài khoản,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế
+759,[Tài chính 6] Nợ phải trả là gì?,Nghĩa vụ tài chính cần thanh toán,Mã màu báo cáo,Tiền đã mất không cần ghi,Tên khách hàng
+760,[Tài chính 6] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Tiền ra lớn hơn tiền vào,Không có giao dịch nào,Tiền vào lớn hơn tiền ra trong kỳ
+761,[Tài chính 6] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Xóa biến động thị trường,Cam kết không lỗ
+762,[Tài chính 6] Quỹ khẩn cấp nên dùng cho mục đích nào?,Mua sắm tùy hứng liên tục,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết,Đầu cơ rủi ro cao
+763,[Tài chính 6] Tín dụng là gì?,Một chuẩn cáp mạng,Khả năng vay và cam kết trả lại theo điều kiện,Một loại mật khẩu,Tiền miễn phí vĩnh viễn
+764,[Tài chính 6] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Dự báo thời tiết,Mã nguồn phần mềm,Số lượt xem video
+765,[Tài chính 6] Doanh thu là gì?,Lỗi phần mềm,Số lượng mật khẩu,Khoản chi mua hàng,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ
+766,[Tài chính 7] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Số lượng nhân viên ngân hàng,Tiền gốc ban đầu,Màu thẻ ATM,Tiền lãi đã sinh ra trước đó
+767,[Tài chính 7] Lãi kép khác lãi đơn ở điểm nào?,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian,Luôn bằng 0,Chỉ dùng cho tiền mặt
+768,[Tài chính 7] Ngân sách cá nhân dùng để làm gì?,Tự động sinh tiền,Tăng số giờ trong ngày,Đổi mật khẩu ngân hàng,Theo dõi thu nhập và chi tiêu
+769,[Tài chính 7] Lạm phát là hiện tượng gì?,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi,Tiền biến thành vàng,Giá mọi thứ luôn giảm
+770,[Tài chính 7] Tài sản trong kế toán là gì?,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn,Khoản phạt bắt buộc,Mật khẩu tài khoản
+771,[Tài chính 7] Nợ phải trả là gì?,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi,Tên khách hàng,Mã màu báo cáo
+772,[Tài chính 7] Dòng tiền dương thường có nghĩa là gì?,Tiền ra lớn hơn tiền vào,Tiền vào lớn hơn tiền ra trong kỳ,Tài khoản bị khóa,Không có giao dịch nào
+773,[Tài chính 7] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Cam kết không lỗ,Xóa biến động thị trường
+774,[Tài chính 7] Quỹ khẩn cấp nên dùng cho mục đích nào?,Chi phí bất ngờ cần thiết,Mua sắm tùy hứng liên tục,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch
+775,[Tài chính 7] Tín dụng là gì?,Tiền miễn phí vĩnh viễn,Một loại mật khẩu,Một chuẩn cáp mạng,Khả năng vay và cam kết trả lại theo điều kiện
+776,[Tài chính 7] Bảng cân đối kế toán phản ánh điều gì?,Dự báo thời tiết,Mã nguồn phần mềm,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Số lượt xem video
+777,[Tài chính 7] Doanh thu là gì?,Lỗi phần mềm,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Khoản chi mua hàng,Số lượng mật khẩu
+778,[Tài chính 8] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Màu thẻ ATM,Số lượng nhân viên ngân hàng,Tiền gốc ban đầu,Tiền lãi đã sinh ra trước đó
+779,[Tài chính 8] Lãi kép khác lãi đơn ở điểm nào?,Lãi được cộng vào gốc để tiếp tục sinh lãi,Luôn bằng 0,Chỉ dùng cho tiền mặt,Không cần thời gian
+780,[Tài chính 8] Ngân sách cá nhân dùng để làm gì?,Tự động sinh tiền,Đổi mật khẩu ngân hàng,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu
+781,[Tài chính 8] Lạm phát là hiện tượng gì?,Thu nhập không thể thay đổi,Giá mọi thứ luôn giảm,Mức giá chung tăng theo thời gian,Tiền biến thành vàng
+782,[Tài chính 8] Tài sản trong kế toán là gì?,Mật khẩu tài khoản,Khoản phạt bắt buộc,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn
+783,[Tài chính 8] Nợ phải trả là gì?,Tiền đã mất không cần ghi,Tên khách hàng,Mã màu báo cáo,Nghĩa vụ tài chính cần thanh toán
+784,[Tài chính 8] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Tiền vào lớn hơn tiền ra trong kỳ,Không có giao dịch nào,Tiền ra lớn hơn tiền vào
+785,[Tài chính 8] Đa dạng hóa đầu tư nhằm mục đích gì?,Cam kết không lỗ,Tăng phí giao dịch,Giảm rủi ro tập trung vào một tài sản,Xóa biến động thị trường
+786,[Tài chính 8] Quỹ khẩn cấp nên dùng cho mục đích nào?,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết,Mua sắm tùy hứng liên tục
+787,[Tài chính 8] Tín dụng là gì?,Một chuẩn cáp mạng,Một loại mật khẩu,Khả năng vay và cam kết trả lại theo điều kiện,Tiền miễn phí vĩnh viễn
+788,[Tài chính 8] Bảng cân đối kế toán phản ánh điều gì?,Số lượt xem video,Dự báo thời tiết,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Mã nguồn phần mềm
+789,[Tài chính 8] Doanh thu là gì?,Khoản chi mua hàng,Lỗi phần mềm,Số lượng mật khẩu,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ
+790,[Tài chính 9] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Màu thẻ ATM,Tiền gốc ban đầu,Tiền lãi đã sinh ra trước đó,Số lượng nhân viên ngân hàng
+791,[Tài chính 9] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Luôn bằng 0,Không cần thời gian,Lãi được cộng vào gốc để tiếp tục sinh lãi
+792,[Tài chính 9] Ngân sách cá nhân dùng để làm gì?,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu,Tự động sinh tiền,Đổi mật khẩu ngân hàng
+793,[Tài chính 9] Lạm phát là hiện tượng gì?,Thu nhập không thể thay đổi,Tiền biến thành vàng,Mức giá chung tăng theo thời gian,Giá mọi thứ luôn giảm
+794,[Tài chính 9] Tài sản trong kế toán là gì?,Mật khẩu tài khoản,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Khoản phạt bắt buộc,Màu sắc hóa đơn
+795,[Tài chính 9] Nợ phải trả là gì?,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi,Tên khách hàng,Mã màu báo cáo
+796,[Tài chính 9] Dòng tiền dương thường có nghĩa là gì?,Không có giao dịch nào,Tiền ra lớn hơn tiền vào,Tài khoản bị khóa,Tiền vào lớn hơn tiền ra trong kỳ
+797,[Tài chính 9] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Cam kết không lỗ,Xóa biến động thị trường,Tăng phí giao dịch
+798,[Tài chính 9] Quỹ khẩn cấp nên dùng cho mục đích nào?,Xóa lịch sử giao dịch,Chi phí bất ngờ cần thiết,Đầu cơ rủi ro cao,Mua sắm tùy hứng liên tục
+799,[Tài chính 9] Tín dụng là gì?,Khả năng vay và cam kết trả lại theo điều kiện,Tiền miễn phí vĩnh viễn,Một chuẩn cáp mạng,Một loại mật khẩu
+800,[Tài chính 9] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Dự báo thời tiết,Số lượt xem video,Mã nguồn phần mềm
+801,[Tài chính 9] Doanh thu là gì?,Khoản chi mua hàng,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Lỗi phần mềm,Số lượng mật khẩu
+802,[Tài chính 10] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền gốc ban đầu,Màu thẻ ATM,Số lượng nhân viên ngân hàng,Tiền lãi đã sinh ra trước đó
+803,[Tài chính 10] Lãi kép khác lãi đơn ở điểm nào?,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian,Chỉ dùng cho tiền mặt,Luôn bằng 0
+804,[Tài chính 10] Ngân sách cá nhân dùng để làm gì?,Tự động sinh tiền,Tăng số giờ trong ngày,Đổi mật khẩu ngân hàng,Theo dõi thu nhập và chi tiêu
+805,[Tài chính 10] Lạm phát là hiện tượng gì?,Tiền biến thành vàng,Giá mọi thứ luôn giảm,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi
+806,[Tài chính 10] Tài sản trong kế toán là gì?,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Khoản phạt bắt buộc,Màu sắc hóa đơn,Mật khẩu tài khoản
+807,[Tài chính 10] Nợ phải trả là gì?,Mã màu báo cáo,Tên khách hàng,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi
+808,[Tài chính 10] Dòng tiền dương thường có nghĩa là gì?,Tiền vào lớn hơn tiền ra trong kỳ,Tiền ra lớn hơn tiền vào,Tài khoản bị khóa,Không có giao dịch nào
+809,[Tài chính 10] Đa dạng hóa đầu tư nhằm mục đích gì?,Giảm rủi ro tập trung vào một tài sản,Cam kết không lỗ,Xóa biến động thị trường,Tăng phí giao dịch
+810,[Tài chính 10] Quỹ khẩn cấp nên dùng cho mục đích nào?,Đầu cơ rủi ro cao,Chi phí bất ngờ cần thiết,Xóa lịch sử giao dịch,Mua sắm tùy hứng liên tục
+811,[Tài chính 10] Tín dụng là gì?,Một chuẩn cáp mạng,Một loại mật khẩu,Khả năng vay và cam kết trả lại theo điều kiện,Tiền miễn phí vĩnh viễn
+812,[Tài chính 10] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Mã nguồn phần mềm,Dự báo thời tiết,Số lượt xem video
+813,[Tài chính 10] Doanh thu là gì?,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Khoản chi mua hàng,Số lượng mật khẩu,Lỗi phần mềm
+814,[Tài chính 11] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền lãi đã sinh ra trước đó,Tiền gốc ban đầu,Màu thẻ ATM,Số lượng nhân viên ngân hàng
+815,[Tài chính 11] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Không cần thời gian,Lãi được cộng vào gốc để tiếp tục sinh lãi,Luôn bằng 0
+816,[Tài chính 11] Ngân sách cá nhân dùng để làm gì?,Đổi mật khẩu ngân hàng,Tăng số giờ trong ngày,Tự động sinh tiền,Theo dõi thu nhập và chi tiêu
+817,[Tài chính 11] Lạm phát là hiện tượng gì?,Mức giá chung tăng theo thời gian,Giá mọi thứ luôn giảm,Tiền biến thành vàng,Thu nhập không thể thay đổi
+818,[Tài chính 11] Tài sản trong kế toán là gì?,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn,Khoản phạt bắt buộc,Mật khẩu tài khoản
+819,[Tài chính 11] Nợ phải trả là gì?,Tên khách hàng,Tiền đã mất không cần ghi,Mã màu báo cáo,Nghĩa vụ tài chính cần thanh toán
+820,[Tài chính 11] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Tiền vào lớn hơn tiền ra trong kỳ,Không có giao dịch nào,Tiền ra lớn hơn tiền vào
+821,[Tài chính 11] Đa dạng hóa đầu tư nhằm mục đích gì?,Xóa biến động thị trường,Giảm rủi ro tập trung vào một tài sản,Tăng phí giao dịch,Cam kết không lỗ
+822,[Tài chính 11] Quỹ khẩn cấp nên dùng cho mục đích nào?,Chi phí bất ngờ cần thiết,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Mua sắm tùy hứng liên tục
+823,[Tài chính 11] Tín dụng là gì?,Khả năng vay và cam kết trả lại theo điều kiện,Một chuẩn cáp mạng,Một loại mật khẩu,Tiền miễn phí vĩnh viễn
+824,[Tài chính 11] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Số lượt xem video,Mã nguồn phần mềm,Dự báo thời tiết
+825,[Tài chính 11] Doanh thu là gì?,Lỗi phần mềm,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Số lượng mật khẩu,Khoản chi mua hàng
+826,[Tài chính 12] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Số lượng nhân viên ngân hàng,Tiền gốc ban đầu,Tiền lãi đã sinh ra trước đó,Màu thẻ ATM
+827,[Tài chính 12] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Luôn bằng 0,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian
+828,[Tài chính 12] Ngân sách cá nhân dùng để làm gì?,Đổi mật khẩu ngân hàng,Tự động sinh tiền,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu
+829,[Tài chính 12] Lạm phát là hiện tượng gì?,Giá mọi thứ luôn giảm,Tiền biến thành vàng,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi
+830,[Tài chính 12] Tài sản trong kế toán là gì?,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn,Mật khẩu tài khoản,Khoản phạt bắt buộc
+831,[Tài chính 12] Nợ phải trả là gì?,Tên khách hàng,Mã màu báo cáo,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi
+832,[Tài chính 12] Dòng tiền dương thường có nghĩa là gì?,Tài khoản bị khóa,Không có giao dịch nào,Tiền vào lớn hơn tiền ra trong kỳ,Tiền ra lớn hơn tiền vào
+833,[Tài chính 12] Đa dạng hóa đầu tư nhằm mục đích gì?,Xóa biến động thị trường,Giảm rủi ro tập trung vào một tài sản,Cam kết không lỗ,Tăng phí giao dịch
+834,[Tài chính 12] Quỹ khẩn cấp nên dùng cho mục đích nào?,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Mua sắm tùy hứng liên tục,Chi phí bất ngờ cần thiết
+835,[Tài chính 12] Tín dụng là gì?,Một chuẩn cáp mạng,Tiền miễn phí vĩnh viễn,Một loại mật khẩu,Khả năng vay và cam kết trả lại theo điều kiện
+836,[Tài chính 12] Bảng cân đối kế toán phản ánh điều gì?,Mã nguồn phần mềm,Số lượt xem video,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Dự báo thời tiết
+837,[Tài chính 12] Doanh thu là gì?,Khoản chi mua hàng,Lỗi phần mềm,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Số lượng mật khẩu
+838,[Tài chính 13] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Tiền gốc ban đầu,Tiền lãi đã sinh ra trước đó,Số lượng nhân viên ngân hàng,Màu thẻ ATM
+839,[Tài chính 13] Lãi kép khác lãi đơn ở điểm nào?,Luôn bằng 0,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian,Chỉ dùng cho tiền mặt
+840,[Tài chính 13] Ngân sách cá nhân dùng để làm gì?,Tăng số giờ trong ngày,Theo dõi thu nhập và chi tiêu,Tự động sinh tiền,Đổi mật khẩu ngân hàng
+841,[Tài chính 13] Lạm phát là hiện tượng gì?,Mức giá chung tăng theo thời gian,Giá mọi thứ luôn giảm,Tiền biến thành vàng,Thu nhập không thể thay đổi
+842,[Tài chính 13] Tài sản trong kế toán là gì?,Mật khẩu tài khoản,Nguồn lực do cá nhân hoặc tổ chức kiểm soát và có giá trị kinh tế,Màu sắc hóa đơn,Khoản phạt bắt buộc
+843,[Tài chính 13] Nợ phải trả là gì?,Tên khách hàng,Mã màu báo cáo,Nghĩa vụ tài chính cần thanh toán,Tiền đã mất không cần ghi
+844,[Tài chính 13] Dòng tiền dương thường có nghĩa là gì?,Tiền vào lớn hơn tiền ra trong kỳ,Tài khoản bị khóa,Không có giao dịch nào,Tiền ra lớn hơn tiền vào
+845,[Tài chính 13] Đa dạng hóa đầu tư nhằm mục đích gì?,Tăng phí giao dịch,Giảm rủi ro tập trung vào một tài sản,Xóa biến động thị trường,Cam kết không lỗ
+846,[Tài chính 13] Quỹ khẩn cấp nên dùng cho mục đích nào?,Đầu cơ rủi ro cao,Xóa lịch sử giao dịch,Mua sắm tùy hứng liên tục,Chi phí bất ngờ cần thiết
+847,[Tài chính 13] Tín dụng là gì?,Một chuẩn cáp mạng,Tiền miễn phí vĩnh viễn,Khả năng vay và cam kết trả lại theo điều kiện,Một loại mật khẩu
+848,[Tài chính 13] Bảng cân đối kế toán phản ánh điều gì?,"Tài sản, nợ phải trả và vốn chủ sở hữu tại một thời điểm",Số lượt xem video,Mã nguồn phần mềm,Dự báo thời tiết
+849,[Tài chính 13] Doanh thu là gì?,Khoản chi mua hàng,Số lượng mật khẩu,Khoản thu từ hoạt động bán hàng hoặc cung cấp dịch vụ,Lỗi phần mềm
+850,[Tài chính 14] Lãi suất đơn thường được tính dựa trên yếu tố nào?,Số lượng nhân viên ngân hàng,Màu thẻ ATM,Tiền lãi đã sinh ra trước đó,Tiền gốc ban đầu
+851,[Tài chính 14] Lãi kép khác lãi đơn ở điểm nào?,Chỉ dùng cho tiền mặt,Luôn bằng 0,Lãi được cộng vào gốc để tiếp tục sinh lãi,Không cần thời gian
+852,[Tài chính 14] Ngân sách cá nhân dùng để làm gì?,Theo dõi thu nhập và chi tiêu,Đổi mật khẩu ngân hàng,Tăng số giờ trong ngày,Tự động sinh tiền
+853,[Tài chính 14] Lạm phát là hiện tượng gì?,Mức giá chung tăng theo thời gian,Thu nhập không thể thay đổi,Tiền biến thành vàng,Giá mọi thứ luôn giảm
+854,Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tim,Dạ dày,Tuyến giáp,Gan
+855,Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Sản xuất mật,Lọc máu thành nước tiểu,Trao đổi khí oxy và carbon dioxide
+856,Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Lây truyền mầm bệnh qua tay,Gãy xương,Tăng huyết áp ngay lập tức,Mất trí nhớ tức thì
+857,Vitamin C thường liên quan nhiều đến chức năng nào?,Làm biến mất mọi bệnh,Truyền tín hiệu điện trong dây cáp,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi
+858,Canxi quan trọng nhất đối với bộ phận nào?,Màu mắt,Móng tay duy nhất,Tóc duy nhất,Xương và răng
+859,Huyết áp thường gồm hai chỉ số nào?,Tâm thu và tâm trương,Trái và phải,Nhanh và chậm,Sáng và tối
+860,Protein trong khẩu phần ăn có vai trò chính nào?,Làm giảm trọng lực,Thay thế hoàn toàn nước,Tạo mật khẩu,Xây dựng và sửa chữa mô
+861,Tiêm vaccine nhằm mục đích chính gì?,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Chữa mọi bệnh ngay lập tức,Thay thế dinh dưỡng,Làm tăng chiều cao tức thì
+862,Mất nước xảy ra khi cơ thể thiếu gì?,Nước và điện giải,Âm thanh,Ánh sáng,Dữ liệu
+863,Giấc ngủ đủ có vai trò gì?,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Tăng dung lượng ổ cứng,Thay thế vận động,Loại bỏ nhu cầu ăn uống
+864,Gan có một chức năng quan trọng nào?,Bơm máu chính,Tạo hình ảnh trên võng mạc,Chuyển hóa và xử lý nhiều chất trong cơ thể,Trao đổi khí trực tiếp
+865,Thận có chức năng chính nào?,Tạo âm thanh,Tiêu hóa protein trong dạ dày,Lọc máu và tạo nước tiểu,Co bóp để bơm máu
+866,[Y tế 2] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tuyến giáp,Gan,Tim,Dạ dày
+867,[Y tế 2] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Sản xuất mật,Trao đổi khí oxy và carbon dioxide,Lọc máu thành nước tiểu
+868,[Y tế 2] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Mất trí nhớ tức thì,Lây truyền mầm bệnh qua tay,Tăng huyết áp ngay lập tức,Gãy xương
+869,[Y tế 2] Vitamin C thường liên quan nhiều đến chức năng nào?,Tạo xương trực tiếp như canxi,Truyền tín hiệu điện trong dây cáp,Làm biến mất mọi bệnh,Hỗ trợ miễn dịch và tổng hợp collagen
+870,[Y tế 2] Canxi quan trọng nhất đối với bộ phận nào?,Xương và răng,Màu mắt,Móng tay duy nhất,Tóc duy nhất
+871,[Y tế 2] Huyết áp thường gồm hai chỉ số nào?,Sáng và tối,Tâm thu và tâm trương,Nhanh và chậm,Trái và phải
+872,[Y tế 2] Protein trong khẩu phần ăn có vai trò chính nào?,Tạo mật khẩu,Làm giảm trọng lực,Xây dựng và sửa chữa mô,Thay thế hoàn toàn nước
+873,[Y tế 2] Tiêm vaccine nhằm mục đích chính gì?,Thay thế dinh dưỡng,Làm tăng chiều cao tức thì,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh
+874,[Y tế 2] Mất nước xảy ra khi cơ thể thiếu gì?,Âm thanh,Dữ liệu,Nước và điện giải,Ánh sáng
+875,[Y tế 2] Giấc ngủ đủ có vai trò gì?,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Loại bỏ nhu cầu ăn uống,Thay thế vận động,Tăng dung lượng ổ cứng
+876,[Y tế 2] Gan có một chức năng quan trọng nào?,Tạo hình ảnh trên võng mạc,Trao đổi khí trực tiếp,Bơm máu chính,Chuyển hóa và xử lý nhiều chất trong cơ thể
+877,[Y tế 2] Thận có chức năng chính nào?,Tạo âm thanh,Co bóp để bơm máu,Lọc máu và tạo nước tiểu,Tiêu hóa protein trong dạ dày
+878,[Y tế 3] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tuyến giáp,Gan,Tim,Dạ dày
+879,[Y tế 3] Phổi có chức năng chính là gì?,Lọc máu thành nước tiểu,Sản xuất mật,Trao đổi khí oxy và carbon dioxide,Tiêu hóa tinh bột
+880,[Y tế 3] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Tăng huyết áp ngay lập tức,Gãy xương,Lây truyền mầm bệnh qua tay,Mất trí nhớ tức thì
+881,[Y tế 3] Vitamin C thường liên quan nhiều đến chức năng nào?,Làm biến mất mọi bệnh,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi,Truyền tín hiệu điện trong dây cáp
+882,[Y tế 3] Canxi quan trọng nhất đối với bộ phận nào?,Tóc duy nhất,Xương và răng,Móng tay duy nhất,Màu mắt
+883,[Y tế 3] Huyết áp thường gồm hai chỉ số nào?,Tâm thu và tâm trương,Nhanh và chậm,Trái và phải,Sáng và tối
+884,[Y tế 3] Protein trong khẩu phần ăn có vai trò chính nào?,Xây dựng và sửa chữa mô,Tạo mật khẩu,Thay thế hoàn toàn nước,Làm giảm trọng lực
+885,[Y tế 3] Tiêm vaccine nhằm mục đích chính gì?,Chữa mọi bệnh ngay lập tức,Thay thế dinh dưỡng,Làm tăng chiều cao tức thì,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh
+886,[Y tế 3] Mất nước xảy ra khi cơ thể thiếu gì?,Âm thanh,Nước và điện giải,Dữ liệu,Ánh sáng
+887,[Y tế 3] Giấc ngủ đủ có vai trò gì?,Loại bỏ nhu cầu ăn uống,Thay thế vận động,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Tăng dung lượng ổ cứng
+888,[Y tế 3] Gan có một chức năng quan trọng nào?,Bơm máu chính,Tạo hình ảnh trên võng mạc,Chuyển hóa và xử lý nhiều chất trong cơ thể,Trao đổi khí trực tiếp
+889,[Y tế 3] Thận có chức năng chính nào?,Tạo âm thanh,Tiêu hóa protein trong dạ dày,Lọc máu và tạo nước tiểu,Co bóp để bơm máu
+890,[Y tế 4] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Tim,Dạ dày,Tuyến giáp
+891,[Y tế 4] Phổi có chức năng chính là gì?,Lọc máu thành nước tiểu,Tiêu hóa tinh bột,Trao đổi khí oxy và carbon dioxide,Sản xuất mật
+892,[Y tế 4] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Gãy xương,Mất trí nhớ tức thì,Lây truyền mầm bệnh qua tay,Tăng huyết áp ngay lập tức
+893,[Y tế 4] Vitamin C thường liên quan nhiều đến chức năng nào?,Hỗ trợ miễn dịch và tổng hợp collagen,Truyền tín hiệu điện trong dây cáp,Làm biến mất mọi bệnh,Tạo xương trực tiếp như canxi
+894,[Y tế 4] Canxi quan trọng nhất đối với bộ phận nào?,Xương và răng,Màu mắt,Tóc duy nhất,Móng tay duy nhất
+895,[Y tế 4] Huyết áp thường gồm hai chỉ số nào?,Trái và phải,Sáng và tối,Nhanh và chậm,Tâm thu và tâm trương
+896,[Y tế 4] Protein trong khẩu phần ăn có vai trò chính nào?,Xây dựng và sửa chữa mô,Thay thế hoàn toàn nước,Tạo mật khẩu,Làm giảm trọng lực
+897,[Y tế 4] Tiêm vaccine nhằm mục đích chính gì?,Thay thế dinh dưỡng,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Làm tăng chiều cao tức thì
+898,[Y tế 4] Mất nước xảy ra khi cơ thể thiếu gì?,Dữ liệu,Ánh sáng,Âm thanh,Nước và điện giải
+899,[Y tế 4] Giấc ngủ đủ có vai trò gì?,Tăng dung lượng ổ cứng,Loại bỏ nhu cầu ăn uống,Thay thế vận động,Hỗ trợ phục hồi cơ thể và chức năng nhận thức
+900,[Y tế 4] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Bơm máu chính,Tạo hình ảnh trên võng mạc,Trao đổi khí trực tiếp
+901,[Y tế 4] Thận có chức năng chính nào?,Lọc máu và tạo nước tiểu,Co bóp để bơm máu,Tạo âm thanh,Tiêu hóa protein trong dạ dày
+902,[Y tế 5] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Dạ dày,Tuyến giáp,Gan,Tim
+903,[Y tế 5] Phổi có chức năng chính là gì?,Trao đổi khí oxy và carbon dioxide,Sản xuất mật,Tiêu hóa tinh bột,Lọc máu thành nước tiểu
+904,[Y tế 5] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Lây truyền mầm bệnh qua tay,Mất trí nhớ tức thì,Gãy xương,Tăng huyết áp ngay lập tức
+905,[Y tế 5] Vitamin C thường liên quan nhiều đến chức năng nào?,Hỗ trợ miễn dịch và tổng hợp collagen,Truyền tín hiệu điện trong dây cáp,Tạo xương trực tiếp như canxi,Làm biến mất mọi bệnh
+906,[Y tế 5] Canxi quan trọng nhất đối với bộ phận nào?,Xương và răng,Tóc duy nhất,Màu mắt,Móng tay duy nhất
+907,[Y tế 5] Huyết áp thường gồm hai chỉ số nào?,Tâm thu và tâm trương,Trái và phải,Nhanh và chậm,Sáng và tối
+908,[Y tế 5] Protein trong khẩu phần ăn có vai trò chính nào?,Tạo mật khẩu,Làm giảm trọng lực,Xây dựng và sửa chữa mô,Thay thế hoàn toàn nước
+909,[Y tế 5] Tiêm vaccine nhằm mục đích chính gì?,Chữa mọi bệnh ngay lập tức,Làm tăng chiều cao tức thì,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Thay thế dinh dưỡng
+910,[Y tế 5] Mất nước xảy ra khi cơ thể thiếu gì?,Ánh sáng,Nước và điện giải,Âm thanh,Dữ liệu
+911,[Y tế 5] Giấc ngủ đủ có vai trò gì?,Thay thế vận động,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Tăng dung lượng ổ cứng,Loại bỏ nhu cầu ăn uống
+912,[Y tế 5] Gan có một chức năng quan trọng nào?,Bơm máu chính,Tạo hình ảnh trên võng mạc,Chuyển hóa và xử lý nhiều chất trong cơ thể,Trao đổi khí trực tiếp
+913,[Y tế 5] Thận có chức năng chính nào?,Tạo âm thanh,Lọc máu và tạo nước tiểu,Tiêu hóa protein trong dạ dày,Co bóp để bơm máu
+914,[Y tế 6] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tim,Gan,Tuyến giáp,Dạ dày
+915,[Y tế 6] Phổi có chức năng chính là gì?,Sản xuất mật,Tiêu hóa tinh bột,Lọc máu thành nước tiểu,Trao đổi khí oxy và carbon dioxide
+916,[Y tế 6] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Mất trí nhớ tức thì,Gãy xương,Lây truyền mầm bệnh qua tay,Tăng huyết áp ngay lập tức
+917,[Y tế 6] Vitamin C thường liên quan nhiều đến chức năng nào?,Truyền tín hiệu điện trong dây cáp,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi,Làm biến mất mọi bệnh
+918,[Y tế 6] Canxi quan trọng nhất đối với bộ phận nào?,Xương và răng,Tóc duy nhất,Móng tay duy nhất,Màu mắt
+919,[Y tế 6] Huyết áp thường gồm hai chỉ số nào?,Nhanh và chậm,Tâm thu và tâm trương,Trái và phải,Sáng và tối
+920,[Y tế 6] Protein trong khẩu phần ăn có vai trò chính nào?,Thay thế hoàn toàn nước,Xây dựng và sửa chữa mô,Làm giảm trọng lực,Tạo mật khẩu
+921,[Y tế 6] Tiêm vaccine nhằm mục đích chính gì?,Làm tăng chiều cao tức thì,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Thay thế dinh dưỡng
+922,[Y tế 6] Mất nước xảy ra khi cơ thể thiếu gì?,Nước và điện giải,Âm thanh,Ánh sáng,Dữ liệu
+923,[Y tế 6] Giấc ngủ đủ có vai trò gì?,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Loại bỏ nhu cầu ăn uống,Tăng dung lượng ổ cứng,Thay thế vận động
+924,[Y tế 6] Gan có một chức năng quan trọng nào?,Tạo hình ảnh trên võng mạc,Bơm máu chính,Trao đổi khí trực tiếp,Chuyển hóa và xử lý nhiều chất trong cơ thể
+925,[Y tế 6] Thận có chức năng chính nào?,Lọc máu và tạo nước tiểu,Tiêu hóa protein trong dạ dày,Tạo âm thanh,Co bóp để bơm máu
+926,[Y tế 7] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Dạ dày,Tim,Tuyến giáp
+927,[Y tế 7] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Trao đổi khí oxy và carbon dioxide,Sản xuất mật,Lọc máu thành nước tiểu
+928,[Y tế 7] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Tăng huyết áp ngay lập tức,Lây truyền mầm bệnh qua tay,Gãy xương,Mất trí nhớ tức thì
+929,[Y tế 7] Vitamin C thường liên quan nhiều đến chức năng nào?,Làm biến mất mọi bệnh,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi,Truyền tín hiệu điện trong dây cáp
+930,[Y tế 7] Canxi quan trọng nhất đối với bộ phận nào?,Móng tay duy nhất,Xương và răng,Màu mắt,Tóc duy nhất
+931,[Y tế 7] Huyết áp thường gồm hai chỉ số nào?,Tâm thu và tâm trương,Nhanh và chậm,Trái và phải,Sáng và tối
+932,[Y tế 7] Protein trong khẩu phần ăn có vai trò chính nào?,Xây dựng và sửa chữa mô,Tạo mật khẩu,Làm giảm trọng lực,Thay thế hoàn toàn nước
+933,[Y tế 7] Tiêm vaccine nhằm mục đích chính gì?,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Thay thế dinh dưỡng,Làm tăng chiều cao tức thì
+934,[Y tế 7] Mất nước xảy ra khi cơ thể thiếu gì?,Dữ liệu,Âm thanh,Nước và điện giải,Ánh sáng
+935,[Y tế 7] Giấc ngủ đủ có vai trò gì?,Tăng dung lượng ổ cứng,Loại bỏ nhu cầu ăn uống,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Thay thế vận động
+936,[Y tế 7] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Bơm máu chính,Trao đổi khí trực tiếp
+937,[Y tế 7] Thận có chức năng chính nào?,Tiêu hóa protein trong dạ dày,Lọc máu và tạo nước tiểu,Co bóp để bơm máu,Tạo âm thanh
+938,[Y tế 8] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Tim,Dạ dày,Tuyến giáp
+939,[Y tế 8] Phổi có chức năng chính là gì?,Lọc máu thành nước tiểu,Trao đổi khí oxy và carbon dioxide,Tiêu hóa tinh bột,Sản xuất mật
+940,[Y tế 8] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Lây truyền mầm bệnh qua tay,Mất trí nhớ tức thì,Gãy xương,Tăng huyết áp ngay lập tức
+941,[Y tế 8] Vitamin C thường liên quan nhiều đến chức năng nào?,Làm biến mất mọi bệnh,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi,Truyền tín hiệu điện trong dây cáp
+942,[Y tế 8] Canxi quan trọng nhất đối với bộ phận nào?,Tóc duy nhất,Màu mắt,Móng tay duy nhất,Xương và răng
+943,[Y tế 8] Huyết áp thường gồm hai chỉ số nào?,Nhanh và chậm,Sáng và tối,Tâm thu và tâm trương,Trái và phải
+944,[Y tế 8] Protein trong khẩu phần ăn có vai trò chính nào?,Xây dựng và sửa chữa mô,Làm giảm trọng lực,Thay thế hoàn toàn nước,Tạo mật khẩu
+945,[Y tế 8] Tiêm vaccine nhằm mục đích chính gì?,Chữa mọi bệnh ngay lập tức,Thay thế dinh dưỡng,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Làm tăng chiều cao tức thì
+946,[Y tế 8] Mất nước xảy ra khi cơ thể thiếu gì?,Ánh sáng,Âm thanh,Dữ liệu,Nước và điện giải
+947,[Y tế 8] Giấc ngủ đủ có vai trò gì?,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Tăng dung lượng ổ cứng,Loại bỏ nhu cầu ăn uống,Thay thế vận động
+948,[Y tế 8] Gan có một chức năng quan trọng nào?,Trao đổi khí trực tiếp,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Bơm máu chính
+949,[Y tế 8] Thận có chức năng chính nào?,Tiêu hóa protein trong dạ dày,Lọc máu và tạo nước tiểu,Co bóp để bơm máu,Tạo âm thanh
+950,[Y tế 9] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Tuyến giáp,Dạ dày,Tim
+951,[Y tế 9] Phổi có chức năng chính là gì?,Trao đổi khí oxy và carbon dioxide,Sản xuất mật,Lọc máu thành nước tiểu,Tiêu hóa tinh bột
+952,[Y tế 9] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Gãy xương,Mất trí nhớ tức thì,Lây truyền mầm bệnh qua tay,Tăng huyết áp ngay lập tức
+953,[Y tế 9] Vitamin C thường liên quan nhiều đến chức năng nào?,Tạo xương trực tiếp như canxi,Hỗ trợ miễn dịch và tổng hợp collagen,Truyền tín hiệu điện trong dây cáp,Làm biến mất mọi bệnh
+954,[Y tế 9] Canxi quan trọng nhất đối với bộ phận nào?,Móng tay duy nhất,Màu mắt,Tóc duy nhất,Xương và răng
+955,[Y tế 9] Huyết áp thường gồm hai chỉ số nào?,Nhanh và chậm,Tâm thu và tâm trương,Sáng và tối,Trái và phải
+956,[Y tế 9] Protein trong khẩu phần ăn có vai trò chính nào?,Xây dựng và sửa chữa mô,Làm giảm trọng lực,Tạo mật khẩu,Thay thế hoàn toàn nước
+957,[Y tế 9] Tiêm vaccine nhằm mục đích chính gì?,Thay thế dinh dưỡng,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Làm tăng chiều cao tức thì
+958,[Y tế 9] Mất nước xảy ra khi cơ thể thiếu gì?,Nước và điện giải,Dữ liệu,Âm thanh,Ánh sáng
+959,[Y tế 9] Giấc ngủ đủ có vai trò gì?,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Tăng dung lượng ổ cứng,Thay thế vận động,Loại bỏ nhu cầu ăn uống
+960,[Y tế 9] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Trao đổi khí trực tiếp,Bơm máu chính
+961,[Y tế 9] Thận có chức năng chính nào?,Lọc máu và tạo nước tiểu,Tiêu hóa protein trong dạ dày,Co bóp để bơm máu,Tạo âm thanh
+962,[Y tế 10] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Tim,Dạ dày,Tuyến giáp
+963,[Y tế 10] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Sản xuất mật,Trao đổi khí oxy và carbon dioxide,Lọc máu thành nước tiểu
+964,[Y tế 10] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Mất trí nhớ tức thì,Gãy xương,Lây truyền mầm bệnh qua tay,Tăng huyết áp ngay lập tức
+965,[Y tế 10] Vitamin C thường liên quan nhiều đến chức năng nào?,Hỗ trợ miễn dịch và tổng hợp collagen,Truyền tín hiệu điện trong dây cáp,Làm biến mất mọi bệnh,Tạo xương trực tiếp như canxi
+966,[Y tế 10] Canxi quan trọng nhất đối với bộ phận nào?,Tóc duy nhất,Móng tay duy nhất,Xương và răng,Màu mắt
+967,[Y tế 10] Huyết áp thường gồm hai chỉ số nào?,Sáng và tối,Trái và phải,Tâm thu và tâm trương,Nhanh và chậm
+968,[Y tế 10] Protein trong khẩu phần ăn có vai trò chính nào?,Thay thế hoàn toàn nước,Xây dựng và sửa chữa mô,Làm giảm trọng lực,Tạo mật khẩu
+969,[Y tế 10] Tiêm vaccine nhằm mục đích chính gì?,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Làm tăng chiều cao tức thì,Thay thế dinh dưỡng
+970,[Y tế 10] Mất nước xảy ra khi cơ thể thiếu gì?,Dữ liệu,Ánh sáng,Âm thanh,Nước và điện giải
+971,[Y tế 10] Giấc ngủ đủ có vai trò gì?,Loại bỏ nhu cầu ăn uống,Thay thế vận động,Tăng dung lượng ổ cứng,Hỗ trợ phục hồi cơ thể và chức năng nhận thức
+972,[Y tế 10] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Bơm máu chính,Trao đổi khí trực tiếp
+973,[Y tế 10] Thận có chức năng chính nào?,Tiêu hóa protein trong dạ dày,Tạo âm thanh,Co bóp để bơm máu,Lọc máu và tạo nước tiểu
+974,[Y tế 11] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tuyến giáp,Dạ dày,Tim,Gan
+975,[Y tế 11] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Lọc máu thành nước tiểu,Sản xuất mật,Trao đổi khí oxy và carbon dioxide
+976,[Y tế 11] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Gãy xương,Lây truyền mầm bệnh qua tay,Mất trí nhớ tức thì,Tăng huyết áp ngay lập tức
+977,[Y tế 11] Vitamin C thường liên quan nhiều đến chức năng nào?,Làm biến mất mọi bệnh,Truyền tín hiệu điện trong dây cáp,Hỗ trợ miễn dịch và tổng hợp collagen,Tạo xương trực tiếp như canxi
+978,[Y tế 11] Canxi quan trọng nhất đối với bộ phận nào?,Móng tay duy nhất,Tóc duy nhất,Màu mắt,Xương và răng
+979,[Y tế 11] Huyết áp thường gồm hai chỉ số nào?,Tâm thu và tâm trương,Trái và phải,Sáng và tối,Nhanh và chậm
+980,[Y tế 11] Protein trong khẩu phần ăn có vai trò chính nào?,Tạo mật khẩu,Làm giảm trọng lực,Thay thế hoàn toàn nước,Xây dựng và sửa chữa mô
+981,[Y tế 11] Tiêm vaccine nhằm mục đích chính gì?,Làm tăng chiều cao tức thì,Chữa mọi bệnh ngay lập tức,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Thay thế dinh dưỡng
+982,[Y tế 11] Mất nước xảy ra khi cơ thể thiếu gì?,Dữ liệu,Ánh sáng,Nước và điện giải,Âm thanh
+983,[Y tế 11] Giấc ngủ đủ có vai trò gì?,Thay thế vận động,Loại bỏ nhu cầu ăn uống,Tăng dung lượng ổ cứng,Hỗ trợ phục hồi cơ thể và chức năng nhận thức
+984,[Y tế 11] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Trao đổi khí trực tiếp,Bơm máu chính
+985,[Y tế 11] Thận có chức năng chính nào?,Co bóp để bơm máu,Tiêu hóa protein trong dạ dày,Tạo âm thanh,Lọc máu và tạo nước tiểu
+986,[Y tế 12] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Gan,Tim,Tuyến giáp,Dạ dày
+987,[Y tế 12] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Sản xuất mật,Trao đổi khí oxy và carbon dioxide,Lọc máu thành nước tiểu
+988,[Y tế 12] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Mất trí nhớ tức thì,Gãy xương,Tăng huyết áp ngay lập tức,Lây truyền mầm bệnh qua tay
+989,[Y tế 12] Vitamin C thường liên quan nhiều đến chức năng nào?,Tạo xương trực tiếp như canxi,Truyền tín hiệu điện trong dây cáp,Làm biến mất mọi bệnh,Hỗ trợ miễn dịch và tổng hợp collagen
+990,[Y tế 12] Canxi quan trọng nhất đối với bộ phận nào?,Tóc duy nhất,Xương và răng,Móng tay duy nhất,Màu mắt
+991,[Y tế 12] Huyết áp thường gồm hai chỉ số nào?,Trái và phải,Sáng và tối,Nhanh và chậm,Tâm thu và tâm trương
+992,[Y tế 12] Protein trong khẩu phần ăn có vai trò chính nào?,Làm giảm trọng lực,Xây dựng và sửa chữa mô,Tạo mật khẩu,Thay thế hoàn toàn nước
+993,[Y tế 12] Tiêm vaccine nhằm mục đích chính gì?,Thay thế dinh dưỡng,Kích thích hệ miễn dịch nhận diện tác nhân gây bệnh,Chữa mọi bệnh ngay lập tức,Làm tăng chiều cao tức thì
+994,[Y tế 12] Mất nước xảy ra khi cơ thể thiếu gì?,Dữ liệu,Âm thanh,Ánh sáng,Nước và điện giải
+995,[Y tế 12] Giấc ngủ đủ có vai trò gì?,Tăng dung lượng ổ cứng,Thay thế vận động,Hỗ trợ phục hồi cơ thể và chức năng nhận thức,Loại bỏ nhu cầu ăn uống
+996,[Y tế 12] Gan có một chức năng quan trọng nào?,Chuyển hóa và xử lý nhiều chất trong cơ thể,Tạo hình ảnh trên võng mạc,Trao đổi khí trực tiếp,Bơm máu chính
+997,[Y tế 12] Thận có chức năng chính nào?,Lọc máu và tạo nước tiểu,Tiêu hóa protein trong dạ dày,Tạo âm thanh,Co bóp để bơm máu
+998,[Y tế 13] Cơ quan nào chịu trách nhiệm bơm máu đi khắp cơ thể?,Tuyến giáp,Gan,Tim,Dạ dày
+999,[Y tế 13] Phổi có chức năng chính là gì?,Tiêu hóa tinh bột,Sản xuất mật,Lọc máu thành nước tiểu,Trao đổi khí oxy và carbon dioxide
+1000,[Y tế 13] Rửa tay bằng xà phòng giúp giảm nguy cơ gì?,Lây truyền mầm bệnh qua tay,Mất trí nhớ tức thì,Gãy xương,Tăng huyết áp ngay lập tức
+1001,[Y tế 13] Vitamin C thường liên quan nhiều đến chức năng nào?,Truyền tín hiệu điện trong dây cáp,Tạo xương trực tiếp như canxi,Hỗ trợ miễn dịch và tổng hợp collagen,Làm biến mất mọi bệnh
+1002,[Y tế 13] Canxi quan trọng nhất đối với bộ phận nào?,Xương và răng,Móng tay duy nhất,Màu mắt,Tóc duy nhất
+1003,[Y tế 13] Huyết áp thường gồm hai chỉ số nào?,Trái và phải,Sáng và tối,Tâm thu và tâm trương,Nhanh và chậm
+1004,Đơn vị đo lực trong hệ SI là gì?,Pascal,Joule,Watt,Newton
+1005,Công thức tính vận tốc trung bình là gì?,v = m/a,v = s/t,v = F/s,v = t/s
+1006,Đơn vị đo công suất là gì?,Kilogram,Mét,Watt,Newton
+1007,Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^6 m/s,3 x 10^8 m/s,3 x 10^10 m/s,3 x 10^5 m/s
+1008,Ký hiệu hóa học của Natri là gì?,N,Ne,Ni,Na
+1009,Công thức hóa học của nước là gì?,H2O,O2,CO2,NaCl
+1010,pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Muối,Bazơ,Trung tính
+1011,Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Photon,Nơtron trong vỏ,Phân tử,Electron
+1012,Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ribosome,Ti thể,Màng sinh chất,Lục lạp ở mọi tế bào
+1013,ADN mang thông tin gì?,Áp suất,Nhiệt lượng,Âm thanh,Thông tin di truyền
+1014,Quang hợp là quá trình gì?,Nước đóng băng,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Kim loại bị ăn mòn
+1015,Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Hệ cơ quan,Tế bào,Mô,Cơ quan
+1016,[Khoa học 2] Đơn vị đo lực trong hệ SI là gì?,Pascal,Watt,Newton,Joule
+1017,[Khoa học 2] Công thức tính vận tốc trung bình là gì?,v = s/t,v = t/s,v = m/a,v = F/s
+1018,[Khoa học 2] Đơn vị đo công suất là gì?,Mét,Watt,Kilogram,Newton
+1019,[Khoa học 2] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^6 m/s,3 x 10^8 m/s,3 x 10^5 m/s,3 x 10^10 m/s
+1020,[Khoa học 2] Ký hiệu hóa học của Natri là gì?,Na,Ne,Ni,N
+1021,[Khoa học 2] Công thức hóa học của nước là gì?,H2O,NaCl,O2,CO2
+1022,[Khoa học 2] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Muối,Bazơ,Axit,Trung tính
+1023,[Khoa học 2] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Phân tử,Nơtron trong vỏ,Electron,Photon
+1024,[Khoa học 2] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ribosome,Ti thể,Màng sinh chất,Lục lạp ở mọi tế bào
+1025,[Khoa học 2] ADN mang thông tin gì?,Áp suất,Âm thanh,Nhiệt lượng,Thông tin di truyền
+1026,[Khoa học 2] Quang hợp là quá trình gì?,Nước đóng băng,Kim loại bị ăn mòn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Động vật tiêu hóa thức ăn
+1027,[Khoa học 2] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Mô,Tế bào,Hệ cơ quan
+1028,[Khoa học 3] Đơn vị đo lực trong hệ SI là gì?,Joule,Newton,Pascal,Watt
+1029,[Khoa học 3] Công thức tính vận tốc trung bình là gì?,v = m/a,v = t/s,v = F/s,v = s/t
+1030,[Khoa học 3] Đơn vị đo công suất là gì?,Kilogram,Watt,Mét,Newton
+1031,[Khoa học 3] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^6 m/s,3 x 10^10 m/s,3 x 10^8 m/s
+1032,[Khoa học 3] Ký hiệu hóa học của Natri là gì?,N,Ne,Na,Ni
+1033,[Khoa học 3] Công thức hóa học của nước là gì?,H2O,O2,CO2,NaCl
+1034,[Khoa học 3] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Bazơ,Muối,Trung tính,Axit
+1035,[Khoa học 3] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Phân tử,Photon,Electron
+1036,[Khoa học 3] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Ribosome,Lục lạp ở mọi tế bào
+1037,[Khoa học 3] ADN mang thông tin gì?,Áp suất,Nhiệt lượng,Thông tin di truyền,Âm thanh
+1038,[Khoa học 3] Quang hợp là quá trình gì?,Động vật tiêu hóa thức ăn,Nước đóng băng,Kim loại bị ăn mòn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ
+1039,[Khoa học 3] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Hệ cơ quan,Tế bào,Mô
+1040,[Khoa học 4] Đơn vị đo lực trong hệ SI là gì?,Newton,Joule,Pascal,Watt
+1041,[Khoa học 4] Công thức tính vận tốc trung bình là gì?,v = s/t,v = t/s,v = m/a,v = F/s
+1042,[Khoa học 4] Đơn vị đo công suất là gì?,Watt,Kilogram,Newton,Mét
+1043,[Khoa học 4] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^10 m/s,3 x 10^6 m/s,3 x 10^5 m/s,3 x 10^8 m/s
+1044,[Khoa học 4] Ký hiệu hóa học của Natri là gì?,Ne,Na,Ni,N
+1045,[Khoa học 4] Công thức hóa học của nước là gì?,NaCl,CO2,O2,H2O
+1046,[Khoa học 4] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Bazơ,Trung tính,Muối
+1047,[Khoa học 4] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Photon,Nơtron trong vỏ,Electron,Phân tử
+1048,[Khoa học 4] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Lục lạp ở mọi tế bào,Ribosome
+1049,[Khoa học 4] ADN mang thông tin gì?,Nhiệt lượng,Thông tin di truyền,Áp suất,Âm thanh
+1050,[Khoa học 4] Quang hợp là quá trình gì?,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng,Kim loại bị ăn mòn,Động vật tiêu hóa thức ăn
+1051,[Khoa học 4] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Hệ cơ quan,Mô,Tế bào
+1052,[Khoa học 5] Đơn vị đo lực trong hệ SI là gì?,Watt,Pascal,Newton,Joule
+1053,[Khoa học 5] Công thức tính vận tốc trung bình là gì?,v = m/a,v = F/s,v = s/t,v = t/s
+1054,[Khoa học 5] Đơn vị đo công suất là gì?,Newton,Kilogram,Watt,Mét
+1055,[Khoa học 5] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^6 m/s,3 x 10^5 m/s,3 x 10^8 m/s,3 x 10^10 m/s
+1056,[Khoa học 5] Ký hiệu hóa học của Natri là gì?,Na,N,Ni,Ne
+1057,[Khoa học 5] Công thức hóa học của nước là gì?,CO2,O2,H2O,NaCl
+1058,[Khoa học 5] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Trung tính,Bazơ,Axit,Muối
+1059,[Khoa học 5] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Electron,Photon,Phân tử
+1060,[Khoa học 5] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Màng sinh chất,Ti thể,Ribosome,Lục lạp ở mọi tế bào
+1061,[Khoa học 5] ADN mang thông tin gì?,Nhiệt lượng,Áp suất,Thông tin di truyền,Âm thanh
+1062,[Khoa học 5] Quang hợp là quá trình gì?,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng,Kim loại bị ăn mòn
+1063,[Khoa học 5] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Hệ cơ quan,Cơ quan,Mô,Tế bào
+1064,[Khoa học 6] Đơn vị đo lực trong hệ SI là gì?,Joule,Watt,Pascal,Newton
+1065,[Khoa học 6] Công thức tính vận tốc trung bình là gì?,v = m/a,v = t/s,v = s/t,v = F/s
+1066,[Khoa học 6] Đơn vị đo công suất là gì?,Kilogram,Mét,Newton,Watt
+1067,[Khoa học 6] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^6 m/s,3 x 10^5 m/s,3 x 10^8 m/s,3 x 10^10 m/s
+1068,[Khoa học 6] Ký hiệu hóa học của Natri là gì?,Na,Ne,Ni,N
+1069,[Khoa học 6] Công thức hóa học của nước là gì?,H2O,CO2,NaCl,O2
+1070,[Khoa học 6] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Bazơ,Muối,Axit,Trung tính
+1071,[Khoa học 6] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Phân tử,Electron,Photon
+1072,[Khoa học 6] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Màng sinh chất,Lục lạp ở mọi tế bào,Ti thể,Ribosome
+1073,[Khoa học 6] ADN mang thông tin gì?,Nhiệt lượng,Áp suất,Âm thanh,Thông tin di truyền
+1074,[Khoa học 6] Quang hợp là quá trình gì?,Kim loại bị ăn mòn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Động vật tiêu hóa thức ăn,Nước đóng băng
+1075,[Khoa học 6] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Mô,Hệ cơ quan,Cơ quan,Tế bào
+1076,[Khoa học 7] Đơn vị đo lực trong hệ SI là gì?,Watt,Pascal,Joule,Newton
+1077,[Khoa học 7] Công thức tính vận tốc trung bình là gì?,v = m/a,v = s/t,v = F/s,v = t/s
+1078,[Khoa học 7] Đơn vị đo công suất là gì?,Kilogram,Mét,Watt,Newton
+1079,[Khoa học 7] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^8 m/s,3 x 10^10 m/s,3 x 10^5 m/s,3 x 10^6 m/s
+1080,[Khoa học 7] Ký hiệu hóa học của Natri là gì?,Ne,Ni,Na,N
+1081,[Khoa học 7] Công thức hóa học của nước là gì?,H2O,O2,CO2,NaCl
+1082,[Khoa học 7] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Muối,Axit,Trung tính,Bazơ
+1083,[Khoa học 7] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Phân tử,Nơtron trong vỏ,Electron,Photon
+1084,[Khoa học 7] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Lục lạp ở mọi tế bào,Ribosome,Ti thể,Màng sinh chất
+1085,[Khoa học 7] ADN mang thông tin gì?,Thông tin di truyền,Nhiệt lượng,Áp suất,Âm thanh
+1086,[Khoa học 7] Quang hợp là quá trình gì?,Nước đóng băng,Kim loại bị ăn mòn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Động vật tiêu hóa thức ăn
+1087,[Khoa học 7] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Tế bào,Mô,Hệ cơ quan
+1088,[Khoa học 8] Đơn vị đo lực trong hệ SI là gì?,Pascal,Joule,Watt,Newton
+1089,[Khoa học 8] Công thức tính vận tốc trung bình là gì?,v = t/s,v = m/a,v = F/s,v = s/t
+1090,[Khoa học 8] Đơn vị đo công suất là gì?,Mét,Kilogram,Watt,Newton
+1091,[Khoa học 8] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^8 m/s,3 x 10^10 m/s,3 x 10^6 m/s
+1092,[Khoa học 8] Ký hiệu hóa học của Natri là gì?,Na,N,Ne,Ni
+1093,[Khoa học 8] Công thức hóa học của nước là gì?,O2,NaCl,CO2,H2O
+1094,[Khoa học 8] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Bazơ,Muối,Axit,Trung tính
+1095,[Khoa học 8] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Electron,Nơtron trong vỏ,Photon,Phân tử
+1096,[Khoa học 8] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ribosome,Màng sinh chất,Ti thể,Lục lạp ở mọi tế bào
+1097,[Khoa học 8] ADN mang thông tin gì?,Âm thanh,Thông tin di truyền,Nhiệt lượng,Áp suất
+1098,[Khoa học 8] Quang hợp là quá trình gì?,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng,Kim loại bị ăn mòn
+1099,[Khoa học 8] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Mô,Hệ cơ quan,Tế bào
+1100,[Khoa học 9] Đơn vị đo lực trong hệ SI là gì?,Watt,Pascal,Joule,Newton
+1101,[Khoa học 9] Công thức tính vận tốc trung bình là gì?,v = t/s,v = F/s,v = s/t,v = m/a
+1102,[Khoa học 9] Đơn vị đo công suất là gì?,Watt,Kilogram,Newton,Mét
+1103,[Khoa học 9] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^10 m/s,3 x 10^6 m/s,3 x 10^8 m/s
+1104,[Khoa học 9] Ký hiệu hóa học của Natri là gì?,Ni,Ne,Na,N
+1105,[Khoa học 9] Công thức hóa học của nước là gì?,O2,H2O,CO2,NaCl
+1106,[Khoa học 9] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Trung tính,Muối,Axit,Bazơ
+1107,[Khoa học 9] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Electron,Photon,Phân tử
+1108,[Khoa học 9] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Lục lạp ở mọi tế bào,Ribosome
+1109,[Khoa học 9] ADN mang thông tin gì?,Thông tin di truyền,Nhiệt lượng,Âm thanh,Áp suất
+1110,[Khoa học 9] Quang hợp là quá trình gì?,Kim loại bị ăn mòn,Nước đóng băng,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ
+1111,[Khoa học 9] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Hệ cơ quan,Mô,Tế bào,Cơ quan
+1112,[Khoa học 10] Đơn vị đo lực trong hệ SI là gì?,Watt,Pascal,Newton,Joule
+1113,[Khoa học 10] Công thức tính vận tốc trung bình là gì?,v = m/a,v = F/s,v = s/t,v = t/s
+1114,[Khoa học 10] Đơn vị đo công suất là gì?,Kilogram,Newton,Watt,Mét
+1115,[Khoa học 10] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^10 m/s,3 x 10^6 m/s,3 x 10^8 m/s,3 x 10^5 m/s
+1116,[Khoa học 10] Ký hiệu hóa học của Natri là gì?,Na,N,Ni,Ne
+1117,[Khoa học 10] Công thức hóa học của nước là gì?,CO2,O2,NaCl,H2O
+1118,[Khoa học 10] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Bazơ,Muối,Trung tính
+1119,[Khoa học 10] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Electron,Nơtron trong vỏ,Phân tử,Photon
+1120,[Khoa học 10] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Ribosome,Lục lạp ở mọi tế bào
+1121,[Khoa học 10] ADN mang thông tin gì?,Thông tin di truyền,Áp suất,Nhiệt lượng,Âm thanh
+1122,[Khoa học 10] Quang hợp là quá trình gì?,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng,Kim loại bị ăn mòn
+1123,[Khoa học 10] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Tế bào,Cơ quan,Mô,Hệ cơ quan
+1124,[Khoa học 11] Đơn vị đo lực trong hệ SI là gì?,Newton,Watt,Joule,Pascal
+1125,[Khoa học 11] Công thức tính vận tốc trung bình là gì?,v = t/s,v = F/s,v = s/t,v = m/a
+1126,[Khoa học 11] Đơn vị đo công suất là gì?,Mét,Watt,Kilogram,Newton
+1127,[Khoa học 11] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^10 m/s,3 x 10^6 m/s,3 x 10^8 m/s,3 x 10^5 m/s
+1128,[Khoa học 11] Ký hiệu hóa học của Natri là gì?,N,Ne,Na,Ni
+1129,[Khoa học 11] Công thức hóa học của nước là gì?,NaCl,CO2,H2O,O2
+1130,[Khoa học 11] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Bazơ,Muối,Trung tính
+1131,[Khoa học 11] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Photon,Electron,Phân tử
+1132,[Khoa học 11] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Lục lạp ở mọi tế bào,Ribosome,Ti thể,Màng sinh chất
+1133,[Khoa học 11] ADN mang thông tin gì?,Nhiệt lượng,Thông tin di truyền,Áp suất,Âm thanh
+1134,[Khoa học 11] Quang hợp là quá trình gì?,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng,Kim loại bị ăn mòn,Động vật tiêu hóa thức ăn
+1135,[Khoa học 11] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Tế bào,Hệ cơ quan,Mô
+1136,[Khoa học 12] Đơn vị đo lực trong hệ SI là gì?,Watt,Newton,Pascal,Joule
+1137,[Khoa học 12] Công thức tính vận tốc trung bình là gì?,v = m/a,v = F/s,v = s/t,v = t/s
+1138,[Khoa học 12] Đơn vị đo công suất là gì?,Kilogram,Newton,Mét,Watt
+1139,[Khoa học 12] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^8 m/s,3 x 10^6 m/s,3 x 10^10 m/s
+1140,[Khoa học 12] Ký hiệu hóa học của Natri là gì?,N,Ni,Ne,Na
+1141,[Khoa học 12] Công thức hóa học của nước là gì?,H2O,O2,NaCl,CO2
+1142,[Khoa học 12] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Muối,Trung tính,Axit,Bazơ
+1143,[Khoa học 12] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Phân tử,Nơtron trong vỏ,Photon,Electron
+1144,[Khoa học 12] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Ribosome,Lục lạp ở mọi tế bào
+1145,[Khoa học 12] ADN mang thông tin gì?,Áp suất,Thông tin di truyền,Nhiệt lượng,Âm thanh
+1146,[Khoa học 12] Quang hợp là quá trình gì?,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Động vật tiêu hóa thức ăn,Kim loại bị ăn mòn,Nước đóng băng
+1147,[Khoa học 12] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Tế bào,Mô,Cơ quan,Hệ cơ quan
+1148,[Khoa học 13] Đơn vị đo lực trong hệ SI là gì?,Pascal,Joule,Newton,Watt
+1149,[Khoa học 13] Công thức tính vận tốc trung bình là gì?,v = m/a,v = s/t,v = t/s,v = F/s
+1150,[Khoa học 13] Đơn vị đo công suất là gì?,Watt,Kilogram,Mét,Newton
+1151,[Khoa học 13] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^6 m/s,3 x 10^10 m/s,3 x 10^8 m/s
+1152,[Khoa học 13] Ký hiệu hóa học của Natri là gì?,Ni,Na,N,Ne
+1153,[Khoa học 13] Công thức hóa học của nước là gì?,H2O,CO2,NaCl,O2
+1154,[Khoa học 13] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Axit,Bazơ,Trung tính,Muối
+1155,[Khoa học 13] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Nơtron trong vỏ,Photon,Phân tử,Electron
+1156,[Khoa học 13] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Ti thể,Màng sinh chất,Lục lạp ở mọi tế bào,Ribosome
+1157,[Khoa học 13] ADN mang thông tin gì?,Âm thanh,Áp suất,Nhiệt lượng,Thông tin di truyền
+1158,[Khoa học 13] Quang hợp là quá trình gì?,Động vật tiêu hóa thức ăn,Nước đóng băng,Kim loại bị ăn mòn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ
+1159,[Khoa học 13] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Mô,Hệ cơ quan,Tế bào,Cơ quan
+1160,[Khoa học 14] Đơn vị đo lực trong hệ SI là gì?,Joule,Pascal,Watt,Newton
+1161,[Khoa học 14] Công thức tính vận tốc trung bình là gì?,v = m/a,v = t/s,v = F/s,v = s/t
+1162,[Khoa học 14] Đơn vị đo công suất là gì?,Kilogram,Watt,Mét,Newton
+1163,[Khoa học 14] Ánh sáng truyền trong chân không với tốc độ xấp xỉ bao nhiêu?,3 x 10^5 m/s,3 x 10^10 m/s,3 x 10^6 m/s,3 x 10^8 m/s
+1164,[Khoa học 14] Ký hiệu hóa học của Natri là gì?,Ni,N,Ne,Na
+1165,[Khoa học 14] Công thức hóa học của nước là gì?,H2O,O2,CO2,NaCl
+1166,[Khoa học 14] pH nhỏ hơn 7 thường biểu thị môi trường gì?,Bazơ,Trung tính,Axit,Muối
+1167,[Khoa học 14] Nguyên tử gồm hạt nhân và lớp vỏ chứa hạt nào?,Electron,Phân tử,Nơtron trong vỏ,Photon
+1168,[Khoa học 14] Bào quan thường được xem là nơi tạo năng lượng chính của tế bào là gì?,Lục lạp ở mọi tế bào,Màng sinh chất,Ti thể,Ribosome
+1169,[Khoa học 14] ADN mang thông tin gì?,Âm thanh,Nhiệt lượng,Áp suất,Thông tin di truyền
+1170,[Khoa học 14] Quang hợp là quá trình gì?,Kim loại bị ăn mòn,Động vật tiêu hóa thức ăn,Cây xanh dùng ánh sáng để tổng hợp chất hữu cơ,Nước đóng băng
+1171,[Khoa học 14] Đơn vị cấu tạo cơ bản của cơ thể sống là gì?,Cơ quan,Hệ cơ quan,Mô,Tế bào
+1172,[Khoa học 15] Đơn vị đo lực trong hệ SI là gì?,Joule,Pascal,Newton,Watt
+1173,[Khoa học 15] Công thức tính vận tốc trung bình là gì?,v = s/t,v = m/a,v = F/s,v = t/s
+1174,Thủ đô của Việt Nam là thành phố nào?,Đà Nẵng,Cần Thơ,Huế,Hà Nội
+1175,Việt Nam nằm ở khu vực nào của châu Á?,Đông Nam Á,Đông Á,Nam Á,Trung Á
+1176,Châu lục có diện tích lớn nhất thế giới là gì?,Châu Phi,Châu Đại Dương,Châu Á,Châu Âu
+1177,Đại dương lớn nhất thế giới là gì?,Bắc Băng Dương,Đại Tây Dương,Ấn Độ Dương,Thái Bình Dương
+1178,Đỉnh núi cao nhất Việt Nam là gì?,Langbiang,Fansipan,Ba Vì,Bạch Mã
+1179,Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1975,1954,1968
+1180,Văn kiện 'Bình Ngô đại cáo' do ai viết?,Quang Trung,Nguyễn Trãi,Nguyễn Du,Trần Hưng Đạo
+1181,Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Pháp,Anh,Nhật Bản,Đức
+1182,Kinh tuyến gốc đi qua địa danh nào?,Greenwich,Tokyo,New York,Paris
+1183,Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Phi,Châu Mỹ,Châu Á,Châu Âu
+1184,[Xã hội 2] Thủ đô của Việt Nam là thành phố nào?,Hà Nội,Đà Nẵng,Cần Thơ,Huế
+1185,[Xã hội 2] Việt Nam nằm ở khu vực nào của châu Á?,Nam Á,Đông Nam Á,Trung Á,Đông Á
+1186,[Xã hội 2] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Phi,Châu Âu,Châu Á,Châu Đại Dương
+1187,[Xã hội 2] Đại dương lớn nhất thế giới là gì?,Bắc Băng Dương,Đại Tây Dương,Ấn Độ Dương,Thái Bình Dương
+1188,[Xã hội 2] Đỉnh núi cao nhất Việt Nam là gì?,Langbiang,Fansipan,Ba Vì,Bạch Mã
+1189,[Xã hội 2] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1975,1968,1954
+1190,[Xã hội 2] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Trãi,Trần Hưng Đạo,Quang Trung,Nguyễn Du
+1191,[Xã hội 2] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Pháp,Nhật Bản,Anh,Đức
+1192,[Xã hội 2] Kinh tuyến gốc đi qua địa danh nào?,New York,Greenwich,Paris,Tokyo
+1193,[Xã hội 2] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Phi,Châu Mỹ,Châu Âu,Châu Á
+1194,[Xã hội 3] Thủ đô của Việt Nam là thành phố nào?,Cần Thơ,Đà Nẵng,Hà Nội,Huế
+1195,[Xã hội 3] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Nam Á,Đông Nam Á,Đông Á
+1196,[Xã hội 3] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Đại Dương,Châu Âu,Châu Phi,Châu Á
+1197,[Xã hội 3] Đại dương lớn nhất thế giới là gì?,Bắc Băng Dương,Ấn Độ Dương,Đại Tây Dương,Thái Bình Dương
+1198,[Xã hội 3] Đỉnh núi cao nhất Việt Nam là gì?,Fansipan,Bạch Mã,Langbiang,Ba Vì
+1199,[Xã hội 3] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1968,1975,1954,1945
+1200,[Xã hội 3] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Trãi,Quang Trung,Nguyễn Du,Trần Hưng Đạo
+1201,[Xã hội 3] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Anh,Đức,Nhật Bản,Pháp
+1202,[Xã hội 3] Kinh tuyến gốc đi qua địa danh nào?,New York,Tokyo,Greenwich,Paris
+1203,[Xã hội 3] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Âu,Châu Mỹ,Châu Phi
+1204,[Xã hội 4] Thủ đô của Việt Nam là thành phố nào?,Đà Nẵng,Hà Nội,Cần Thơ,Huế
+1205,[Xã hội 4] Việt Nam nằm ở khu vực nào của châu Á?,Đông Á,Nam Á,Đông Nam Á,Trung Á
+1206,[Xã hội 4] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Phi,Châu Đại Dương,Châu Á,Châu Âu
+1207,[Xã hội 4] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Đại Tây Dương,Bắc Băng Dương,Ấn Độ Dương
+1208,[Xã hội 4] Đỉnh núi cao nhất Việt Nam là gì?,Ba Vì,Bạch Mã,Fansipan,Langbiang
+1209,[Xã hội 4] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1954,1968,1975
+1210,[Xã hội 4] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Nguyễn Trãi,Trần Hưng Đạo,Quang Trung
+1211,[Xã hội 4] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Pháp,Đức,Nhật Bản,Anh
+1212,[Xã hội 4] Kinh tuyến gốc đi qua địa danh nào?,Paris,Tokyo,New York,Greenwich
+1213,[Xã hội 4] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Âu,Châu Phi,Châu Mỹ
+1214,[Xã hội 5] Thủ đô của Việt Nam là thành phố nào?,Hà Nội,Đà Nẵng,Huế,Cần Thơ
+1215,[Xã hội 5] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Đông Nam Á,Nam Á,Đông Á
+1216,[Xã hội 5] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Âu,Châu Á,Châu Phi,Châu Đại Dương
+1217,[Xã hội 5] Đại dương lớn nhất thế giới là gì?,Ấn Độ Dương,Bắc Băng Dương,Thái Bình Dương,Đại Tây Dương
+1218,[Xã hội 5] Đỉnh núi cao nhất Việt Nam là gì?,Fansipan,Bạch Mã,Langbiang,Ba Vì
+1219,[Xã hội 5] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1954,1968,1975
+1220,[Xã hội 5] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Quang Trung,Trần Hưng Đạo,Nguyễn Trãi
+1221,[Xã hội 5] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Đức,Pháp,Nhật Bản,Anh
+1222,[Xã hội 5] Kinh tuyến gốc đi qua địa danh nào?,New York,Tokyo,Greenwich,Paris
+1223,[Xã hội 5] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Phi,Châu Mỹ,Châu Á,Châu Âu
+1224,[Xã hội 6] Thủ đô của Việt Nam là thành phố nào?,Huế,Hà Nội,Cần Thơ,Đà Nẵng
+1225,[Xã hội 6] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Đông Nam Á,Đông Á,Nam Á
+1226,[Xã hội 6] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Á,Châu Phi,Châu Đại Dương,Châu Âu
+1227,[Xã hội 6] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Ấn Độ Dương,Đại Tây Dương,Bắc Băng Dương
+1228,[Xã hội 6] Đỉnh núi cao nhất Việt Nam là gì?,Langbiang,Bạch Mã,Fansipan,Ba Vì
+1229,[Xã hội 6] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1968,1945,1954,1975
+1230,[Xã hội 6] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Quang Trung,Trần Hưng Đạo,Nguyễn Du,Nguyễn Trãi
+1231,[Xã hội 6] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Anh,Pháp,Nhật Bản,Đức
+1232,[Xã hội 6] Kinh tuyến gốc đi qua địa danh nào?,Tokyo,New York,Paris,Greenwich
+1233,[Xã hội 6] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Mỹ,Châu Âu,Châu Phi,Châu Á
+1234,[Xã hội 7] Thủ đô của Việt Nam là thành phố nào?,Cần Thơ,Hà Nội,Huế,Đà Nẵng
+1235,[Xã hội 7] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Đông Nam Á,Nam Á,Đông Á
+1236,[Xã hội 7] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Phi,Châu Đại Dương,Châu Âu,Châu Á
+1237,[Xã hội 7] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Ấn Độ Dương,Bắc Băng Dương,Đại Tây Dương
+1238,[Xã hội 7] Đỉnh núi cao nhất Việt Nam là gì?,Bạch Mã,Langbiang,Ba Vì,Fansipan
+1239,[Xã hội 7] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1975,1945,1968,1954
+1240,[Xã hội 7] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Quang Trung,Nguyễn Trãi,Trần Hưng Đạo
+1241,[Xã hội 7] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Đức,Anh,Nhật Bản,Pháp
+1242,[Xã hội 7] Kinh tuyến gốc đi qua địa danh nào?,Tokyo,New York,Greenwich,Paris
+1243,[Xã hội 7] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Âu,Châu Phi,Châu Mỹ
+1244,[Xã hội 8] Thủ đô của Việt Nam là thành phố nào?,Huế,Đà Nẵng,Cần Thơ,Hà Nội
+1245,[Xã hội 8] Việt Nam nằm ở khu vực nào của châu Á?,Đông Nam Á,Nam Á,Trung Á,Đông Á
+1246,[Xã hội 8] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Á,Châu Đại Dương,Châu Âu,Châu Phi
+1247,[Xã hội 8] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Ấn Độ Dương,Bắc Băng Dương,Đại Tây Dương
+1248,[Xã hội 8] Đỉnh núi cao nhất Việt Nam là gì?,Ba Vì,Langbiang,Fansipan,Bạch Mã
+1249,[Xã hội 8] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1954,1968,1975,1945
+1250,[Xã hội 8] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Quang Trung,Nguyễn Trãi,Trần Hưng Đạo
+1251,[Xã hội 8] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Anh,Nhật Bản,Pháp,Đức
+1252,[Xã hội 8] Kinh tuyến gốc đi qua địa danh nào?,Paris,Greenwich,New York,Tokyo
+1253,[Xã hội 8] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Âu,Châu Mỹ,Châu Phi
+1254,[Xã hội 9] Thủ đô của Việt Nam là thành phố nào?,Đà Nẵng,Hà Nội,Huế,Cần Thơ
+1255,[Xã hội 9] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Đông Nam Á,Nam Á,Đông Á
+1256,[Xã hội 9] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Âu,Châu Á,Châu Phi,Châu Đại Dương
+1257,[Xã hội 9] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Ấn Độ Dương,Bắc Băng Dương,Đại Tây Dương
+1258,[Xã hội 9] Đỉnh núi cao nhất Việt Nam là gì?,Bạch Mã,Ba Vì,Fansipan,Langbiang
+1259,[Xã hội 9] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1975,1968,1954
+1260,[Xã hội 9] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Trãi,Nguyễn Du,Quang Trung,Trần Hưng Đạo
+1261,[Xã hội 9] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Anh,Pháp,Đức,Nhật Bản
+1262,[Xã hội 9] Kinh tuyến gốc đi qua địa danh nào?,Paris,New York,Greenwich,Tokyo
+1263,[Xã hội 9] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Mỹ,Châu Âu,Châu Phi
+1264,[Xã hội 10] Thủ đô của Việt Nam là thành phố nào?,Cần Thơ,Đà Nẵng,Huế,Hà Nội
+1265,[Xã hội 10] Việt Nam nằm ở khu vực nào của châu Á?,Đông Nam Á,Trung Á,Nam Á,Đông Á
+1266,[Xã hội 10] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Á,Châu Đại Dương,Châu Phi,Châu Âu
+1267,[Xã hội 10] Đại dương lớn nhất thế giới là gì?,Bắc Băng Dương,Thái Bình Dương,Ấn Độ Dương,Đại Tây Dương
+1268,[Xã hội 10] Đỉnh núi cao nhất Việt Nam là gì?,Bạch Mã,Langbiang,Ba Vì,Fansipan
+1269,[Xã hội 10] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1968,1975,1954,1945
+1270,[Xã hội 10] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Quang Trung,Trần Hưng Đạo,Nguyễn Trãi
+1271,[Xã hội 10] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Đức,Pháp,Nhật Bản,Anh
+1272,[Xã hội 10] Kinh tuyến gốc đi qua địa danh nào?,New York,Tokyo,Paris,Greenwich
+1273,[Xã hội 10] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Phi,Châu Âu,Châu Mỹ,Châu Á
+1274,[Xã hội 11] Thủ đô của Việt Nam là thành phố nào?,Huế,Hà Nội,Cần Thơ,Đà Nẵng
+1275,[Xã hội 11] Việt Nam nằm ở khu vực nào của châu Á?,Đông Nam Á,Trung Á,Nam Á,Đông Á
+1276,[Xã hội 11] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Âu,Châu Đại Dương,Châu Phi,Châu Á
+1277,[Xã hội 11] Đại dương lớn nhất thế giới là gì?,Thái Bình Dương,Bắc Băng Dương,Ấn Độ Dương,Đại Tây Dương
+1278,[Xã hội 11] Đỉnh núi cao nhất Việt Nam là gì?,Ba Vì,Fansipan,Langbiang,Bạch Mã
+1279,[Xã hội 11] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1954,1968,1975,1945
+1280,[Xã hội 11] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Du,Quang Trung,Nguyễn Trãi,Trần Hưng Đạo
+1281,[Xã hội 11] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Đức,Anh,Pháp,Nhật Bản
+1282,[Xã hội 11] Kinh tuyến gốc đi qua địa danh nào?,Tokyo,New York,Paris,Greenwich
+1283,[Xã hội 11] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Á,Châu Phi,Châu Âu,Châu Mỹ
+1284,[Xã hội 12] Thủ đô của Việt Nam là thành phố nào?,Huế,Cần Thơ,Đà Nẵng,Hà Nội
+1285,[Xã hội 12] Việt Nam nằm ở khu vực nào của châu Á?,Trung Á,Đông Nam Á,Đông Á,Nam Á
+1286,[Xã hội 12] Châu lục có diện tích lớn nhất thế giới là gì?,Châu Á,Châu Phi,Châu Âu,Châu Đại Dương
+1287,[Xã hội 12] Đại dương lớn nhất thế giới là gì?,Đại Tây Dương,Ấn Độ Dương,Thái Bình Dương,Bắc Băng Dương
+1288,[Xã hội 12] Đỉnh núi cao nhất Việt Nam là gì?,Ba Vì,Fansipan,Langbiang,Bạch Mã
+1289,[Xã hội 12] Chiến thắng Điện Biên Phủ diễn ra vào năm nào?,1945,1954,1975,1968
+1290,[Xã hội 12] Văn kiện 'Bình Ngô đại cáo' do ai viết?,Nguyễn Trãi,Quang Trung,Nguyễn Du,Trần Hưng Đạo
+1291,[Xã hội 12] Cách mạng công nghiệp lần thứ nhất bắt đầu chủ yếu ở quốc gia nào?,Anh,Đức,Pháp,Nhật Bản
+1292,[Xã hội 12] Kinh tuyến gốc đi qua địa danh nào?,Paris,Tokyo,New York,Greenwich
+1293,[Xã hội 12] Sa mạc Sahara nằm chủ yếu ở châu lục nào?,Châu Âu,Châu Á,Châu Mỹ,Châu Phi
+1294,"Dãy số 2, 9, 16, 23, 30 tăng đều. Số tiếp theo là gì?",31,37,44,30
+1295,"Nếu hôm nay là Thứ Bảy, sau 12 ngày nữa là thứ mấy?",Thứ Tư,Thứ Sáu,Thứ Bảy,Thứ Năm
+1296,"Nếu tất cả A là B, và một đối tượng X là A, kết luận logic nào đúng nhất?",Không có kết luận nào,X là B,Mọi B đều là A,X không phải B
+1297,Số 96 có chia hết cho 2 không?,Không,Có,Chỉ khi lớn hơn 100,Không xác định
+1298,Số 145 có chia hết cho 3 không?,Không xác định,Có,Chỉ khi là số chẵn,Không
+1299,"Dãy số 19, 25, 31, 37, 43 tăng đều. Số tiếp theo là gì?",55,49,44,43
+1300,"Nếu hôm nay là Thứ Ba, sau 16 ngày nữa là thứ mấy?",Thứ Sáu,Thứ Năm,Thứ Tư,Thứ Bảy
+1301,Số 20 có chia hết cho 2 không?,Không xác định,Chỉ khi lớn hơn 100,Không,Có
+1302,Số 50 có chia hết cho 3 không?,Có,Chỉ khi là số chẵn,Không xác định,Không
+1303,"Trong hai số 1 và 10, số nào lớn hơn?",11,10,1,9
+1304,"Dãy số 2, 4, 6, 8, 10 tăng đều. Số tiếp theo là gì?",11,14,10,12
+1305,"Nếu hôm nay là Thứ Tư, sau 6 ngày nữa là thứ mấy?",Thứ Ba,Thứ Năm,Thứ Hai,Thứ Tư
+1306,Số 78 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Không,Có,Không xác định
+1307,Số 113 có chia hết cho 3 không?,Không xác định,Chỉ khi là số chẵn,Không,Có
+1308,"Trong hai số 21 và 12, số nào lớn hơn?",9,12,21,33
+1309,"Dãy số 3, 7, 11, 15, 19 tăng đều. Số tiếp theo là gì?",20,27,19,23
+1310,"Nếu hôm nay là Thứ Ba, sau 19 ngày nữa là thứ mấy?",Thứ Bảy,Thứ Ba,Thứ Hai,Chủ Nhật
+1311,Số 62 có chia hết cho 2 không?,Không,Không xác định,Có,Chỉ khi lớn hơn 100
+1312,Số 117 có chia hết cho 3 không?,Không,Chỉ khi là số chẵn,Không xác định,Có
+1313,"Trong hai số 2 và 16, số nào lớn hơn?",16,18,14,2
+1314,"Dãy số 15, 19, 23, 27, 31 tăng đều. Số tiếp theo là gì?",39,35,31,32
+1315,"Nếu hôm nay là Thứ Ba, sau 5 ngày nữa là thứ mấy?",Thứ Bảy,Chủ Nhật,Thứ Ba,Thứ Hai
+1316,Số 63 có chia hết cho 2 không?,Không,Chỉ khi lớn hơn 100,Không xác định,Có
+1317,Số 71 có chia hết cho 3 không?,Không,Có,Chỉ khi là số chẵn,Không xác định
+1318,"Trong hai số 20 và 21, số nào lớn hơn?",41,20,1,21
+1319,"Dãy số 16, 21, 26, 31, 36 tăng đều. Số tiếp theo là gì?",46,37,41,36
+1320,"Nếu hôm nay là Thứ Bảy, sau 6 ngày nữa là thứ mấy?",Thứ Bảy,Chủ Nhật,Thứ Năm,Thứ Sáu
+1321,Số 152 có chia hết cho 3 không?,Có,Không xác định,Chỉ khi là số chẵn,Không
+1322,"Trong hai số 9 và 21, số nào lớn hơn?",9,21,30,12
+1323,"Dãy số 8, 16, 24, 32, 40 tăng đều. Số tiếp theo là gì?",56,48,40,41
+1324,"Nếu hôm nay là Chủ Nhật, sau 18 ngày nữa là thứ mấy?",Thứ Tư,Thứ Sáu,Thứ Bảy,Thứ Năm
+1325,Số 18 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Có,Không,Không xác định
+1326,Số 149 có chia hết cho 3 không?,Không,Không xác định,Chỉ khi là số chẵn,Có
+1327,"Trong hai số 10 và 1, số nào lớn hơn?",10,1,9,11
+1328,"Dãy số 15, 21, 27, 33, 39 tăng đều. Số tiếp theo là gì?",45,51,40,39
+1329,"Nếu hôm nay là Thứ Ba, sau 17 ngày nữa là thứ mấy?",Thứ Bảy,Thứ Năm,Chủ Nhật,Thứ Sáu
+1330,Số 99 có chia hết cho 2 không?,Không xác định,Không,Có,Chỉ khi lớn hơn 100
+1331,Số 83 có chia hết cho 3 không?,Không xác định,Chỉ khi là số chẵn,Có,Không
+1332,"Trong hai số 29 và 14, số nào lớn hơn?",29,43,14,15
+1333,"Dãy số 9, 14, 19, 24, 29 tăng đều. Số tiếp theo là gì?",39,29,34,30
+1334,"Nếu hôm nay là Thứ Ba, sau 4 ngày nữa là thứ mấy?",Thứ Sáu,Thứ Bảy,Chủ Nhật,Thứ Hai
+1335,Số 57 có chia hết cho 2 không?,Không,Không xác định,Chỉ khi lớn hơn 100,Có
+1336,Số 82 có chia hết cho 3 không?,Có,Chỉ khi là số chẵn,Không,Không xác định
+1337,"Trong hai số 1 và 23, số nào lớn hơn?",1,23,24,22
+1338,"Dãy số 9, 12, 15, 18, 21 tăng đều. Số tiếp theo là gì?",24,27,21,22
+1339,"Nếu hôm nay là Thứ Sáu, sau 6 ngày nữa là thứ mấy?",Thứ Năm,Thứ Tư,Thứ Sáu,Thứ Bảy
+1340,Số 136 có chia hết cho 3 không?,Không,Có,Không xác định,Chỉ khi là số chẵn
+1341,"Trong hai số 4 và 5, số nào lớn hơn?",4,5,9,1
+1342,"Dãy số 8, 15, 22, 29, 36 tăng đều. Số tiếp theo là gì?",36,37,50,43
+1343,"Nếu hôm nay là Chủ Nhật, sau 14 ngày nữa là thứ mấy?",Chủ Nhật,Thứ Bảy,Thứ Ba,Thứ Hai
+1344,Số 43 có chia hết cho 2 không?,Không,Có,Không xác định,Chỉ khi lớn hơn 100
+1345,Số 163 có chia hết cho 3 không?,Chỉ khi là số chẵn,Có,Không xác định,Không
+1346,"Trong hai số 10 và 9, số nào lớn hơn?",9,10,19,1
+1347,"Dãy số 3, 10, 17, 24, 31 tăng đều. Số tiếp theo là gì?",45,31,32,38
+1348,"Nếu hôm nay là Thứ Bảy, sau 20 ngày nữa là thứ mấy?",Thứ Bảy,Thứ Sáu,Thứ Năm,Chủ Nhật
+1349,Số 88 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Không,Không xác định,Có
+1350,Số 85 có chia hết cho 3 không?,Không,Không xác định,Có,Chỉ khi là số chẵn
+1351,"Trong hai số 20 và 4, số nào lớn hơn?",16,4,24,20
+1352,"Dãy số 6, 14, 22, 30, 38 tăng đều. Số tiếp theo là gì?",39,54,38,46
+1353,"Nếu hôm nay là Thứ Hai, sau 12 ngày nữa là thứ mấy?",Thứ Bảy,Chủ Nhật,Thứ Sáu,Thứ Hai
+1354,Số 91 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Không xác định,Có,Không
+1355,Số 63 có chia hết cho 3 không?,Chỉ khi là số chẵn,Không xác định,Có,Không
+1356,"Trong hai số 9 và 13, số nào lớn hơn?",13,4,22,9
+1357,"Dãy số 2, 6, 10, 14, 18 tăng đều. Số tiếp theo là gì?",18,26,22,19
+1358,"Nếu hôm nay là Thứ Hai, sau 11 ngày nữa là thứ mấy?",Thứ Bảy,Thứ Sáu,Thứ Năm,Chủ Nhật
+1359,Số 71 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Không,Có,Không xác định
+1360,Số 18 có chia hết cho 3 không?,Có,Không,Chỉ khi là số chẵn,Không xác định
+1361,"Trong hai số 28 và 4, số nào lớn hơn?",28,24,4,32
+1362,"Dãy số 20, 23, 26, 29, 32 tăng đều. Số tiếp theo là gì?",33,32,35,38
+1363,"Nếu hôm nay là Thứ Ba, sau 6 ngày nữa là thứ mấy?",Chủ Nhật,Thứ Hai,Thứ Ba,Thứ Tư
+1364,Số 59 có chia hết cho 2 không?,Có,Chỉ khi lớn hơn 100,Không,Không xác định
+1365,Số 23 có chia hết cho 3 không?,Không xác định,Có,Chỉ khi là số chẵn,Không
+1366,"Trong hai số 18 và 10, số nào lớn hơn?",8,18,10,28
+1367,"Dãy số 7, 15, 23, 31, 39 tăng đều. Số tiếp theo là gì?",55,47,40,39
+1368,"Nếu hôm nay là Thứ Sáu, sau 9 ngày nữa là thứ mấy?",Thứ Ba,Thứ Bảy,Chủ Nhật,Thứ Hai
+1369,Số 17 có chia hết cho 2 không?,Có,Không xác định,Không,Chỉ khi lớn hơn 100
+1370,Số 196 có chia hết cho 3 không?,Không xác định,Chỉ khi là số chẵn,Có,Không
+1371,"Trong hai số 29 và 5, số nào lớn hơn?",24,34,29,5
+1372,"Dãy số 12, 19, 26, 33, 40 tăng đều. Số tiếp theo là gì?",54,41,47,40
+1373,"Nếu hôm nay là Thứ Hai, sau 16 ngày nữa là thứ mấy?",Thứ Sáu,Thứ Năm,Thứ Ba,Thứ Tư
+1374,Số 55 có chia hết cho 2 không?,Chỉ khi lớn hơn 100,Không,Có,Không xác định
+1375,Số 25 có chia hết cho 3 không?,Chỉ khi là số chẵn,Không,Không xác định,Có
+1376,"Trong hai số 9 và 10, số nào lớn hơn?",19,1,9,10
+1377,"Dãy số 4, 8, 12, 16, 20 tăng đều. Số tiếp theo là gì?",28,21,20,24
+1378,"Nếu hôm nay là Chủ Nhật, sau 6 ngày nữa là thứ mấy?",Chủ Nhật,Thứ Sáu,Thứ Hai,Thứ Bảy
+1379,Số 39 có chia hết cho 2 không?,Có,Không xác định,Chỉ khi lớn hơn 100,Không
+1380,Số 100 có chia hết cho 3 không?,Chỉ khi là số chẵn,Không,Không xác định,Có
+1381,"Trong hai số 11 và 15, số nào lớn hơn?",15,26,11,4
+1382,"Nếu hôm nay là Thứ Ba, sau 18 ngày nữa là thứ mấy?",Thứ Sáu,Thứ Hai,Chủ Nhật,Thứ Bảy
+1383,Số 95 có chia hết cho 2 không?,Không,Có,Không xác định,Chỉ khi lớn hơn 100
+1384,Số 73 có chia hết cho 3 không?,Không,Chỉ khi là số chẵn,Không xác định,Có
+1385,"Trong hai số 24 và 22, số nào lớn hơn?",22,46,2,24
+1386,"Nếu hôm nay là Thứ Hai, sau 8 ngày nữa là thứ mấy?",Thứ Ba,Thứ Năm,Thứ Tư,Thứ Hai
+1387,Số 120 có chia hết cho 3 không?,Chỉ khi là số chẵn,Không xác định,Có,Không
+1388,"Trong hai số 27 và 7, số nào lớn hơn?",34,27,7,20
+1389,Choose the correct plural form of 'child'.,childrens,childes,children,childs
+1390,Choose the correct sentence in present perfect tense.,I will eat breakfast.,I ate breakfast.,I eat breakfast.,I have eaten breakfast.
+1391,What is the synonym of 'rapid'?,slow,silent,quick,heavy
+1392,Choose the correct word: She ___ to school every day.,going,go,gone,goes
+1393,Which word is an adjective?,beautifully,beautiful,beauty,beautify
+1394,Choose the best translation of 'machine learning'.,Học bằng máy chiếu,Máy học sinh,Học máy,Máy đang học bài
+1395,What is the antonym of 'increase'?,grow,decrease,expand,rise
+1396,Choose the correct article: I saw ___ elephant.,no article,a,the only,an
+1397,Which sentence is in future tense?,She traveled yesterday.,She is traveling now.,She travels every day.,She will travel tomorrow.
+1398,What does 'data' commonly mean in Vietnamese?,Bầu trời,Cảm xúc,Dữ liệu,Âm thanh
+1399,[English 2] Choose the correct plural form of 'child'.,childes,childrens,childs,children
+1400,[English 2] Choose the correct sentence in present perfect tense.,I eat breakfast.,I will eat breakfast.,I have eaten breakfast.,I ate breakfast.
+1401,[English 2] What is the synonym of 'rapid'?,quick,heavy,silent,slow
+1402,[English 2] Choose the correct word: She ___ to school every day.,goes,gone,go,going
+1403,[English 2] Which word is an adjective?,beautify,beauty,beautifully,beautiful
+1404,[English 2] Choose the best translation of 'machine learning'.,Học máy,Máy học sinh,Học bằng máy chiếu,Máy đang học bài
+1405,[English 2] What is the antonym of 'increase'?,expand,decrease,grow,rise
+1406,[English 2] Choose the correct article: I saw ___ elephant.,no article,the only,an,a
+1407,[English 2] Which sentence is in future tense?,She traveled yesterday.,She travels every day.,She will travel tomorrow.,She is traveling now.
+1408,[English 2] What does 'data' commonly mean in Vietnamese?,Dữ liệu,Bầu trời,Âm thanh,Cảm xúc
+1409,[English 3] Choose the correct plural form of 'child'.,childes,childrens,childs,children
+1410,[English 3] Choose the correct sentence in present perfect tense.,I eat breakfast.,I have eaten breakfast.,I ate breakfast.,I will eat breakfast.
+1411,[English 3] What is the synonym of 'rapid'?,silent,quick,heavy,slow
+1412,[English 3] Choose the correct word: She ___ to school every day.,goes,go,gone,going
+1413,[English 3] Which word is an adjective?,beautify,beautifully,beauty,beautiful
+1414,[English 3] Choose the best translation of 'machine learning'.,Học máy,Máy học sinh,Học bằng máy chiếu,Máy đang học bài
+1415,[English 3] What is the antonym of 'increase'?,rise,expand,grow,decrease
+1416,[English 3] Choose the correct article: I saw ___ elephant.,no article,the only,a,an
+1417,[English 3] Which sentence is in future tense?,She is traveling now.,She traveled yesterday.,She travels every day.,She will travel tomorrow.
+1418,[English 3] What does 'data' commonly mean in Vietnamese?,Âm thanh,Cảm xúc,Bầu trời,Dữ liệu
+1419,[English 4] Choose the correct plural form of 'child'.,childes,childs,childrens,children
+1420,[English 4] Choose the correct sentence in present perfect tense.,I have eaten breakfast.,I will eat breakfast.,I ate breakfast.,I eat breakfast.
+1421,[English 4] What is the synonym of 'rapid'?,heavy,silent,slow,quick
+1422,[English 4] Choose the correct word: She ___ to school every day.,gone,going,goes,go
+1423,[English 4] Which word is an adjective?,beautify,beauty,beautiful,beautifully
+1424,[English 4] Choose the best translation of 'machine learning'.,Máy đang học bài,Học máy,Máy học sinh,Học bằng máy chiếu
+1425,[English 4] What is the antonym of 'increase'?,grow,expand,decrease,rise
+1426,[English 4] Choose the correct article: I saw ___ elephant.,the only,an,a,no article
+1427,[English 4] Which sentence is in future tense?,She is traveling now.,She traveled yesterday.,She will travel tomorrow.,She travels every day.
+1428,[English 4] What does 'data' commonly mean in Vietnamese?,Bầu trời,Âm thanh,Cảm xúc,Dữ liệu
+1429,[English 5] Choose the correct plural form of 'child'.,childrens,childs,children,childes
+1430,[English 5] Choose the correct sentence in present perfect tense.,I eat breakfast.,I have eaten breakfast.,I will eat breakfast.,I ate breakfast.
+1431,[English 5] What is the synonym of 'rapid'?,slow,silent,quick,heavy
+1432,[English 5] Choose the correct word: She ___ to school every day.,goes,gone,going,go
+1433,[English 5] Which word is an adjective?,beauty,beautifully,beautiful,beautify
+1434,[English 5] Choose the best translation of 'machine learning'.,Máy đang học bài,Học máy,Học bằng máy chiếu,Máy học sinh
+1435,[English 5] What is the antonym of 'increase'?,decrease,rise,expand,grow
+1436,[English 5] Choose the correct article: I saw ___ elephant.,a,no article,the only,an
+1437,[English 5] Which sentence is in future tense?,She is traveling now.,She will travel tomorrow.,She travels every day.,She traveled yesterday.
+1438,[English 5] What does 'data' commonly mean in Vietnamese?,Cảm xúc,Âm thanh,Bầu trời,Dữ liệu
+1439,[English 6] Choose the correct plural form of 'child'.,childrens,childes,children,childs
+1440,[English 6] Choose the correct sentence in present perfect tense.,I will eat breakfast.,I eat breakfast.,I ate breakfast.,I have eaten breakfast.
+1441,[English 6] What is the synonym of 'rapid'?,silent,slow,quick,heavy
+1442,[English 6] Choose the correct word: She ___ to school every day.,goes,gone,going,go
+1443,[English 6] Which word is an adjective?,beauty,beautify,beautiful,beautifully
+1444,[English 6] Choose the best translation of 'machine learning'.,Máy đang học bài,Học máy,Học bằng máy chiếu,Máy học sinh
+1445,[English 6] What is the antonym of 'increase'?,grow,decrease,rise,expand
+1446,[English 6] Choose the correct article: I saw ___ elephant.,a,an,the only,no article
+1447,[English 6] Which sentence is in future tense?,She will travel tomorrow.,She is traveling now.,She travels every day.,She traveled yesterday.
+1448,[English 6] What does 'data' commonly mean in Vietnamese?,Bầu trời,Âm thanh,Cảm xúc,Dữ liệu
+1449,[English 7] Choose the correct plural form of 'child'.,childes,children,childrens,childs
+1450,[English 7] Choose the correct sentence in present perfect tense.,I ate breakfast.,I have eaten breakfast.,I eat breakfast.,I will eat breakfast.
+1451,[English 7] What is the synonym of 'rapid'?,silent,heavy,quick,slow
+1452,[English 7] Choose the correct word: She ___ to school every day.,go,goes,going,gone
+1453,[English 7] Which word is an adjective?,beauty,beautiful,beautify,beautifully
+1454,[English 7] Choose the best translation of 'machine learning'.,Học bằng máy chiếu,Học máy,Máy đang học bài,Máy học sinh
+1455,[English 7] What is the antonym of 'increase'?,grow,decrease,rise,expand
+1456,[English 7] Choose the correct article: I saw ___ elephant.,no article,a,an,the only
+1457,[English 7] Which sentence is in future tense?,She is traveling now.,She will travel tomorrow.,She travels every day.,She traveled yesterday.
+1458,[English 7] What does 'data' commonly mean in Vietnamese?,Cảm xúc,Dữ liệu,Bầu trời,Âm thanh
+1459,[English 8] Choose the correct plural form of 'child'.,children,childs,childes,childrens
+1460,[English 8] Choose the correct sentence in present perfect tense.,I will eat breakfast.,I have eaten breakfast.,I eat breakfast.,I ate breakfast.
+1461,[English 8] What is the synonym of 'rapid'?,silent,heavy,quick,slow
+1462,[English 8] Choose the correct word: She ___ to school every day.,gone,going,go,goes
+1463,[English 8] Which word is an adjective?,beautifully,beautiful,beautify,beauty
+1464,[English 8] Choose the best translation of 'machine learning'.,Máy học sinh,Máy đang học bài,Học máy,Học bằng máy chiếu
+1465,[English 8] What is the antonym of 'increase'?,decrease,grow,expand,rise
+1466,[English 8] Choose the correct article: I saw ___ elephant.,the only,no article,an,a
+1467,[English 8] Which sentence is in future tense?,She will travel tomorrow.,She is traveling now.,She travels every day.,She traveled yesterday.
+1468,[English 8] What does 'data' commonly mean in Vietnamese?,Cảm xúc,Bầu trời,Âm thanh,Dữ liệu
+1469,[English 9] Choose the correct plural form of 'child'.,children,childs,childrens,childes
+1470,[English 9] Choose the correct sentence in present perfect tense.,I have eaten breakfast.,I eat breakfast.,I ate breakfast.,I will eat breakfast.
+1471,[English 9] What is the synonym of 'rapid'?,silent,slow,heavy,quick
+1472,[English 9] Choose the correct word: She ___ to school every day.,gone,goes,go,going
+1473,[English 9] Which word is an adjective?,beautify,beautiful,beautifully,beauty
+1474,[English 9] Choose the best translation of 'machine learning'.,Học bằng máy chiếu,Học máy,Máy học sinh,Máy đang học bài
+1475,[English 9] What is the antonym of 'increase'?,rise,expand,grow,decrease
+1476,[English 9] Choose the correct article: I saw ___ elephant.,the only,an,no article,a
+1477,[English 9] Which sentence is in future tense?,She will travel tomorrow.,She travels every day.,She is traveling now.,She traveled yesterday.
+1478,[English 9] What does 'data' commonly mean in Vietnamese?,Cảm xúc,Bầu trời,Âm thanh,Dữ liệu
+1479,[English 10] Choose the correct plural form of 'child'.,childes,childrens,children,childs
+1480,[English 10] Choose the correct sentence in present perfect tense.,I will eat breakfast.,I have eaten breakfast.,I eat breakfast.,I ate breakfast.
+1481,[English 10] What is the synonym of 'rapid'?,silent,slow,quick,heavy
+1482,[English 10] Choose the correct word: She ___ to school every day.,go,gone,goes,going
+1483,[English 10] Which word is an adjective?,beautiful,beauty,beautify,beautifully
+1484,[English 10] Choose the best translation of 'machine learning'.,Học bằng máy chiếu,Máy học sinh,Máy đang học bài,Học máy
+1485,[English 10] What is the antonym of 'increase'?,decrease,grow,rise,expand
+1486,[English 10] Choose the correct article: I saw ___ elephant.,no article,a,an,the only
+1487,[English 10] Which sentence is in future tense?,She traveled yesterday.,She is traveling now.,She will travel tomorrow.,She travels every day.
+1488,[English 10] What does 'data' commonly mean in Vietnamese?,Âm thanh,Dữ liệu,Bầu trời,Cảm xúc
+1489,Tái chế giúp ích chính ở điểm nào?,Tăng ô nhiễm,Thay thế hoàn toàn sản xuất,Làm biến mất mọi chi phí,Giảm rác thải và tiết kiệm tài nguyên
+1490,Năng lượng mặt trời thuộc nhóm năng lượng nào?,Hóa thạch,Không thể sử dụng,Tái tạo,Hạt nhân bắt buộc
+1491,Khí CO2 thường được nhắc đến nhiều trong vấn đề nào?,Tạo mật khẩu,Tăng tốc máy tính,Hiệu ứng nhà kính,Sạc pin trực tiếp
+1492,Pháp luật có vai trò chính nào trong xã hội?,Thay thế đạo đức hoàn toàn,Xóa mọi tranh chấp ngay lập tức,Điều chỉnh hành vi và bảo vệ trật tự xã hội,Tạo tiền tự động
+1493,Hợp đồng thường thể hiện điều gì?,Một bài hát,Một loại virus máy tính,Một thiết bị mạng,Sự thỏa thuận giữa các bên
+1494,Khách hàng mục tiêu là gì?,Tên server,Người bất kỳ không cần phân tích,Nhóm người dùng mà sản phẩm hướng tới,Mã lỗi HTTP
+1495,MVP trong phát triển sản phẩm là gì?,Sản phẩm khả thi tối thiểu,Một loại database,Bản hoàn hảo cuối cùng,Một giao thức mạng
+1496,KPI thường dùng để làm gì?,Tăng điện áp,Đo lường hiệu quả theo chỉ số,Mã hóa ảnh,Thay thế teamwork
+1497,UX tập trung vào điều gì?,Tốc độ quạt,Dung lượng pin duy nhất,Số lõi CPU,Trải nghiệm người dùng
+1498,Bảo mật thông tin nhằm mục tiêu gì?,Xóa toàn bộ log,Công khai mọi mật khẩu,"Bảo vệ tính bí mật, toàn vẹn và sẵn sàng của dữ liệu",Tăng kích thước màn hình
+1499,[Tổng hợp 2] Tái chế giúp ích chính ở điểm nào?,Thay thế hoàn toàn sản xuất,Tăng ô nhiễm,Làm biến mất mọi chi phí,Giảm rác thải và tiết kiệm tài nguyên
+1500,[Tổng hợp 2] Năng lượng mặt trời thuộc nhóm năng lượng nào?,Hóa thạch,Hạt nhân bắt buộc,Không thể sử dụng,Tái tạo

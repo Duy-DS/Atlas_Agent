@@ -1,46 +1,38 @@
-# Tech Spec: LangGraph Agent Architecture (Updated)
+# Tech Spec: Multi-Tool LangGraph Agent (Bảng C - HackAIthon)
 
 ## 1. Tổng quan dự án
-Tài liệu này mô tả kiến trúc của **LangGraph Agent Pipeline**, đóng vai trò là bộ não xử lý chính cho hệ thống trả lời câu hỏi trắc nghiệm tự động. Kiến trúc đã được tái cấu trúc (Refactored) để đạt hiệu năng xử lý hàng loạt song song (Async Batching), loại bỏ hoàn toàn các thành phần dư thừa như RAG/VectorDB nhằm tối đa hóa tốc độ.
+Tài liệu này mô tả kiến trúc của **Multi-Tool LangGraph Agent**, bộ não xử lý chính cho hệ thống trả lời câu hỏi trắc nghiệm tự động, nhắm tới việc tối đa hóa điểm **Accuracy** và **Inference Time** trong Bảng C cuộc thi Vietnamese Student HackAIthon 2026.
+Hệ thống sử dụng **Conditional Routing** để định tuyến câu hỏi tới đúng công cụ (Tool) phù hợp thay vì gọi Tool mù quáng.
 
 ## 2. Kiến trúc Hệ thống (Workflow)
-Hệ thống vận hành theo mô hình State Machine (đồ thị trạng thái) bất đồng bộ, đảm bảo luồng dữ liệu chảy xuyên suốt từ khâu nạp câu hỏi đến khâu xuất đáp án.
+Hệ thống vận hành theo mô hình State Machine (Đồ thị trạng thái) bất đồng bộ (Async Batching). 
 
-### Các Node chính:
-* **Retrieve Node (Input -> Local File):** Tiếp nhận câu hỏi, tự động đọc trực tiếp file `mock_knowledge.txt` để lấy toàn bộ ngữ cảnh (Không còn dùng RAG).
-* **Reason Node (Context -> LLM -> Output):** Tiếp nhận ngữ cảnh + câu hỏi, gọi API tới mô hình ngôn ngữ (hiện là Groq, sau này là vLLM tự host) để suy luận logic theo Chain-of-Thought (CoT). Node này được trang bị **Concurrency Limit (Semaphore)** và **Retry Loop (Exponential Backoff)** để bảo vệ server.
+### Các Node chính (4 Ngã rẽ):
+* **Retrieve Node:** Nạp câu hỏi và ngữ cảnh ban đầu.
+* **Router Node:** Là bộ não điều phối. Gọi LLM để đọc nhanh câu hỏi và quyết định rẽ 1 trong 4 nhánh:
+  - `PYTHON`: Các câu hỏi Toán học, phương trình, logic ➔ Chuyển qua **PythonREPL Node**.
+  - `WIKI`: Các câu hỏi lịch sử, địa lý, định nghĩa ➔ Chuyển qua **WikiSearch Node**.
+  - `WEB`: Các câu hỏi thời sự, kết quả thể thao, tỷ giá ➔ Chuyển qua **WebSearch Node** (DuckDuckGo).
+  - `NO`: Mọi kiến thức phổ thông cơ bản ➔ Đi thẳng vào **Reason Node**.
+* **Reason Node (Reasoning):** Nhận ngữ cảnh đã được bổ sung bởi các Tool (nếu có), gọi LLM suy luận theo chuỗi logic (Chain-of-Thought) để xuất ra đáp án cuối cùng dạng JSON chứa `answer` (A/B/C/D).
 
 | Thành phần | File chịu trách nhiệm | Trạng thái hiện tại |
 | :--- | :--- | :--- |
-| **Orchestrator** | `src/agent_graph.py` | Hoàn thiện (Chạy Async + Batching) |
-| **Logic Prompt** | `src/system_prompt.py` | Hoàn thiện |
-| **Data Retrieval** | N/A | Đã loại bỏ RAG. Đọc thẳng từ txt. |
-| **LLM Inference** | `Groq API` (Tạm thời) | Hoàn thiện (Đã tích hợp API thật + Retry) |
-| **Pipeline Runner** | `main.py` | Hoàn thiện (Xử lý file CSV ra CSV) |
+| **Orchestrator** | `src/agent_graph.py` | Hoàn thiện (Chạy Async + Conditional Routing) |
+| **Tools** | `wikipedia`, `DuckDuckGo`, `PythonREPL` | Đã tích hợp (Local/Free API) |
+| **Logic Prompt** | `src/system_prompt.py` | Hoàn thiện (CoT Prompt) |
+| **Pipeline Runner** | `main.py` | Hoàn thiện (Đọc/Ghi file CSV) |
 
-## 3. Chi tiết các thành phần (Components)
+## 3. Điểm nhấn Kiến trúc Mới
+1. **Zero API Key Tools:** Toàn bộ công cụ sử dụng (Wiki, DuckDuckGo, Python) đều miễn phí và không cần cấu hình API Key, rất thuận tiện khi nộp bài qua Docker.
+2. **Speed Optimization (Inference Time):** Bằng cách phân loại qua Router, những câu hỏi cơ bản sẽ đi thẳng vào nhánh Reasoning mà không phải chờ phản hồi chậm chạp từ Internet, giúp tăng đáng kể điểm tốc độ.
+3. **Accuracy Optimization:** Thay vì để LLM tự làm toán (thường xuyên bị sai), hệ thống sinh code Python và bắt máy tính chạy để đảm bảo tỷ lệ đúng tuyệt đối 100% cho mảng Khoa học tự nhiên.
 
-### A. Agent Graph (`src/agent_graph.py`)
-Đóng vai trò là trung tâm điều phối. Sử dụng `StateGraph` để quản lý `AgentState` xuyên suốt vòng đời của một câu hỏi.
-* **Điểm nhấn Kiến trúc mới:** Sử dụng `async def` và gọi xử lý song song bằng `.abatch()`. Cùng với đó là hệ thống giới hạn luồng (`asyncio.Semaphore`) để tránh nghẽn/Sập LLM khi xử lý hàng trăm câu hỏi.
+## 4. Hướng dẫn Chạy thử
 
-### B. Chain-of-Thought Prompt (`src/system_prompt.py`)
-Thay vì để AI đoán mò, chúng ta ép mô hình thực hiện các bước:
-1.  Phân tích ngữ cảnh.
-2.  Tranh luận các phương án sai/đúng.
-3.  Kết luận đáp án cuối cùng dưới dạng JSON để hệ thống dễ dàng bóc tách thông qua Regex.
+Đảm bảo bạn đã cài đặt đủ thư viện trong `requirements.txt` và đã thiết lập biến môi trường `GROQ_API_KEY` trong file `.env`.
 
-### C. Pipeline Xử Lý File (`main.py`)
-Là cổng giao tiếp chính (Entry Point). Đọc dữ liệu từ `data/mock_public_test.csv`, đóng gói hàng loạt các câu hỏi thành Input State và gọi Graph xử lý đồng thời, cuối cùng xuất ra kết quả dự đoán tại `output/pred.csv`.
-
-## 4. Hướng dẫn Tích hợp & Chạy thử
-
-### Cấu hình môi trường:
-Hãy đảm bảo bạn đã tạo file `.env` chứa `GROQ_API_KEY` (hoặc cấu hình url cho vLLM tương ứng trong `agent_graph.py`).
-
-### Lệnh chạy chính thức:
-Chạy luồng xử lý toàn bộ data (đang được limit 5 câu trong source code để test API free):
-
+Chạy hệ thống (cần cấu hình encoding UTF-8 trên Windows):
 ```bash
-python main.py
+$env:PYTHONUTF8=1; python main.py
 ```

@@ -1,7 +1,9 @@
 # Atlas_Agent - Giải Pháp Trợ Lý Ảo Đa Tác Vụ
 
 **Atlas Agent** là một AI Agent được thiết kế từ mô hình ngôn ngữ lớn để xử lý đa tác vụ trong khuôn khổ cuộc thi Vietnamese Student HackAIthon 2026.  
-
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Docker Supported](https://img.shields.io/badge/docker-supported-blue.svg)](https://www.docker.com/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-Agentic-orange.svg)](https://python.langchain.com/)
 
 ## 📖 Giới thiệu dự án  
 **Atlas_Agent** là một hệ thống AI Agent thông minh được thiết kế đặc biệt để giải quyết các bài toán trắc nghiệm phức tạp. Thay vì áp dụng phương pháp đoán mò hay học vẹt (hard-code), Atlas_Agent sử dụng kiến trúc đồ thị trạng thái (State Graph) kết hợp với kỹ thuật suy luận chuỗi (Chain-of-Thought / ReAct) để tự động đọc hiểu, tìm kiếm ngữ cảnh, và đưa ra quyết định logic nhất.  
@@ -13,8 +15,7 @@ Dự án hướng đến việc xây dựng một hệ thống AI Agent có kh�
 - Xuất kết quả theo đúng định dạng yêu cầu của cuộc thi.
 - Đóng gói và chạy được trong môi trường local hoặc Docker.
 
-## 🎯 Mục Tiêu Dự Án:
-
+## 🎯 Mục Tiêu Dự Án:  
 Dự án được xây dựng với các mục tiêu chính:
 
 1. Xây dựng AI Agent có khả năng reasoning thay vì trả lời theo hard-code.
@@ -129,6 +130,7 @@ qid,answer
 1,A
 2,C
 3,D  
+
 Quy định:  
 - Cột qid phải giữ nguyên từ file input.  
 - Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.  
@@ -164,12 +166,9 @@ docker run \
    - Rerank kết quả.
 5. Tổng hợp thông tin.
 6. Suy luận và chọn đáp án A/B/C/D.
-7. Ghi kết quả vào pred.csv.
-
-## ✉️ Liên Hệ
-
-Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ:
-
+7. Ghi kết quả vào pred.csv.  
+## ✉️ Liên Hệ  
+Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ:  
 | Thành Viên      | Email                             | Github                                       |
 | --------------- | --------------------------------- | -------------------------------------------- |
 | Lê Phước Thành  | [thanhlephuoc0202@gmail.com]      | [GIthub](https://github.com/thanhlek5)       |

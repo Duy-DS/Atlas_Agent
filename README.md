@@ -13,7 +13,7 @@ Dự án hướng đến việc xây dựng một hệ thống AI Agent có kh�
 - Xuất kết quả theo đúng định dạng yêu cầu của cuộc thi.
 - Đóng gói và chạy được trong môi trường local hoặc Docker.
 
-## 1. Mục Tiêu Dự Án:
+## 🎯 Mục Tiêu Dự Án:
 
 Dự án được xây dựng với các mục tiêu chính:
 
@@ -24,8 +24,7 @@ Dự án được xây dựng với các mục tiêu chính:
 5. Đảm bảo hệ thống đọc input và ghi output đúng chuẩn.
 6. Cung cấp tài liệu kỹ thuật rõ ràng để giải thích kiến trúc và phương pháp triển khai.
 
-## 2. Bối Cảnh Đề Bài:
-
+## 🌐 Bối Cảnh Đề Bài:  
 Tên cuộc thi: Vietnamese Student HackAIthon 2026  
 Bảng: C - INNOVATOR  
 Đội thi: Ngũ Lão Tinh  
@@ -40,7 +39,7 @@ Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng cá
   được rõ nhất tính sáng tạo, hiệu quả của chiến lược tối ưu mô hình đã lựa chọn.  
   Thời hạn nộp bài: 02/6/2026 - 23/6/2026.  
 
-## 3. Kiến Trúc Tổng Quan  
+## 📐 Kiến Trúc Tổng Quan  
 Hệ thống dự kiến bao gồm các thành phần chính:
 
 Input CSV
@@ -56,7 +55,7 @@ Tool Calling / RAG Search
 Reasoning & Answer Selection
     ↓
 Output pred.csv  
-### 3.1. Các Thành Phần Chính  
+### Các Thành Phần Chính  
 |Thành Phần|Vai Trò|  
 |---|---|  
 |Main LLM|Mô hình ngôn ngữ lớn dùng để suy luận và chọn đáp án|  
@@ -69,9 +68,9 @@ Output pred.csv
 |Docker|Đóng gói môi trường chạy thống nhất|  
 
 
-## 4. Công Nghệ Sử Dụng
+## 🛠️ Công Nghệ Sử Dụng
 
-## 5. Phân Công Thành Viên
+## 👥 Phân Công Thành Viên
 
 |Thành Viên|Vai trò|Công việc|
 |---|---|---|
@@ -81,13 +80,13 @@ Output pred.csv
 |Nguyễn Công Chí|Model Optimizer|Nén Mô Hình (Quantization), Khởi chạy vLLM, Tối ưu Batching|
 |Đường Minh Đức|QA, UI Tester & Technical Writer|Xây dựng Dữ liệu Kiểm thử, Dựng Web UI Test Local, Soạn Thuyết Minh Phương Pháp|
 
-## 6. Cài Đặt Môi Trường  
-### 6.1 Clone Repo  
+## ⚙️ Cài Đặt Môi Trường  
+### Clone Repo  
 ```
 git clone https://github.com/Duy-DS/Atlas_Agent.git cd Atlas_Agent
 
 ```  
-### 6.2 Tạo Virtual Environment  
+### Tạo Virtual Environment  
 ```
 python -m venv .venv 
 source .venv/bin/activate
@@ -99,15 +98,15 @@ python -m venv .venv
 .venv\Scripts\activate
 ```  
 
-### 6.3 Cài Đặt Thư Viện  
+### Cài Đặt Thư Viện  
 ```
 pip install -r requirements.txt  
 ```  
-### 6.4 Cấu Hình Biến Môi Trường
+### Cấu Hình Biến Môi Trường
 
-## 7. Chuẩn Dữ Liệu Đầu Vào và Đầu Ra
+## 📈 Chuẩn Dữ Liệu Đầu Vào và Đầu Ra
 
-### 7.1 Định Dạng Dữ Liệu Đầu Vào
+### Định Dạng Dữ Liệu Đầu Vào
 
 File input dự kiến đặt tại:
 
@@ -120,7 +119,7 @@ qid,question,A,B,C,D
 1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á  
 2,"Việt Nam gia nhập ASEAN năm nào?",1995,1997,1999,2001  
 
-### 7.2 Định Dạng Dữ Liệu Đầu Ra
+### Định Dạng Dữ Liệu Đầu Ra
 
 File output cần được ghi tại:
 
@@ -137,15 +136,15 @@ Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.
 Không được để trống đáp án.  
 Không ghi thêm reasoning hoặc log vào file output.  
 
-## 8. Cách Chạy Project
+## 🏃 Cách Chạy Project
 
-### 8.1. Build Docker image
+### Build Docker image
 
 ```
 docker build -t atlas-agent .
 ```
 
-### 8.2. Run Docker container
+### Run Docker container
 
 ```
 docker run \
@@ -154,7 +153,7 @@ docker run \
   atlas-agent
 ```
 
-## 9. Quy trình xử lý của Agent
+## 🔄 Quy trình xử lý của Agent
 
 1. Đọc câu hỏi từ file input.
 2. Phân tích độ khó của câu hỏi.
@@ -168,7 +167,7 @@ docker run \
 6. Suy luận và chọn đáp án A/B/C/D.
 7. Ghi kết quả vào pred.csv.
 
-## 10. Liên Hệ
+## ✉️ Liên Hệ
 
 Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ:
 

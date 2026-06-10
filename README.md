@@ -112,6 +112,7 @@ File input dự kiến đặt tại:
 
 Format dự kiến:  
 qid,question,A,B,C,D  
+
 Ví Dụ:  
 qid,question,A,B,C,D  
 1,"Việt Nam thuộc khu vực nào?",Đông Á,Đông Nam Á,Nam Á,Tây Á  
@@ -129,10 +130,10 @@ qid,answer
 2,C
 3,D  
 Quy định:  
-Cột qid phải giữ nguyên từ file input.  
-Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.  
-Không được để trống đáp án.  
-Không ghi thêm reasoning hoặc log vào file output.  
+- Cột qid phải giữ nguyên từ file input.  
+- Cột answer chỉ nhận một trong bốn giá trị: A, B, C, D.  
+- Không được để trống đáp án.  
+- Không ghi thêm reasoning hoặc log vào file output.  
 
 ## 🏃 Cách Chạy Project
 

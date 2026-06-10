@@ -43,17 +43,17 @@ Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng cá
 Hệ thống dự kiến bao gồm các thành phần chính:
 
 Input CSV  
-    ↓
+    ↓  
 Preprocessing  
-    ↓
+    ↓  
 LangGraph Agent  
-    ↓
+    ↓  
 Main LLM  
-    ↓
+    ↓  
 Tool Calling / RAG Search  
-    ↓
+    ↓  
 Reasoning & Answer Selection  
-    ↓
+    ↓  
 Output pred.csv  
 ### Các Thành Phần Chính  
 |Thành Phần|Vai Trò|  

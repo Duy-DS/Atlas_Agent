@@ -50,8 +50,8 @@ graph TD
     E --> F[Reasoning & Answer Selection]
     F --> G[Output pred.csv]
     
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style G fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#2f0ad1,stroke:#333,stroke-width:2px
+    style G fill:#2f0ad1,stroke:#333,stroke-width:2px
 ```  
 ### Các Thành Phần Chính  
 |Thành Phần|Vai Trò|  

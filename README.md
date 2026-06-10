@@ -40,21 +40,19 @@ Yêu cầu chính: Cá nhân/đội thi tập trung vào việc sử dụng cá
   Thời hạn nộp bài: 02/6/2026 - 23/6/2026.  
 
 ## 📐 Kiến Trúc Tổng Quan  
-Hệ thống dự kiến bao gồm các thành phần chính:
-
-Input CSV  
-    ↓  
-Preprocessing  
-    ↓  
-LangGraph Agent  
-    ↓  
-Main LLM  
-    ↓  
-Tool Calling / RAG Search  
-    ↓  
-Reasoning & Answer Selection  
-    ↓  
-Output pred.csv  
+Hệ thống dự kiến bao gồm các thành phần chính:  
+```mermaid
+graph TD
+    A[Input CSV] --> B[Preprocessing]
+    B --> C[LangGraph Agent]
+    C --> D[Main LLM]
+    D --> E[Tool Calling / RAG Search]
+    E --> F[Reasoning & Answer Selection]
+    F --> G[Output pred.csv]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style G fill:#bbf,stroke:#333,stroke-width:2px
+```  
 ### Các Thành Phần Chính  
 |Thành Phần|Vai Trò|  
 |---|---|  

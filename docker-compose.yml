@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+# ========================= container ollama==================================
   ollama: 
     image: ollama/ollama:latest 
     container_name: ollama
@@ -24,6 +25,11 @@ services:
         done;
         curl -fsS -X POST http://ollama:11434/api/pull -H 'Content-Type: application/json' -d '{"name":"qwen3.5:0.8b"}'
 
+# ============================= streamlit ================================
+#  streamlit: 
+#    build: 
+
+# =============================== app ===================================
   app:
     build: .
     container_name: agent-app
@@ -36,7 +42,9 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - OLLAMA_BASE_URL=http://ollama:11434
-      - MODEL_NAME=qwen3.5:0.8b
+      - MODEL_NAME=${MODEL_NAME:-qwen3.5:0.8b}
+      - BATCH_SIZE=${BATCH_SIZE:-20}
+      - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}
       - APP_MODE=python
     ports:
       - "8501:8501"

@@ -1,72 +1,149 @@
-from pathlib import Path
+import csv
 import os
+import re
+from io import StringIO
+from pathlib import Path
 
-import pandas as pd
-import requests
+from agents.agent import agent
 
-
-DATA_DIR = Path("/data")
-PUBLIC_TEST_PATH = DATA_DIR / "public_test.csv"
-PRIVATE_TEST_PATH = DATA_DIR / "private_test.csv"
-
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-MODEL_NAME = os.getenv("MODEL_NAME", "qwen3.5:0.8b")
-
-
-def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
-    public_df = pd.read_csv(PUBLIC_TEST_PATH)
-    private_df = pd.read_csv(PRIVATE_TEST_PATH)
-
-    print(f"Loaded public_test.csv: {public_df.shape}")
-    print(f"Loaded private_test.csv: {private_df.shape}")
-
-    return public_df, private_df
+BASE_DIR = Path(__file__).resolve().parent
+PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
+PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
+VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
+ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|N/A)\b", re.IGNORECASE | re.DOTALL)
+ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$", re.IGNORECASE)
+FIELDNAMES = ["qid", "question", "A", "B", "C", "D"]
+DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
 
 
-def ask_ollama(prompt: str) -> str:
-    response = requests.post(
-        f"{OLLAMA_BASE_URL}/api/generate",
-        json={
-            "model": MODEL_NAME,
-            "prompt": prompt,
-            "stream": False,
-        },
-        timeout=180,
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+def question_ids(csv_text: str) -> list[str]:
+    reader = csv.DictReader(StringIO(csv_text))
+    return [row["qid"] for row in reader if row.get("qid")]
+
+
+def parse_model_answers(model_output: str) -> dict[str, str]:
+    answers = {}
+    for line in (model_output or "").splitlines():
+        match = ROW_RE.match(line.strip())
+        if not match:
+            continue
+        qid, answer = match.groups()
+        qid = qid.strip()
+        if qid.lower() == "qid":
+            continue
+        answers[qid] = answer.upper()
+    if answers:
+        return answers
+
+    reader = csv.DictReader(StringIO((model_output or "").strip()))
+    for row in reader:
+        qid = (row.get("qid") or "").strip()
+        answer = (row.get("answer") or "").strip().upper()
+        if qid:
+            answers[qid] = answer if answer in VALID_ANSWERS else "N/A"
+    return answers
+
+
+def build_predictions(question_csv: str, model_output: str) -> list[dict[str, str]]:
+    answers = parse_model_answers(model_output)
+    return [
+        {"qid": qid, "answer": answers.get(qid, "N/A")}
+        for qid in question_ids(question_csv)
+    ]
+
+
+def rows_to_prompt(rows: list[dict[str, str]]) -> str:
+    buffer = StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=FIELDNAMES)
+    writer.writeheader()
+    for row in rows:
+        writer.writerow({field: row.get(field, "") for field in FIELDNAMES})
+    return buffer.getvalue()
+
+
+def batched(rows: list[dict[str, str]], batch_size: int):
+    for start in range(0, len(rows), batch_size):
+        yield rows[start : start + batch_size]
+
+
+def extract_single_answer(model_output: str) -> str:
+    matches = ANSWER_RE.findall(model_output or "")
+    if not matches:
+        return "N/A"
+    answer = matches[-1].upper()
+    return answer if answer in VALID_ANSWERS else "N/A"
+
+
+
+def force_single_answer_prompt(row: dict[str, str]) -> str:
+    return (
+        "Chi tra ve dung 2 dong CSV: header qid,answer va mot dong dap an cho qid nay. "
+        "Khong phan tich. answer chi la A, B, C, D hoac N/A.\n\n"
+        + rows_to_prompt([row])
     )
-    response.raise_for_status()
-    return response.json()["response"]
+
+def predict_batch(rows: list[dict[str, str]]) -> dict[str, str]:
+    model_output = agent(rows_to_prompt(rows))
+    answers = parse_model_answers(model_output)
+    if len(rows) == 1:
+        qid = rows[0].get("qid", "")
+        if qid not in answers and len(answers) == 1:
+            answers[qid] = next(iter(answers.values()))
+        if qid not in answers:
+            answers[qid] = extract_single_answer(model_output)
+        if answers.get(qid, "N/A") == "N/A":
+            forced_output = agent(force_single_answer_prompt(rows[0]))
+            forced_answers = parse_model_answers(forced_output)
+            if qid in forced_answers:
+                answers[qid] = forced_answers[qid]
+            elif len(forced_answers) == 1:
+                answers[qid] = next(iter(forced_answers.values()))
+            else:
+                answers[qid] = extract_single_answer(forced_output)
+    return {row["qid"]: answers.get(row["qid"], "N/A") for row in rows if row.get("qid")}
 
 
-def summarize_dataframe(df: pd.DataFrame, name: str) -> str:
-    columns = list(df.columns)
-    sample = df.head(3).to_dict(orient="records")
-
-    prompt = f"""
-You are analyzing a CSV file named {name}.
-
-Columns:
-{columns}
-
-First 3 rows:
-{sample}
-
-Briefly describe what this dataset seems to contain.
-"""
-    return ask_ollama(prompt)
+def retry_bad_rows(rows: list[dict[str, str]], answers: dict[str, str]) -> dict[str, str]:
+    bad_rows = [row for row in rows if answers.get(row.get("qid", ""), "N/A") == "N/A"]
+    for row in bad_rows:
+        qid = row.get("qid", "")
+        retry_answers = predict_batch([row])
+        answers[qid] = retry_answers.get(qid, "N/A")
+    return answers
 
 
-def main():
-    public_df, private_df = load_data()
+def write_predictions(rows: list[dict[str, str]], output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["qid", "answer"])
+        writer.writeheader()
+        writer.writerows(rows)
 
-    public_summary = summarize_dataframe(public_df, "public_test.csv")
-    private_summary = summarize_dataframe(private_df, "private_test.csv")
 
-    print("\n=== Public Summary ===")
-    print(public_summary)
+def run(
+    input_path: Path = PUBLIC_QUESTION,
+    output_path: Path = PREDICTION_OUTPUT,
+    batch_size: int = DEFAULT_BATCH_SIZE,
+) -> Path:
+    with input_path.open(newline="", encoding="utf-8") as f:
+        source_rows = [row for row in csv.DictReader(f) if row.get("qid")]
 
-    print("\n=== Private Summary ===")
-    print(private_summary)
+    answers: dict[str, str] = {}
+    for batch in batched(source_rows, batch_size):
+        batch_answers = predict_batch(batch)
+        answers.update(retry_bad_rows(batch, batch_answers))
+
+    output_rows = [
+        {"qid": row["qid"], "answer": answers.get(row["qid"], "N/A")}
+        for row in source_rows
+    ]
+    write_predictions(output_rows, output_path)
+    return output_path
 
 
 if __name__ == "__main__":
-    main()
+    print(run())

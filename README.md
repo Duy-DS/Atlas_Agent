@@ -4,7 +4,7 @@
 
 
 ## 📖 Giới thiệu dự án  
-**Atlas_Agent** là một hệ thống AI Agent thông minh được thiết kế đặc biệt để giải quyết các bài toán trắc nghiệm phức tạp. Thay vì áp dụng phương pháp đoán mò hay học vẹt (hard-code), Atlas_Agent sử dụng kiến trúc đồ thị trạng thái (State Graph) kết hợp với kỹ thuật suy luận chuỗi (Chain-of-Thought / ReAct) để tự động đọc hiểu, tìm kiếm ngữ cảnh, và đưa ra quyết định logic nhất.
+**Atlas_Agent** là một hệ thống AI Agent thông minh được thiết kế đặc biệt để giải quyết các bài toán trắc nghiệm phức tạp. Thay vì áp dụng phương pháp đoán mò hay học vẹt (hard-code), Atlas_Agent sử dụng kiến trúc đồ thị trạng thái (State Graph) kết hợp với kỹ thuật suy luận chuỗi (Chain-of-Thought / ReAct) để tự động đọc hiểu, tìm kiếm ngữ cảnh, và đưa ra quyết định logic nhất.  
 Dự án hướng đến việc xây dựng một hệ thống AI Agent có khả năng:  
 - Đọc và phân tích câu hỏi đầu vào.
 - Suy luận để chọn đáp án phù hợp.

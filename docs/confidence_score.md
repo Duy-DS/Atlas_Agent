@@ -83,3 +83,37 @@ Nếu cần đánh giá sát hơn nữa, nên làm theo thứ tự:
 2. Thêm `answer_before_domain_retry` và `domain_retry_used` nếu muốn đo domain retry có giúp thật không.
 3. Chỉ thêm verifier pass cho domain rủi ro cao như toán và logic.
 4. Cân nhắc self-consistency cho một tập nhỏ câu khó, không áp dụng toàn bộ dataset.
+
+Bổi sung thêm: 
+
+1. Logprob qua /api/generate:
+pythonimport requests, math
+
+def get_confidence_from_logprob(prompt: str) -> float:
+    res = requests.post("http://localhost:11434/api/generate", json={
+        "model": "qwen3.5:4b",
+        "prompt": prompt,
+        "logprobs": True,
+        "stream": False
+    }).json()
+
+    # Tìm token A/B/C/D trong logprobs và lấy xác suất
+    for lp in res.get("logprobs", []):
+        if lp["token"].strip() in ("A", "B", "C", "D"):
+            return round(math.exp(lp["logprob"]), 2)  # logprob → probability
+    return 0.5  # fallback
+2. Thinking mode — tắt cho batch thường, bật cho câu khó:
+python# Tắt thinking (nhanh hơn, dùng cho batch bình thường)
+{"role": "system", "content": "/no_think " + system_prompt}
+
+# Bật thinking (chậm hơn nhưng chính xác hơn, dùng cho retry)
+{"role": "system", "content": "/think " + system_prompt}
+
+Chiến lược kết hợp cho qwen3.5:4b:
+Lần 1: /no_think + heuristic confidence
+        ↓
+confidence < 0.6 hoặc N/A?
+        ↓ có
+Lần 2: /think + logprob để lấy confidence thật
+        ↓
+Vẫn thấp? → web search hoặc domain retry

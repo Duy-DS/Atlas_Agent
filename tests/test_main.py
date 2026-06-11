@@ -327,6 +327,35 @@ class MainOutputTest(unittest.TestCase):
                 )
 
 
+    def test_run_keeps_existing_answer_when_search_reanswer_is_na(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "2,CEO hiện nay là ai?,a,b,c,d\n",
+                encoding="utf-8",
+            )
+            search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web không đủ để chọn đáp án."})
+
+            def fake_agent(prompt):
+                if "Nguồn web không đủ" in prompt:
+                    return "qid,answer\n2,N/A\n"
+                return "qid,answer\n2,C\n"
+
+            with patch.object(main, "agent", fake_agent):
+                main.run(input_path=input_path, output_path=output_path, batch_size=1, search_client=search)
+
+            with output_path.open(newline="", encoding="utf-8") as f:
+                self.assertEqual(list(csv.DictReader(f)), [{"qid": "2", "answer": "C"}])
+            with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [{"qid": "2", "answer": "C", "confidence": "0.40", "needs_search": "true", "search_used": "true"}],
+                )
+
+
     def test_run_uses_default_web_search_and_marks_audit_when_context_exists(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)

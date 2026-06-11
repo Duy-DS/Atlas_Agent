@@ -98,7 +98,7 @@ class DuckDuckGoHtmlSearch:
 
 
 def default_web_search() -> WebSearchClient:
-    if os.getenv("WEB_SEARCH_ENABLED", "false").lower() not in {"1", "true", "yes"}:
+    if os.getenv("WEB_SEARCH_ENABLED", "true").lower() in {"0", "false", "no", "off"}:
         return DisabledWebSearch()
     endpoint = os.getenv("WEB_SEARCH_ENDPOINT")
     if endpoint:

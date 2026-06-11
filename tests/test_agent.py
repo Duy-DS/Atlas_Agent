@@ -11,6 +11,15 @@ def load_agent_module():
 
 
 class AgentResponseTest(unittest.TestCase):
+    def test_system_prompt_instructs_how_to_handle_web_search_results(self):
+        agent_module = load_agent_module()
+
+        self.assertIn("**Xử lý kết quả tìm kiếm (khi có)**", agent_module.SYSTEM_PROMPT)
+        self.assertIn("Ưu tiên thông tin từ kết quả tìm kiếm hơn kiến thức nội tại", agent_module.SYSTEM_PROMPT)
+        self.assertIn("Không bịa thêm thông tin ngoài những gì đã được cung cấp", agent_module.SYSTEM_PROMPT)
+        self.assertIn("Nếu có kết quả tìm kiếm", agent_module.SYSTEM_PROMPT)
+        self.assertIn("[Search Result]:", agent_module.SYSTEM_PROMPT)
+
     def test_agent_strips_thinking_from_response(self):
         agent_module = load_agent_module()
 

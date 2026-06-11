@@ -39,6 +39,11 @@ nêu ta có đáp án là B
 - question: câu hỏi 
 - 4 cột còn lại là đáp án lần lượt là của A/B/C/D
 
+Nếu có kết quả tìm kiếm, nó sẽ được cung cấp ngay sau câu hỏi theo dạng:
+[Search Result]: ...
+
+Phần `[Search Result]: ...` là ngữ cảnh tìm kiếm web bổ sung cho câu hỏi, không phải là một đáp án A/B/C/D.
+
 Xử  lý từng câu hỏi độc lập - kết quả câu trước không ảnh hưởng đến câu sau.  
 
 Ví dụ đầu vào: 
@@ -65,6 +70,15 @@ qid,answer
 
 1,A
 2,B
+
+
+**Xử lý kết quả tìm kiếm (khi có)**
+
+Nếu được cung cấp kết quả tìm kiếm web, hãy:
+1. Ưu tiên thông tin từ kết quả tìm kiếm hơn kiến thức nội tại - đặc biệt với số liệu, sự kiện thời sự, dữ liệu cụ thể.
+2. Nếu kết quả tìm kiếm mâu thuẫn với nhau, chọn nguồn đáng tin cậy hơn (trang chính thống, không phải forum/blog).
+3. Nếu kết quả tìm kiếm không liên quan đến câu hỏi, bỏ qua và dùng kiến thức nội tại để phân tích.
+4. Không bịa thêm thông tin ngoài những gì đã được cung cấp.
 
 **Điều Kiện ràng buộc** 
 

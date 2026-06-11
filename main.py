@@ -6,11 +6,12 @@ from pathlib import Path
 
 from agents.agent import agent
 from agents.search_router import should_search
+from agents.subject_router import classify_subject
 from agents.web_search import WebSearchClient, default_web_search
 from agents.web_search_graph import build_web_search_graph
 
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
+PUBLIC_QUESTION = BASE_DIR / "data" / "public_test_80.csv"
 PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
 AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
 VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
@@ -18,6 +19,17 @@ ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|N/A)\b", re.IG
 ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$", re.IGNORECASE)
 FIELDNAMES = ["qid", "question", "A", "B", "C", "D"]
 DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
+DOMAIN_PROMPT_PATHS = {
+    "it": BASE_DIR / "prompts" / "domain_it.md",
+    "math": BASE_DIR / "prompts" / "domain_math.md",
+    "physics": BASE_DIR / "prompts" / "domain_physics.md",
+    "geography": BASE_DIR / "prompts" / "domain_geography.md",
+    "history": BASE_DIR / "prompts" / "domain_history.md",
+    "english": BASE_DIR / "prompts" / "domain_english.md",
+    "logic": BASE_DIR / "prompts" / "domain_logic.md",
+    "other": BASE_DIR / "prompts" / "domain_other.md",
+}
+_DOMAIN_PROMPT_CACHE: dict[str, str] = {}
 
 
 def read_text(path: Path) -> str:
@@ -116,6 +128,35 @@ def predict_single_retry(row: dict[str, str]) -> str:
     model_output = agent(force_single_answer_prompt(row))
     answers = apply_single_row_fallback(row, model_output, parse_model_answers(model_output))
     return answers.get(qid, "N/A")
+
+
+def domain_prompt_for(subject: str) -> str:
+    normalized_subject = subject if subject in DOMAIN_PROMPT_PATHS else "other"
+    if normalized_subject not in _DOMAIN_PROMPT_CACHE:
+        _DOMAIN_PROMPT_CACHE[normalized_subject] = read_text(DOMAIN_PROMPT_PATHS[normalized_subject]).strip()
+    return _DOMAIN_PROMPT_CACHE[normalized_subject]
+
+
+def domain_retry_prompt(row: dict[str, str], subject: str) -> str:
+    return domain_prompt_for(subject) + "\n\n" + rows_to_prompt([row])
+
+
+def predict_domain_retry(row: dict[str, str], subject: str) -> str:
+    model_output = agent(domain_retry_prompt(row, subject))
+    answers = apply_single_row_fallback(row, model_output, parse_model_answers(model_output))
+    return answers.get(row.get("qid", ""), "N/A")
+
+
+def retry_domain_rows(rows: list[dict[str, str]], answers: dict[str, str]) -> dict[str, str]:
+    for row in rows:
+        qid = row.get("qid", "")
+        decision = classify_subject(row)
+        if not decision.needs_domain_retry:
+            continue
+        retry_answer = predict_domain_retry(row, decision.subject)
+        if retry_answer in VALID_ANSWERS:
+            answers[qid] = retry_answer
+    return answers
 
 
 
@@ -228,10 +269,13 @@ def run(
     search_client = search_client or default_web_search()
 
     answers: dict[str, str] = {}
+    audit_answers: dict[str, str] = {}
     search_used_qids: set[str] = set()
     for batch in batched(source_rows, batch_size):
         batch_answers = predict_batch(batch)
         batch_answers = retry_bad_rows(batch, batch_answers)
+        batch_answers = retry_domain_rows(batch, batch_answers)
+        audit_answers.update(batch_answers)
         answers.update(apply_web_search(batch, batch_answers, search_client, search_used_qids))
 
     output_rows = [
@@ -239,7 +283,7 @@ def run(
         for row in source_rows
     ]
     write_predictions(output_rows, output_path)
-    write_audit(build_audit_rows(source_rows, answers, search_used_qids), audit_output_path or output_path.with_name("pred_audit.csv"))
+    write_audit(build_audit_rows(source_rows, audit_answers, search_used_qids), audit_output_path or output_path.with_name("pred_audit.csv"))
     return output_path
 
 

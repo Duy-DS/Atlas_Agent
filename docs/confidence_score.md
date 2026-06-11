@@ -1,50 +1,85 @@
-• Hiện tại confidence trong repo không phải confidence thật từ model. Nó là
-  heuristic tự đặt trong main.py, function confidence_for():
+# Confidence Score Plan
 
-  def confidence_for(row, answer):
-      if answer == "N/A":
-          return "0.00"
-      if should_search(row, answer):
-          return "0.40"
-      return "0.90"
+Tài liệu này mô tả cách tính `confidence` trong `pred_audit.csv`.
 
-  Nghĩa là:
+## 1. Trạng thái hiện tại
 
-  - N/A → 0.00
-  - câu bị router đánh là cần web search → 0.40
-  - còn lại → 0.90
+Confidence hiện đã được tính theo pipeline events thay vì chỉ dựa vào `should_search()`.
 
-  Cách này đơn giản, nhưng không đo được model chắc hay không. Nó chỉ phản ánh
-  rule của pipeline.
+Các event đang được theo dõi trong `main.py`:
 
-  Các cách tốt hơn, theo mức độ thực tế:
+- `batch`: đáp án đến trực tiếp từ batch prediction.
+- `single_retry`: đáp án được sửa từ bước retry riêng cho câu `N/A` hoặc thiếu qid.
+- `domain_retry_changed`: domain retry đã chạy và đổi đáp án.
+- `domain_retry_same`: domain retry đã chạy nhưng giữ nguyên đáp án.
+- `missing`: batch không trả được đáp án hợp lệ.
 
-  1. Heuristic theo pipeline
-     Dễ nhất, nhanh nhất.
-     Ví dụ:
-      - batch trả hợp lệ ngay → 0.70
-      - domain retry đổi đáp án → 0.60
-      - domain retry giữ nguyên đáp án → 0.80
-      - web search có source và đổi đáp án → 0.75
-      - answer N/A → 0.00
+Audit vẫn giữ schema hiện tại:
 
-  2. Self-consistency
-     Gọi model 2-3 lần cùng câu, nếu cùng chọn một đáp án thì confidence cao.
-     Chính xác hơn, nhưng chậm hơn nhiều.
+```text
+qid,answer,confidence,needs_search,search_used
+```
 
-  3. Ask model tự chấm confidence
-     Prompt model trả thêm confidence.
-     Không đáng tin lắm, vì model thường tự tin sai.
+Trong đó `answer` là đáp án trước web search, còn `pred.csv` là đáp án cuối cùng sau web search nếu có.
 
-  4. Logprob/token probability
-     Nếu backend model trả logprobs cho đáp án A/B/C/D thì đây là cách tốt hơn.
-     Nhưng với ollama.chat hiện tại thường không có logprob chuẩn dễ dùng.
+## 2. Rule confidence hiện dùng
 
-  5. Verifier pass
-     Sau khi có đáp án, gọi một prompt verifier hỏi “đáp án này có thỏa đề
-     không?”.
-     Tốt cho toán/logic, nhưng thêm latency.
+Rule trong `confidence_for()`:
 
-  Tôi khuyên với repo này dùng cách 1 trước: confidence theo pipeline events, vì
-  nhanh và dễ debug. Muốn làm chính xác hơn cho toán thì thêm verifier riêng cho
-  domain retry, không nên áp dụng toàn bộ câu hỏi ngay
+```text
+answer == N/A                         -> 0.00
+needs_search == true                  -> 0.40
+answer_source == single_retry          -> 0.55
+answer_source == domain_retry_changed  -> 0.60
+answer_source == domain_retry_same     -> 0.80
+mặc định batch hợp lệ                  -> 0.70
+```
+
+Ý nghĩa:
+
+- `0.70`: batch trả hợp lệ nhưng chưa có bước kiểm chứng bổ sung.
+- `0.55`: câu ban đầu lỗi/thiếu, được single retry sửa lại nên độ tin cậy thấp hơn batch sạch.
+- `0.60`: domain retry đổi đáp án, hữu ích nhưng có rủi ro sửa sai câu vốn đúng.
+- `0.80`: domain retry kiểm tra lại và giữ nguyên đáp án, đáng tin hơn batch thường.
+- `0.40`: câu cần web search, audit đang ghi đáp án trước search nên confidence thấp.
+- `0.00`: không có đáp án hợp lệ.
+
+## 3. Vì sao cách này sát hơn
+
+Cách cũ chỉ có 3 mức:
+
+```text
+N/A -> 0.00
+needs_search -> 0.40
+còn lại -> 0.90
+```
+
+Cách đó không phân biệt được:
+
+- câu batch trả ngay với câu phải retry;
+- câu domain retry đổi đáp án với câu domain retry giữ nguyên;
+- câu toán/logic đã được kiểm tra lại với câu thường.
+
+Cách mới không phải confidence thật của model, nhưng phản ánh tốt hơn đường đi của đáp án trong pipeline.
+
+## 4. Giới hạn
+
+Confidence này vẫn là heuristic, không phải xác suất đúng thật sự.
+
+Nó chưa dùng:
+
+- self-consistency nhiều lần gọi model;
+- model tự chấm confidence;
+- logprob/token probability;
+- verifier pass độc lập.
+
+Các cách trên có thể sát hơn trong một số trường hợp nhưng sẽ tăng latency hoặc phức tạp hơn. Với pipeline hiện tại, confidence theo event là lựa chọn cân bằng giữa tốc độ và khả năng debug.
+
+## 5. Hướng mở rộng sau
+
+Nếu cần đánh giá sát hơn nữa, nên làm theo thứ tự:
+
+1. Thêm cột audit `answer_source` để debug trực tiếp nguồn đáp án.
+2. Thêm `answer_before_domain_retry` và `domain_retry_used` nếu muốn đo domain retry có giúp thật không.
+3. Chỉ thêm verifier pass cho domain rủi ro cao như toán và logic.
+4. Cân nhắc self-consistency cho một tập nhỏ câu khó, không áp dụng toàn bộ dataset.

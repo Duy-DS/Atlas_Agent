@@ -218,20 +218,28 @@ def write_predictions(rows: list[dict[str, str]], output_path: Path) -> None:
 
 
 
-def confidence_for(row: dict[str, str], answer: str) -> str:
+def confidence_for(row: dict[str, str], answer: str, answer_source: str = "batch") -> str:
     if answer == "N/A":
         return "0.00"
     if should_search(row, answer):
         return "0.40"
-    return "0.90"
+    if answer_source == "single_retry":
+        return "0.55"
+    if answer_source == "domain_retry_changed":
+        return "0.60"
+    if answer_source == "domain_retry_same":
+        return "0.80"
+    return "0.70"
 
 
 def build_audit_rows(
     source_rows: list[dict[str, str]],
     answers: dict[str, str],
     search_used_qids: set[str] | None = None,
+    answer_sources: dict[str, str] | None = None,
 ) -> list[dict[str, str]]:
     search_used_qids = search_used_qids or set()
+    answer_sources = answer_sources or {}
     audit_rows = []
     for row in source_rows:
         qid = row["qid"]
@@ -240,7 +248,7 @@ def build_audit_rows(
             {
                 "qid": qid,
                 "answer": answer,
-                "confidence": confidence_for(row, answer),
+                "confidence": confidence_for(row, answer, answer_sources.get(qid, "batch")),
                 "needs_search": "true" if should_search(row, answer) else "false",
                 "search_used": "true" if qid in search_used_qids else "false",
             }
@@ -270,11 +278,32 @@ def run(
 
     answers: dict[str, str] = {}
     audit_answers: dict[str, str] = {}
+    answer_sources: dict[str, str] = {}
     search_used_qids: set[str] = set()
     for batch in batched(source_rows, batch_size):
         batch_answers = predict_batch(batch)
+        for row in batch:
+            qid = row.get("qid", "")
+            answer_sources[qid] = "batch" if batch_answers.get(qid, "N/A") != "N/A" else "missing"
+
+        before_single_retry = dict(batch_answers)
         batch_answers = retry_bad_rows(batch, batch_answers)
+        for row in batch:
+            qid = row.get("qid", "")
+            if before_single_retry.get(qid, "N/A") == "N/A" and batch_answers.get(qid, "N/A") != "N/A":
+                answer_sources[qid] = "single_retry"
+
+        before_domain_retry = dict(batch_answers)
         batch_answers = retry_domain_rows(batch, batch_answers)
+        for row in batch:
+            qid = row.get("qid", "")
+            if not classify_subject(row).needs_domain_retry:
+                continue
+            if batch_answers.get(qid, "N/A") != before_domain_retry.get(qid, "N/A"):
+                answer_sources[qid] = "domain_retry_changed"
+            elif batch_answers.get(qid, "N/A") != "N/A":
+                answer_sources[qid] = "domain_retry_same"
+
         audit_answers.update(batch_answers)
         answers.update(apply_web_search(batch, batch_answers, search_client, search_used_qids))
 
@@ -283,7 +312,7 @@ def run(
         for row in source_rows
     ]
     write_predictions(output_rows, output_path)
-    write_audit(build_audit_rows(source_rows, audit_answers, search_used_qids), audit_output_path or output_path.with_name("pred_audit.csv"))
+    write_audit(build_audit_rows(source_rows, audit_answers, search_used_qids, answer_sources), audit_output_path or output_path.with_name("pred_audit.csv"))
     return output_path
 
 

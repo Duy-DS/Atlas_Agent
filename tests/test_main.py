@@ -130,9 +130,9 @@ class MainOutputTest(unittest.TestCase):
                 self.assertEqual(
                     list(csv.DictReader(f)),
                     [
-                        {"qid": "1", "answer": "A", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
-                        {"qid": "2", "answer": "B", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
-                        {"qid": "3", "answer": "C", "confidence": "0.90", "needs_search": "false", "search_used": "false"},
+                        {"qid": "1", "answer": "A", "confidence": "0.70", "needs_search": "false", "search_used": "false"},
+                        {"qid": "2", "answer": "B", "confidence": "0.70", "needs_search": "false", "search_used": "false"},
+                        {"qid": "3", "answer": "C", "confidence": "0.70", "needs_search": "false", "search_used": "false"},
                     ],
                 )
 
@@ -230,6 +230,39 @@ class MainOutputTest(unittest.TestCase):
         self.assertEqual(audit, [{"qid": "9", "answer": "A", "confidence": "0.40", "needs_search": "true", "search_used": "true"}])
 
 
+    def test_run_scores_single_retry_lower_than_batch_answer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "1,one,a,b,c,d\n"
+                "2,two,a,b,c,d\n",
+                encoding="utf-8",
+            )
+
+            calls = []
+
+            def fake_agent(prompt):
+                calls.append(prompt)
+                if len(calls) == 1:
+                    return "qid,answer\n1,A\n"
+                return "qid,answer\n2,B\n"
+
+            with patch.object(main, "agent", fake_agent):
+                main.run(input_path=input_path, output_path=output_path, batch_size=2, search_client=StaticWebSearch({}))
+
+            with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [
+                        {"qid": "1", "answer": "A", "confidence": "0.70", "needs_search": "false", "search_used": "false"},
+                        {"qid": "2", "answer": "B", "confidence": "0.55", "needs_search": "false", "search_used": "false"},
+                    ],
+                )
+
+
     def test_run_retries_math_with_domain_prompt_before_web_search(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
@@ -259,7 +292,7 @@ class MainOutputTest(unittest.TestCase):
             with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
                 self.assertEqual(
                     list(csv.DictReader(f)),
-                    [{"qid": "1", "answer": "B", "confidence": "0.90", "needs_search": "false", "search_used": "false"}],
+                    [{"qid": "1", "answer": "B", "confidence": "0.60", "needs_search": "false", "search_used": "false"}],
                 )
 
 

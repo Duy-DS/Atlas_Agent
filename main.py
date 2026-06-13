@@ -1,17 +1,18 @@
 import csv
 import os
 import re
+import sys
 from io import StringIO
 from pathlib import Path
 
 from agents.agent import agent
 from agents.search_router import should_search
-from agents.subject_router import classify_subject
+from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
 from agents.web_search_graph import build_web_search_graph
 
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
+PUBLIC_QUESTION = BASE_DIR / "data" / "public_test_80.csv"
 PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
 AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
 VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
@@ -90,6 +91,17 @@ def batched(rows: list[dict[str, str]], batch_size: int):
         yield rows[start : start + batch_size]
 
 
+def print_progress(done: int, total: int, width: int = 30) -> None:
+    if total <= 0:
+        return
+    done = min(done, total)
+    filled = round(width * done / total)
+    bar = "#" * filled + "-" * (width - filled)
+    percent = round(100 * done / total)
+    end = "\n" if done >= total else "\r"
+    print(f"Progress: [{bar}] {done}/{total} ({percent}%)", end=end, file=sys.stderr, flush=True)
+
+
 def extract_single_answer(model_output: str) -> str:
     matches = ANSWER_RE.findall(model_output or "")
     if not matches:
@@ -115,12 +127,37 @@ def apply_single_row_fallback(row: dict[str, str], model_output: str, answers: d
     return answers
 
 
-def predict_batch(rows: list[dict[str, str]]) -> dict[str, str]:
+def answer_quality_for(row: dict[str, str], parsed_answers: dict[str, str], final_answers: dict[str, str]) -> str:
+    qid = row.get("qid", "")
+    parsed_answer = parsed_answers.get(qid)
+    final_answer = final_answers.get(qid, "N/A")
+    if parsed_answer in VALID_ANSWERS and parsed_answer != "N/A":
+        return "clean"
+    if final_answer in VALID_ANSWERS and final_answer != "N/A":
+        return "weak_parse"
+    if qid in parsed_answers:
+        return "invalid"
+    return "missing"
+
+
+def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], dict[str, str]]:
     model_output = agent(rows_to_prompt(rows))
-    answers = parse_model_answers(model_output)
+    parsed_answers = parse_model_answers(model_output)
+    answers = dict(parsed_answers)
     if len(rows) == 1:
         answers = apply_single_row_fallback(rows[0], model_output, answers)
-    return {row["qid"]: answers.get(row["qid"], "N/A") for row in rows if row.get("qid")}
+    final_answers = {row["qid"]: answers.get(row["qid"], "N/A") for row in rows if row.get("qid")}
+    answer_quality = {
+        row["qid"]: answer_quality_for(row, parsed_answers, final_answers)
+        for row in rows
+        if row.get("qid")
+    }
+    return final_answers, answer_quality
+
+
+def predict_batch(rows: list[dict[str, str]]) -> dict[str, str]:
+    answers, _ = predict_batch_details(rows)
+    return answers
 
 
 def predict_single_retry(row: dict[str, str]) -> str:
@@ -147,11 +184,16 @@ def predict_domain_retry(row: dict[str, str], subject: str) -> str:
     return answers.get(row.get("qid", ""), "N/A")
 
 
-def retry_domain_rows(rows: list[dict[str, str]], answers: dict[str, str]) -> dict[str, str]:
+def retry_domain_rows(
+    rows: list[dict[str, str]],
+    answers: dict[str, str],
+    answer_quality: dict[str, str] | None = None,
+) -> dict[str, str]:
+    answer_quality = answer_quality or {}
     for row in rows:
         qid = row.get("qid", "")
         decision = classify_subject(row)
-        if not decision.needs_domain_retry:
+        if not should_retry_domain(row, answer_quality.get(qid, "clean")):
             continue
         retry_answer = predict_domain_retry(row, decision.subject)
         if retry_answer in VALID_ANSWERS:
@@ -270,6 +312,7 @@ def run(
     batch_size: int = DEFAULT_BATCH_SIZE,
     search_client: WebSearchClient | None = None,
     audit_output_path: Path | None = None,
+    show_progress: bool = False,
 ) -> Path:
     with input_path.open(newline="", encoding="utf-8-sig") as f:
         source_rows = [normalize_row(row) for row in csv.DictReader(f)]
@@ -281,8 +324,12 @@ def run(
     audit_answers: dict[str, str] = {}
     answer_sources: dict[str, str] = {}
     search_used_qids: set[str] = set()
+    total_rows = len(source_rows)
+    processed_rows = 0
+    if show_progress:
+        print_progress(0, total_rows)
     for batch in batched(source_rows, batch_size):
-        batch_answers = predict_batch(batch)
+        batch_answers, answer_quality = predict_batch_details(batch)
         for row in batch:
             qid = row.get("qid", "")
             answer_sources[qid] = "batch" if batch_answers.get(qid, "N/A") != "N/A" else "missing"
@@ -295,10 +342,10 @@ def run(
                 answer_sources[qid] = "single_retry"
 
         before_domain_retry = dict(batch_answers)
-        batch_answers = retry_domain_rows(batch, batch_answers)
+        batch_answers = retry_domain_rows(batch, batch_answers, answer_quality)
         for row in batch:
             qid = row.get("qid", "")
-            if not classify_subject(row).needs_domain_retry:
+            if not should_retry_domain(row, answer_quality.get(qid, "clean")):
                 continue
             if batch_answers.get(qid, "N/A") != before_domain_retry.get(qid, "N/A"):
                 answer_sources[qid] = "domain_retry_changed"
@@ -307,6 +354,9 @@ def run(
 
         audit_answers.update(batch_answers)
         answers.update(apply_web_search(batch, batch_answers, search_client, search_used_qids))
+        processed_rows += len(batch)
+        if show_progress:
+            print_progress(processed_rows, total_rows)
 
     output_rows = [
         {"qid": row["qid"], "answer": answers.get(row["qid"], "N/A")}
@@ -318,4 +368,4 @@ def run(
 
 
 if __name__ == "__main__":
-    print(run())
+    print(run(show_progress=True))

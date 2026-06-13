@@ -1,28 +1,38 @@
 #!/bin/sh
 set -e
 
-echo "Starting app inside Docker container..."
+INPUT_CSV="${INPUT_CSV:-/data/public_test.csv}"
+OUTPUT_CSV="${OUTPUT_CSV:-/output/pred.csv}"
+AUDIT_CSV="${AUDIT_CSV:-/output/pred_audit.csv}"
+APP_MODE="${APP_MODE:-python}"
+OLLAMA_BASE_URL="${OLLAMA_BASE_URL:-http://ollama:11434}"
 
-echo "Checking data files..."
+printf "%s\n" "Starting Atlas Agent..."
+printf "%s\n" "Input: ${INPUT_CSV}"
+printf "%s\n" "Output: ${OUTPUT_CSV}"
+printf "%s\n" "Audit: ${AUDIT_CSV}"
 
-if [ ! -f "/data/public_test.csv" ]; then
-  echo "ERROR: /data/public_test.csv not found"
+if [ ! -f "$INPUT_CSV" ]; then
+  printf "%s\n" "ERROR: input CSV not found: $INPUT_CSV"
   exit 1
 fi
 
-if [ ! -f "/data/private_test.csv" ]; then
-  echo "ERROR: /data/private_test.csv not found"
-  exit 1
+mkdir -p "$(dirname "$OUTPUT_CSV")"
+mkdir -p "$(dirname "$AUDIT_CSV")"
+
+if [ "${WAIT_FOR_OLLAMA:-true}" = "true" ]; then
+  printf "%s\n" "Waiting for Ollama at ${OLLAMA_BASE_URL}..."
+  until curl -fsS "${OLLAMA_BASE_URL}/api/tags" >/dev/null; do
+    sleep 2
+  done
 fi
 
-echo "Data files found."
+export INPUT_CSV OUTPUT_CSV AUDIT_CSV OLLAMA_BASE_URL
 
 if [ "$APP_MODE" = "streamlit" ]; then
-  echo "Starting Streamlit..."
-  streamlit run /app/main.py \
-    --server.address=0.0.0.0 \
-    --server.port=8501
-else
-  echo "Running main.py..."
-  python /app/main.py
+  printf "%s\n" "Starting Streamlit..."
+  exec streamlit run /app/main.py --server.address=0.0.0.0 --server.port=8501
 fi
+
+printf "%s\n" "Running main.py..."
+exec python /app/main.py

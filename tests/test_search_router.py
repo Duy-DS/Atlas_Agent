@@ -28,6 +28,22 @@ class SearchRouterKeywordTest(unittest.TestCase):
             with self.subTest(question=question):
                 self.assertTrue(search_router.should_search({"qid": "1", "question": question}, "A"))
 
+    def test_should_not_search_triangle_question_because_gia_is_inside_giac(self):
+        question = "Một tam giác vuông có hai cạnh góc vuông dài 6 và 8. Cạnh huyền dài bao nhiêu?"
+
+        decision = search_router.route_search({"qid": "1", "question": question}, "A")
+
+        self.assertFalse(decision.needs_search)
+        self.assertEqual(decision.reason, "stable_question")
+
+    def test_should_search_price_questions_when_gia_is_a_word(self):
+        question = "Giá vàng là bao nhiêu?"
+
+        decision = search_router.route_search({"qid": "1", "question": question}, "A")
+
+        self.assertTrue(decision.needs_search)
+        self.assertEqual(decision.reason, "volatile_keyword:giá")
+
     def test_should_not_search_stable_academic_questions_only_because_of_domain(self):
         examples = [
             "Công thức toán học nào dùng để tính diện tích hình tròn?",

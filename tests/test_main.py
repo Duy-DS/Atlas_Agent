@@ -1,4 +1,6 @@
 import csv
+import contextlib
+import io
 import sys
 import tempfile
 import types
@@ -136,6 +138,39 @@ class MainOutputTest(unittest.TestCase):
                     ],
                 )
 
+    def test_run_can_print_progress_to_stderr(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "1,one,a,b,c,d\n"
+                "2,two,a,b,c,d\n"
+                "3,three,a,b,c,d\n",
+                encoding="utf-8",
+            )
+
+            def fake_agent(prompt):
+                if "3,three" in prompt:
+                    return "qid,answer\n3,C\n"
+                return "qid,answer\n1,A\n2,B\n"
+
+            stderr = io.StringIO()
+            with patch.object(main, "agent", fake_agent), contextlib.redirect_stderr(stderr):
+                main.run(
+                    input_path=input_path,
+                    output_path=output_path,
+                    batch_size=2,
+                    search_client=StaticWebSearch({}),
+                    show_progress=True,
+                )
+
+            progress_output = stderr.getvalue()
+            self.assertIn("Progress:", progress_output)
+            self.assertIn("3/3 (100%)", progress_output)
+
+
     def test_run_retries_missing_or_invalid_rows_one_by_one_with_one_retry_each(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
@@ -260,6 +295,66 @@ class MainOutputTest(unittest.TestCase):
                         {"qid": "1", "answer": "A", "confidence": "0.70", "needs_search": "false", "search_used": "false"},
                         {"qid": "2", "answer": "B", "confidence": "0.55", "needs_search": "false", "search_used": "false"},
                     ],
+                )
+
+
+    def test_run_skips_simple_domain_retry_when_batch_answer_is_clean(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "1,Toán học là môn học về điều gì?,số học,văn học,lịch sử,địa lý\n",
+                encoding="utf-8",
+            )
+            calls = []
+
+            def fake_agent(prompt):
+                calls.append(prompt)
+                return "qid,answer\n1,A\n"
+
+            with patch.object(main, "agent", fake_agent):
+                main.run(input_path=input_path, output_path=output_path, batch_size=1, search_client=StaticWebSearch({}))
+
+            self.assertEqual(len(calls), 1)
+            self.assertNotIn("domain Toán học", calls[0])
+            with output_path.open(newline="", encoding="utf-8") as f:
+                self.assertEqual(list(csv.DictReader(f)), [{"qid": "1", "answer": "A"}])
+            with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [{"qid": "1", "answer": "A", "confidence": "0.70", "needs_search": "false", "search_used": "false"}],
+                )
+
+
+    def test_run_retries_simple_domain_when_batch_output_needed_single_row_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            input_path = tmp_path / "public_test.csv"
+            output_path = tmp_path / "pred.csv"
+            input_path.write_text(
+                "qid,question,A,B,C,D\n"
+                "1,Toán học là môn học về điều gì?,số học,văn học,lịch sử,địa lý\n",
+                encoding="utf-8",
+            )
+            calls = []
+
+            def fake_agent(prompt):
+                calls.append(prompt)
+                if "domain Toán học" in prompt:
+                    return "qid,answer\n1,A\n"
+                return "qid,answer\nwrong_id,A\n"
+
+            with patch.object(main, "agent", fake_agent):
+                main.run(input_path=input_path, output_path=output_path, batch_size=1, search_client=StaticWebSearch({}))
+
+            self.assertEqual(len(calls), 2)
+            self.assertIn("domain Toán học", calls[1])
+            with output_path.with_name("pred_audit.csv").open(newline="", encoding="utf-8") as f:
+                self.assertEqual(
+                    list(csv.DictReader(f)),
+                    [{"qid": "1", "answer": "A", "confidence": "0.80", "needs_search": "false", "search_used": "false"}],
                 )
 
 

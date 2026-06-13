@@ -1,0 +1,58 @@
+# Git and local agent metadata
+.git
+.gitignore
+.codex
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+venv/
+env/
+.venv/
+
+# Local/runtime data. These are mounted by docker-compose or regenerated.
+data/
+output/
+chroma-data/
+chroma_db/
+ollama-data/
+
+# Secrets and local machine config
+.env
+.env.*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build artifacts and dependency caches
+build/
+dist/
+*.egg-info/
+node_modules/
+.tmp_runtime/
+.pytest_tmp/
+
+# Large source documents commonly used as input data
+*.csv
+*.json
+*.parquet
+*.snappy
+*.delta/
+*.pdf
+*.docx
+Article/
+Thesis/
+
+# Compose files and local docs are not needed inside the app image
+docker-compose*.yml
+README.md
+ollama_run_*.md

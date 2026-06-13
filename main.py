@@ -53,7 +53,8 @@ async def process_dataset(input_file: str, output_file: str):
     for idx in range(0, len(inputs), batch_size):
         chunk_inputs = inputs[idx : idx + batch_size]
         print(f"[BATCH RUN] Đang xử lý câu hỏi từ {idx + 1} đến {min(idx + batch_size, len(inputs))}...")
-        chunk_results = await app_graph.abatch(chunk_inputs)
+        # Sử dụng return_exceptions=True để tránh việc một câu hỏi bị lỗi làm sập toàn bộ batch
+        chunk_results = await app_graph.abatch(chunk_inputs, return_exceptions=True)
         results.extend(chunk_results)
     
     end_time = time.time()
@@ -69,8 +70,14 @@ async def process_dataset(input_file: str, output_file: str):
         writer.writerow(["qid", "answer"]) # Header theo format thông thường của các cuộc thi
         
         for qid, res in zip(qids, results):
-            # Lấy đáp án dự đoán (mặc định hiện tại là B từ mock logic)
-            ans = res.get("answer", "")
+            # Lấy đáp án dự đoán (mặc định hiện tại là B từ mock logic nếu bị lỗi)
+            if isinstance(res, Exception):
+                print(f"[CẢNH BÁO] Lỗi xử lý qid {qid}: {res}")
+                ans = "B"
+            else:
+                ans = res.get("answer", "B")
+                if not ans:
+                    ans = "B"
             writer.writerow([qid, ans])
             
     print("Hoàn tất luồng dữ liệu của Agent!")

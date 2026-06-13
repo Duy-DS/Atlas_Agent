@@ -19,11 +19,18 @@ python_repl = PythonREPL()
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY", "")
 
-# Khởi tạo LLM sử dụng Groq API thông qua ChatOpenAI format
+# Đọc cấu hình từ biến môi trường hoặc dùng fallback mặc định sang Groq API
+llm_base_url = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
+llm_model_name = os.getenv("LLM_MODEL_NAME", "llama-3.1-8b-instant")
+llm_api_key = os.getenv("LLM_API_KEY", groq_api_key)
+
+print(f"[*] Cấu hình LLM: Base URL={llm_base_url} | Model={llm_model_name}")
+
+# Khởi tạo LLM tương thích chuẩn OpenAI
 llm = ChatOpenAI(
-    model="llama-3.1-8b-instant", # Sử dụng model siêu nhanh của Groq
-    api_key=groq_api_key, 
-    base_url="https://api.groq.com/openai/v1",
+    model=llm_model_name,
+    api_key=llm_api_key, 
+    base_url=llm_base_url,
     temperature=0.1
 )
 

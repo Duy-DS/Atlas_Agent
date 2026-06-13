@@ -1,123 +1,79 @@
-# Testing Guide — Atlas Agent
+# Testing Guide — Atlas Agent (Kiến trúc Multi-Tool)
 
-Hướng dẫn chạy các bài kiểm thử cho hệ thống Agent. Tất cả lệnh chạy từ **thư mục gốc** của project (`Atlas_Agent/`).
+Tài liệu hướng dẫn chạy thử nghiệm và kiểm thử hệ thống Agent phiên bản Multi-Tool Async.
 
 ---
 
-## Yêu cầu trước khi chạy test
+## 1. Yêu cầu trước khi chạy Test
 
-1. Kích hoạt virtual environment:
+1. **Kích hoạt Virtual Environment:**
    ```bash
-   # Windows
+   # Windows PowerShell/CMD
    .venv\Scripts\activate
 
    # Linux / macOS
    source .venv/bin/activate
    ```
 
-2. Đảm bảo file `.env` có chứa `GROQ_API_KEY` (bắt buộc) và `HF_TOKEN` (tùy chọn):
+2. **Cài đặt thư viện:** Đảm bảo bạn đã cài đặt đầy đủ các thư viện mới nhất:
+   ```bash
+   pip install -r requirements.txt
    ```
+
+3. **Biến môi trường:** Đảm bảo tệp `.env` ở thư mục gốc có cấu hình `GROQ_API_KEY`:
+   ```env
    GROQ_API_KEY=gsk_...
-   HF_TOKEN=hf_...        # Nếu không có sẽ dùng local embedding
    ```
 
 ---
 
-## Danh sách các Test Script
+## 2. Hướng dẫn chạy Test Script chính
 
-### 1. `test/test_agent_no_RAG.py` — Agent trả lời trực tiếp (không gọi tool)
+Tất cả các lệnh chạy kiểm thử phải được thực hiện từ **thư mục gốc** của dự án (`Atlas_Agent/`).
 
-**Mục đích**: Kiểm tra agent có thể trả lời câu hỏi kiến thức tổng quát / toán cơ bản **mà không gọi bất kỳ tool nào**.
+### Test Script: `test/test_async.py`
 
-```bash
-.venv\Scripts\python test/test_agent_no_RAG.py
-```
+**Mục đích:**
+- Kiểm tra luồng chạy của Multi-Tool Agent trên 10 câu hỏi mẫu khác nhau.
+- Xác thực hoạt động của **Router Node** trong việc phân loại câu hỏi (định tuyến đến Python, Wikipedia, Web Search hoặc Đi thẳng).
+- Kiểm tra cơ chế chạy song song bất đồng bộ (`abatch()`) để đo thời gian phản hồi thực tế.
 
-**Kết quả mong đợi**:
-- Log **KHÔNG** xuất hiện dòng `[Tool] LLM yeu cau goi tool RAG Database...`
-- Agent trả lời trực tiếp, đáp án đúng là `B` (1+1=2)
+**Lệnh thực thi:**
+* **Trên Windows (Tránh lỗi mã hóa tiếng Việt):**
+  ```powershell
+  $env:PYTHONUTF8=1; python test/test_async.py
+  ```
+* **Trên Linux / macOS:**
+  ```bash
+  python test/test_async.py
+  ```
 
----
-
-### 2. `test/test_agent_to_RAG.py` — Agent gọi RAG tool khi cần
-
-**Mục đích**: Kiểm tra agent **tự động gọi tool `search_rag_database`** khi câu hỏi yêu cầu thông tin từ tài liệu bên ngoài (ví dụ: quy định cuộc thi).
-
-```bash
-.venv\Scripts\python test/test_agent_to_RAG.py
-```
-
-**Kết quả mong đợi**:
-- Log xuất hiện dòng `[Tool] LLM yeu cau goi tool RAG Database...`
-- Agent truy vấn RAG, lấy context, rồi mới trả lời
-
----
-
-### 3. `test/test_graph.py` — Test cơ bản luồng đồ thị
-
-**Mục đích**: Smoke test kiểm tra luồng chạy xuyên suốt từ đầu vào đến đầu ra.
-
-```bash
-.venv\Scripts\python test/test_graph.py
-```
+**Kết quả mong đợi trên Console:**
+- Nhìn thấy các dòng log điều phối từ Router:
+  ```text
+  [ROUTER] 'Câu hỏi 1: AI Agent là gì?...' -> ĐI THẲNG REASONING
+  [ROUTER] 'Câu hỏi 2: Giải thưởng bảng C là bao nhiêu?...' -> GOI WIKIPEDIA
+  [ROUTER] 'Câu hỏi 3: RAG hoạt động như thế nào?...' -> GOI WEB SEARCH
+  ```
+- Kết quả in ra dạng:
+  ```text
+  Q1: Câu hỏi 1: AI Agent là gì?
+  A: B | Lập luận: AI Agent là một thực thể trí tuệ nhân tạo...
+  --------------------------------------------------
+  ```
+- Tổng thời gian xử lý hiển thị ở cuối log (thông thường chỉ mất khoảng dưới 2-3 giây nhờ chạy song song `abatch`).
 
 ---
 
-## Hướng dẫn tạo Test cho Tool mới
+## 3. Cách thêm câu hỏi kiểm thử mới
 
-Khi thêm một tool mới vào agent (ví dụ: `search_web`, `calculate`, ...), hãy tạo file test theo mẫu sau:
+Nếu bạn muốn bổ sung câu hỏi để test độ chính xác của các công cụ cụ thể:
+1. Mở file [test/test_async.py](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/test/test_async.py).
+2. Thêm câu hỏi trắc nghiệm của bạn vào danh sách `questions`.
+3. Chạy lại test script để quan sát xem Router có định hướng đúng hay không.
 
-### Bước 1: Tạo file `test/test_<tên_tool>.py`
-
-```python
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-import sys
-if sys.platform.startswith("win"):
-    sys.stdout.reconfigure(encoding='utf-8')
-    sys.stderr.reconfigure(encoding='utf-8')
-
-sys.path.append(str(BASE_DIR))
-
-from src.agent_graph import app_graph
-
-def test_new_tool():
-    # Câu hỏi BẮT BUỘC phải ở dạng trắc nghiệm ABCD
-    test_question = (
-        "Câu hỏi: ...?\n"
-        "A. ...\n"
-        "B. ...\n"
-        "C. ...\n"
-        "D. ..."
-    )
-
-    result = app_graph.invoke({"question": test_question})
-    print(f"Reasoning: {result.get('reasoning')}")
-    print(f"Answer: {result.get('answer')}")
-
-if __name__ == "__main__":
-    test_new_tool()
-```
-
-### Bước 2: Chạy test
-
-```bash
-.venv\Scripts\python test/test_<tên_tool>.py
-```
-
-### Bước 3: Kiểm tra kết quả
-
-| Điều cần xác nhận | Cách kiểm tra |
-|---|---|
-| Tool có được gọi khi cần? | Log xuất hiện `[Tool]...` |
-| Tool **không** được gọi khi không cần? | Log **không** xuất hiện `[Tool]...` |
-| Đáp án đầu ra hợp lệ? | Kết quả là `A`, `B`, `C`, hoặc `D` |
-
----
-
-## Lưu ý quan trọng
-
-- **Luôn chạy từ thư mục gốc** của project (không `cd` vào `test/`).
-- **Đầu ra luôn là A/B/C/D**: Dù agent gọi tool hay trả lời trực tiếp, `parse_answer_node` sẽ trích xuất đúng 1 ký tự `A`, `B`, `C`, hoặc `D`.
-- **Câu hỏi phải là trắc nghiệm**: Agent được thiết kế cho multiple-choice, câu hỏi phải có 4 lựa chọn.
+Ví dụ câu hỏi định tuyến mong đợi:
+* *Toán học / Logic* ➔ `PYTHON` (Ví dụ: `"Tính tổng 1234 + 5678"`)
+* *Thông tin lịch sử / Định nghĩa học thuật* ➔ `WIKI` (Ví dụ: `"Chiến tranh thế giới thứ hai bắt đầu năm nào?"`)
+* *Sự kiện mới / Thời tiết / EURO* ➔ `WEB` (Ví dụ: `"Đội nào vô địch Euro 2024?"`)
+* *Câu hỏi phổ thông cơ bản* ➔ `NO` (Ví dụ: `"Quả táo có màu gì?"`)

@@ -1,118 +1,65 @@
-# EXPLAIN DEV 3 - DATA / RAG ENGINEER (Atlas Agent)
+# EXPLAIN DEV 3 - DATA PIPELINE & DOCKER DEPLOYMENT (Atlas Agent)
 
 ## 1. Mục tiêu vai trò Dev 3
-Dev 3 chịu trách nhiệm xây dựng "bộ nhớ tri thức" cho toàn bộ hệ thống Agent. Kết quả đầu ra của Dev 3 phải giúp Dev 2 (LangGraph Architect) có thể gọi tool tra cứu một cách ổn định, chính xác và dễ tích hợp.
 
-Mục tiêu kỹ thuật cốt lõi:
-- Thiết kế Local Vector Database chạy bền vững trên cả Windows và Linux (Docker).
-- Xây dựng pipeline nạp dữ liệu (ingestion) có thể chạy lặp lại, không gây hỏng dữ liệu.
-- Cung cấp tool `search_rag_database(query: str) -> str` để Main Agent truy vấn ngữ cảnh.
-- Đảm bảo module RAG có thể tự kiểm thử độc lập bằng command line.
+Trong kiến trúc mới, module RAG cồng kềnh đã được lược bỏ để tối ưu hóa thời gian chạy và dung lượng Docker image. Vai trò của **Dev 3** chuyển trọng tâm sang **Quản lý dữ liệu đầu vào/đầu ra (Data Pipeline)** và **Đảm bảo tính tương thích môi trường (Docker & OS)** để nộp bài thành công lên hệ thống chấm thi tự động.
+
+Mục tiêu cốt lõi:
+- Đảm bảo luồng dữ liệu CSV đầu vào (`/data/*.csv`) được đọc chính xác không lỗi font/BOM.
+- Ghi kết quả dự đoán đúng định dạng yêu cầu của BTC (`/output/pred.csv`).
+- Thiết lập cơ chế chạy bất đồng bộ (Async Batching) để đạt tốc độ xử lý tối đa.
+- Quản lý tệp tri thức tĩnh phục vụ tra cứu cục bộ (`data/mock_knowledge.txt`).
+
+---
 
 ## 2. Phạm vi công việc Dev 3
-### 2.1 Trách nhiệm chính
-- Quản lý dữ liệu nguồn dùng cho tra cứu tri thức.
-- Thiết kế chunking, embedding, lưu vector và retrieval.
-- Tối ưu chất lượng truy xuất (recall + precision) bằng retrieval và rerank.
-- Bảo đảm module chạy được trong môi trường hạn chế (không cloud DB).
 
-### 2.2 Trách nhiệm bàn giao cho Dev 2
-- Hàm tool đã sẵn sàng để bind vào LLM (`bind_tools`).
-- Contract đầu vào/đầu ra rõ ràng, docstring đầy đủ tiếng Việt.
-- Hướng dẫn tích hợp ngắn gọn và ví dụ gọi tool.
+### 2.1 Quản lý Data Pipeline (`main.py`)
+* **Đầu vào (Input):**
+  - Quét tự động thư mục `/data` (trong Docker) hoặc thư mục local `./data` để tìm file kiểm thử (`public_test.csv` hoặc `private_test.csv`).
+  - Định dạng bảng đầu vào chứa: `qid`, `question`, `A`, `B`, `C`, `D`.
+  - Kết hợp câu hỏi và các phương án thành một chuỗi text có cấu trúc gửi cho Agent.
+* **Xử lý Batching:**
+  - Sử dụng hàm `abatch()` từ đồ thị LangGraph (`app_graph`) của Dev 2 để chạy song song nhiều câu hỏi cùng một lúc.
+* **Đầu ra (Output):**
+  - Ghi tệp `pred.csv` tại `/output/` (Docker) hoặc `./output/` (Local).
+  - Định dạng cột bắt buộc: `qid`, `answer` (A/B/C/D).
 
-## 3. Ràng buộc kiến trúc và môi trường
-- Vector DB phải là local persistent (Chroma), không phụ thuộc cloud service.
-- Đường dẫn bắt buộc tương thích đa nền tảng bằng `pathlib`.
-- Ưu tiên thiết kế module có fallback khi model không tải được (mạng, policy, DLL).
-- Không hard-code secret/API key trong mã nguồn.
+### 2.2 Quản lý Tri thức tĩnh (Local Knowledge Context)
+- Do RAG Engine đã được gỡ bỏ, tri thức tĩnh cố định về cuộc thi hoặc tài liệu hướng dẫn được Dev 3 lưu trữ tại [data/mock_knowledge.txt](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_knowledge.txt) (nếu cần).
+- Đồ thị Agent sẽ nạp toàn bộ file này vào bộ nhớ trong bước `Retrieve Node` để cung cấp context cho LLM mà không cần thông qua bước tìm kiếm vector chậm chạp.
 
-## 4. Thiết kế kỹ thuật đề xuất
-### Bước 1: Khởi tạo storage và model
-- Tạo `BASE_DIR` từ `Path(__file__).resolve().parent.parent`.
-- Tạo `CHROMA_PATH = BASE_DIR / "chroma_db"`.
-- Khởi tạo `PersistentClient` hoặc `Chroma(... persist_directory=...)`.
-- Chọn device tự động (`cuda` nếu có, ngược lại `cpu`).
+---
 
-### Bước 2: Ingestion pipeline
-- Đọc dữ liệu đầu vào (`.txt` hoặc tài liệu text hóa).
-- Chunking có overlap để giảm mất ngữ cảnh:
-  - Gợi ý: `chunk_size=500`, `chunk_overlap=50`.
-- Sinh embedding cho chunks.
-- Ghi dữ liệu vào vector DB:
-  - Nên dùng cơ chế idempotent (`upsert` hoặc deduplicate ID) để chạy lặp lại an toàn.
+## 3. Ràng buộc Kỹ thuật & Docker
 
-### Bước 3: Retrieval tool cho Agent
-- Định nghĩa hàm tool:
-  - `search_rag_database(query: str) -> str`
-- Quy trình truy xuất đề xuất:
-  1. Query embedding.
-  2. Vector retrieval lấy top-k ứng viên thô (vd: top 10).
-  3. Rerank để lọc top 3 tốt nhất.
-  4. Ghép context trả về cho Agent theo format rõ ràng.
+### 3.1 Đường dẫn tương thích Docker
+Tất cả đường dẫn file đầu vào/đầu ra phải tuân thủ nghiêm ngặt cấu trúc thư mục Docker của BTC:
+* **Input Path:** `/data/public_test.csv` hoặc `/data/private_test.csv`
+* **Output Path:** `/output/pred.csv`
 
-### Bước 4: Unit test độc lập
-- Tạo dữ liệu mock.
-- Chạy luồng ingest -> search.
-- In kết quả để kiểm tra mức liên quan của ngữ cảnh trả về.
-- Đảm bảo script chạy được bằng lệnh trực tiếp:
-  - `python src/rag_engine.py`
-
-## 5. Chuẩn chất lượng đầu ra của Dev 3
-### 5.1 Đúng chức năng
-- Tool nhận đúng query tiếng Việt tự nhiên.
-- Trả về tối đa 3 đoạn ngữ cảnh liên quan nhất.
-- Có thông báo rõ ràng khi không tìm thấy dữ liệu.
-
-### 5.2 Ổn định vận hành
-- Không crash khi thiếu model chính; có fallback hợp lý.
-- Không vỡ khi chạy ingest lặp lại nhiều lần.
-- Không phụ thuộc đường dẫn tuyệt đối theo máy cá nhân.
-
-### 5.3 Dễ tích hợp
-- Hàm tool có type hint đầy đủ.
-- Docstring tiếng Việt đủ chi tiết để LLM hiểu khi nào cần gọi tool.
-- Có snippet mẫu cho Dev 2 dùng `bind_tools`.
-
-## 6. Contract bàn giao cho Dev 2
-### Input contract
-- `query: str`
-- Là câu hỏi hoặc yêu cầu truy vấn tri thức từ Main Agent.
-
-### Output contract
-- `str` chứa các đoạn context đã lọc, ngăn cách bằng `---`.
-- Nếu không có dữ liệu liên quan: trả thông báo tiếng Việt thống nhất.
-
-### Hành vi kỳ vọng
-- Tool chỉ trả tri thức truy xuất, không tự suy diễn đáp án cuối cùng.
-- Main Agent sẽ dùng context này để lập luận và sinh câu trả lời.
-
-## 7. Checklist trước khi merge
-- [ ] Chạy local thành công module RAG.
-- [ ] Ingestion chạy lặp lại không lỗi trùng ID.
-- [ ] Search trả ra đúng domain context.
-- [ ] Tool bind được vào LLM trong test tích hợp.
-- [ ] Không lộ API key/secret trong source.
-- [ ] Có hướng dẫn ngắn cho Dev 2.
-
-## 8. Mẫu tích hợp cho Dev 2 (tham khảo)
+Hệ thống hỗ trợ cơ chế tự động nhận diện môi trường (Docker vs Local) trong `main.py`:
 ```python
-from rag_engine_v3 import search_rag_database
-
-llm_with_tools = llm.bind_tools([search_rag_database])
-response = llm_with_tools.invoke("Cơ cấu giải thưởng của bảng C HackAIthon là gì?")
+def find_input_csv():
+    if os.path.exists("/data"):
+        # Chạy trong Docker
+        ...
+    return local_data_path # Chạy local
 ```
 
-## 9. Rủi ro thường gặp và cách xử lý
-- Lỗi phụ thuộc model (`sentence_transformers`, `sklearn`, DLL policy):
-  - Cần fallback embedding local để không block toàn hệ thống.
-- Lỗi model LLM bị decommission:
-  - Đọc model từ biến môi trường để đổi nhanh không sửa code.
-- Lỗi nhiễu do dữ liệu cũ trong vector DB:
-  - Tách collection theo phiên bản dữ liệu hoặc làm sạch định kỳ.
+### 3.2 Khắc phục lỗi Encode trên Windows
+Khi dev trên Windows, hệ thống rất dễ gặp lỗi `UnicodeEncodeError` khi in các câu hỏi tiếng Việt ra Console. Dev 3 đã tích hợp giải pháp cấu hình UTF-8 tự động tại đầu file `src/agent_graph.py` và chạy lệnh với biến môi trường:
+```bash
+# Windows PowerShell
+$env:PYTHONUTF8=1; python main.py
+```
 
-## 10. Lộ trình tối ưu tiếp theo
-- Chuẩn hóa metadata cho mỗi chunk (nguồn, chủ đề, phiên bản tài liệu).
-- Thêm reranker mạnh hơn khi môi trường cho phép.
-- Thêm đánh giá tự động (retrieval metrics) trên bộ câu hỏi kiểm thử.
-- Tách cấu hình model/chunking vào file config để dễ tinh chỉnh theo vòng thi.
+---
+
+## 4. Checklist bàn giao trước khi nộp bài
+
+- [ ] File dữ liệu tri thức tĩnh [data/mock_knowledge.txt](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_knowledge.txt) được cập nhật đầy đủ thông tin hỗ trợ thi cử.
+- [ ] Hàm quét file CSV tự động nhận diện đúng file test của BTC.
+- [ ] Thư mục `/output` được tạo tự động nếu chưa tồn tại.
+- [ ] File `pred.csv` xuất ra có đúng 2 cột `qid` và `answer` (viết hoa A/B/C/D).
+- [ ] Dockerfile cấu hình cài đặt tất cả thư viện trong `requirements.txt` và thiết lập biến môi trường `PYTHONUTF8=1`.

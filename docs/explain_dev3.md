@@ -1,65 +1,38 @@
-# EXPLAIN DEV 3 - DATA PIPELINE & DOCKER DEPLOYMENT (Atlas Agent)
+# EXPLAIN DEV 3 - DATA & RAG ENGINEER (Atlas Agent)
 
 ## 1. Mục tiêu vai trò Dev 3
 
-Trong kiến trúc mới, module RAG cồng kềnh đã được lược bỏ để tối ưu hóa thời gian chạy và dung lượng Docker image. Vai trò của **Dev 3** chuyển trọng tâm sang **Quản lý dữ liệu đầu vào/đầu ra (Data Pipeline)** và **Đảm bảo tính tương thích môi trường (Docker & OS)** để nộp bài thành công lên hệ thống chấm thi tự động.
+**Dev 3** ban đầu chịu trách nhiệm xây dựng "bộ nhớ tri thức" và các công cụ RAG cho Agent. Trong tiến trình phát triển và kiểm thử thực tế, để tối ưu hóa hiệu năng, giảm dung lượng bộ cài Docker và tránh nhiễu ngữ cảnh cho LLM, vai trò của Dev 3 đã được tối ưu hóa.
 
 Mục tiêu cốt lõi:
 - Đảm bảo luồng dữ liệu CSV đầu vào (`/data/*.csv`) được đọc chính xác không lỗi font/BOM.
 - Ghi kết quả dự đoán đúng định dạng yêu cầu của BTC (`/output/pred.csv`).
-- Thiết lập cơ chế chạy bất đồng bộ (Async Batching) để đạt tốc độ xử lý tối đa.
-- Quản lý tệp tri thức tĩnh phục vụ tra cứu cục bộ (`data/mock_knowledge.txt`).
+- Quản lý tệp dữ liệu tri thức cục bộ phục vụ tra cứu.
 
 ---
 
-## 2. Phạm vi công việc Dev 3
+## 2. Các nhiệm vụ chi tiết (Bản đồ nhiệm vụ từ Task List)
 
-### 2.1 Quản lý Data Pipeline (`main.py`)
-* **Đầu vào (Input):**
-  - Quét tự động thư mục `/data` (trong Docker) hoặc thư mục local `./data` để tìm file kiểm thử (`public_test.csv` hoặc `private_test.csv`).
-  - Định dạng bảng đầu vào chứa: `qid`, `question`, `A`, `B`, `C`, `D`.
-  - Kết hợp câu hỏi và các phương án thành một chuỗi text có cấu trúc gửi cho Agent.
-* **Xử lý Batching:**
-  - Sử dụng hàm `abatch()` từ đồ thị LangGraph (`app_graph`) của Dev 2 để chạy song song nhiều câu hỏi cùng một lúc.
-* **Đầu ra (Output):**
-  - Ghi tệp `pred.csv` tại `/output/` (Docker) hoặc `./output/` (Local).
-  - Định dạng cột bắt buộc: `qid`, `answer` (A/B/C/D).
+### Task 3.1: Dựng Vector Database
+* **Mô tả:** Cấu hình ChromaDB chạy ở chế độ local persistent tại `/chroma_db`.
+* **Trạng thái:** **Đã thay đổi sang chế độ Tối ưu (Optimized/Pivoted)**.
+* **Chi tiết:** Nhóm quyết định loại bỏ module ChromaDB cồng kềnh để giảm dung lượng Docker image nộp bài và tránh lỗi thiếu thư viện trên môi trường máy chấm thi chấm điểm. 
 
-### 2.2 Quản lý Tri thức tĩnh (Local Knowledge Context)
-- Do RAG Engine đã được gỡ bỏ, tri thức tĩnh cố định về cuộc thi hoặc tài liệu hướng dẫn được Dev 3 lưu trữ tại [data/mock_knowledge.txt](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_knowledge.txt) (nếu cần).
-- Đồ thị Agent sẽ nạp toàn bộ file này vào bộ nhớ trong bước `Retrieve Node` để cung cấp context cho LLM mà không cần thông qua bước tìm kiếm vector chậm chạp.
+### Task 3.2: Xây dựng Pipeline Embedding
+* **Mô tả:** Viết script làm sạch văn bản, cắt đoạn (chunking) và nhúng qua mô hình BGE-m3.
+* **Trạng thái:** **Đã thay đổi sang chế độ Tối ưu (Optimized/Pivoted)**.
+* **Chi tiết:** Để tối ưu hóa tốc độ suy luận (Inference Time), việc nhúng vector động được thay thế bằng việc truy cập trực tiếp tệp tri thức tĩnh cục bộ và tra cứu online thời gian thực bằng Wikipedia / Web Search.
 
----
-
-## 3. Ràng buộc Kỹ thuật & Docker
-
-### 3.1 Đường dẫn tương thích Docker
-Tất cả đường dẫn file đầu vào/đầu ra phải tuân thủ nghiêm ngặt cấu trúc thư mục Docker của BTC:
-* **Input Path:** `/data/public_test.csv` hoặc `/data/private_test.csv`
-* **Output Path:** `/output/pred.csv`
-
-Hệ thống hỗ trợ cơ chế tự động nhận diện môi trường (Docker vs Local) trong `main.py`:
-```python
-def find_input_csv():
-    if os.path.exists("/data"):
-        # Chạy trong Docker
-        ...
-    return local_data_path # Chạy local
-```
-
-### 3.2 Khắc phục lỗi Encode trên Windows
-Khi dev trên Windows, hệ thống rất dễ gặp lỗi `UnicodeEncodeError` khi in các câu hỏi tiếng Việt ra Console. Dev 3 đã tích hợp giải pháp cấu hình UTF-8 tự động tại đầu file `src/agent_graph.py` và chạy lệnh với biến môi trường:
-```bash
-# Windows PowerShell
-$env:PYTHONUTF8=1; python main.py
-```
+### Task 3.3: Hoàn thiện Tool Tìm kiếm (RAG Tool)
+* **Mô tả:** Code hàm `search_rag_database(query)` trong `src/rag_engine.py` kết hợp Qwen-Rerank.
+* **Trạng thái:** **Đã thay đổi sang chế độ Tối ưu (Optimized/Pivoted)**.
+* **Chi tiết:** File `src/rag_engine.py` đã được xóa bỏ hoàn toàn. Thay vào đó, Dev 3 đã xây dựng luồng nạp ngữ cảnh cục bộ từ file [data/mock_knowledge.txt](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_knowledge.txt) thông qua `Retrieve Node` của Agent. Tệp tri thức tĩnh này được đọc thẳng vào RAM và truyền trực tiếp làm context nền cho LLM, mang lại tốc độ truy xuất cực nhanh và loại bỏ lỗi phân tích vector.
 
 ---
 
-## 4. Checklist bàn giao trước khi nộp bài
+## 3. Quản lý Data Pipeline (`main.py`)
 
-- [ ] File dữ liệu tri thức tĩnh [data/mock_knowledge.txt](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_knowledge.txt) được cập nhật đầy đủ thông tin hỗ trợ thi cử.
-- [ ] Hàm quét file CSV tự động nhận diện đúng file test của BTC.
-- [ ] Thư mục `/output` được tạo tự động nếu chưa tồn tại.
-- [ ] File `pred.csv` xuất ra có đúng 2 cột `qid` và `answer` (viết hoa A/B/C/D).
-- [ ] Dockerfile cấu hình cài đặt tất cả thư viện trong `requirements.txt` và thiết lập biến môi trường `PYTHONUTF8=1`.
+Do sự dịch chuyển trong kiến trúc, Dev 3 đã phối hợp cùng Dev 1 quản lý và kiểm soát toàn bộ luồng vào/ra của dữ liệu:
+* **Đầu vào (Input):** Tự động nhận diện thư mục `/data` trong Docker hoặc thư mục local `./data` để nạp file kiểm thử.
+* **Đầu ra (Output):** Xuất file kết quả đúng định dạng cột yêu cầu `qid,answer` tại `/output/pred.csv`.
+* **Chạy song song (Batching):** Cấu hình Batch Size phù hợp cho mô hình để chạy song song thông qua hàm `abatch()` nhằm tăng điểm tốc độ suy luận.

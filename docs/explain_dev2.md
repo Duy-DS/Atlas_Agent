@@ -1,32 +1,46 @@
-# Tech Spec: Multi-Tool LangGraph Agent (Bảng C - HackAIthon)
+# EXPLAIN DEV 2 - LANGGRAPH ARCHITECT (Atlas Agent)
 
-## 1. Tổng quan dự án
-Tài liệu này mô tả kiến trúc của **Multi-Tool LangGraph Agent**, bộ não xử lý chính cho hệ thống trả lời câu hỏi trắc nghiệm tự động, nhắm tới việc tối đa hóa điểm **Accuracy** và **Inference Time** trong Bảng C cuộc thi Vietnamese Student HackAIthon 2026.
-Hệ thống sử dụng **Conditional Routing** để định tuyến câu hỏi tới đúng công cụ (Tool) phù hợp thay vì gọi Tool mù quáng.
+## 1. Mục tiêu vai trò Dev 2
 
-## 2. Kiến trúc Hệ thống (Workflow)
-Hệ thống vận hành theo mô hình State Machine (Đồ thị trạng thái) bất đồng bộ (Async Batching). 
+**Dev 2** chịu trách nhiệm thiết kế cấu trúc đồ thị luồng xử lý chính (**LangGraph State Machine**), tích hợp các công cụ bổ trợ (Tool Calling) và thiết lập kịch bản prompt suy luận (Prompt Engineering) cho hệ thống Agent.
 
-### Các Node chính (4 Ngã rẽ):
-* **Retrieve Node:** Nạp câu hỏi và ngữ cảnh ban đầu.
-* **Router Node:** Là bộ não điều phối. Gọi LLM để đọc nhanh câu hỏi và quyết định rẽ 1 trong 4 nhánh:
-  - `PYTHON`: Các câu hỏi Toán học, phương trình, logic ➔ Chuyển qua **PythonREPL Node**.
-  - `WIKI`: Các câu hỏi lịch sử, địa lý, định nghĩa ➔ Chuyển qua **WikiSearch Node**.
-  - `WEB`: Các câu hỏi thời sự, kết quả thể thao, tỷ giá ➔ Chuyển qua **WebSearch Node** (DuckDuckGo).
-  - `NO`: Mọi kiến thức phổ thông cơ bản ➔ Đi thẳng vào **Reason Node**.
-* **Reason Node (Reasoning):** Nhận ngữ cảnh đã được bổ sung bởi các Tool (nếu có), gọi LLM suy luận theo chuỗi logic (Chain-of-Thought) để xuất ra đáp án cuối cùng dạng JSON chứa `answer` (A/B/C/D).
+Mục tiêu kỹ thuật cốt lõi:
+- Xây dựng đồ thị trạng thái bất đồng bộ (Async StateGraph) quản lý tiến trình suy luận của câu hỏi.
+- Triển khai định tuyến thông minh (Conditional Routing) hướng câu hỏi tới đúng công cụ cần thiết.
+- Tối ưu hóa chất lượng suy luận logic trắc nghiệm bằng prompt Chain-of-Thought (CoT).
 
-| Thành phần | File chịu trách nhiệm | Trạng thái hiện tại |
-| :--- | :--- | :--- |
-| **Orchestrator** | `src/agent_graph.py` | Hoàn thiện (Chạy Async + Conditional Routing) |
-| **Tools** | `wikipedia`, `DuckDuckGo`, `PythonREPL` | Đã tích hợp (Local/Free API) |
-| **Logic Prompt** | `src/system_prompt.py` | Hoàn thiện (CoT Prompt) |
-| **Pipeline Runner** | `main.py` | Hoàn thiện (Đọc/Ghi file CSV) |
+---
+
+## 2. Các nhiệm vụ chi tiết (Bản đồ nhiệm vụ từ Task List)
+
+### Task 2.1: Dựng State Machine
+* **Mô tả:** Code file [src/agent_graph.py](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/src/agent_graph.py), định nghĩa `AgentState` và kết nối các Node/Edge.
+* **Trạng thái:** **Hoàn thành 100%**.
+* **Chi tiết:** Đã thiết kế cấu trúc đồ thị với 6 Node hoạt động bất đồng bộ: `Retrieve` ➔ `Router` ➔ Các Node Tool (`PythonREPL`, `WikiSearch`, `WebSearch`) ➔ `Reason` ➔ `END`.
+
+### Task 2.2: Tích hợp Tool Calling
+* **Mô tả:** Liên kết các công cụ với LLM để hỗ trợ xử lý câu hỏi khó.
+* **Trạng thái:** **Hoàn thành & Nâng cấp (Tối ưu)**.
+* **Chi tiết:** Thay vì gọi RAG mù quáng gây chậm/nhiễu, Dev 2 đã chuyển sang mô hình **Conditional Routing** sử dụng Router Node để LLM phân loại câu hỏi nhanh và đưa ra lựa chọn công cụ thông minh:
+  - `PYTHON`: Câu hỏi toán học, logic ➔ Gọi Python REPL Node chạy code trực tiếp.
+  - `WIKI`: Câu hỏi lịch sử, định nghĩa học thuật ➔ Gọi Wikipedia Node tra cứu.
+  - `WEB`: Câu hỏi thời sự, kết quả mới ➔ Gọi Web Search Node (DuckDuckGo).
+  - `NO`: Kiến thức phổ thông thông thường ➔ Đi thẳng tới Reason Node.
+
+### Task 2.3: Kỹ sư Prompt (Prompt Engineering)
+* **Mô tả:** Viết prompt hệ thống kiểm soát chất lượng suy luận.
+* **Trạng thái:** **Hoàn thành 100%**.
+* **Chi tiết:** Cấu hình tệp [src/system_prompt.py](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/src/system_prompt.py) chứa prompt Chain-of-Thought (CoT) bắt buộc AI thực hiện phân tích và phản biện logic các phương án A, B, C, D trước khi đưa ra kết quả cuối cùng dưới dạng JSON.
+
+---
 
 ## 3. Điểm nhấn Kiến trúc Mới
+
 1. **Zero API Key Tools:** Toàn bộ công cụ sử dụng (Wiki, DuckDuckGo, Python) đều miễn phí và không cần cấu hình API Key, rất thuận tiện khi nộp bài qua Docker.
 2. **Speed Optimization (Inference Time):** Bằng cách phân loại qua Router, những câu hỏi cơ bản sẽ đi thẳng vào nhánh Reasoning mà không phải chờ phản hồi chậm chạp từ Internet, giúp tăng đáng kể điểm tốc độ.
 3. **Accuracy Optimization:** Thay vì để LLM tự làm toán (thường xuyên bị sai), hệ thống sinh code Python và bắt máy tính chạy để đảm bảo tỷ lệ đúng tuyệt đối 100% cho mảng Khoa học tự nhiên.
+
+---
 
 ## 4. Hướng dẫn Chạy thử
 

@@ -1,10 +1,10 @@
 # Testing Guide — Atlas Agent (Kiến trúc Multi-Tool)
 
-Tài liệu hướng dẫn chạy thử nghiệm và kiểm thử hệ thống Agent phiên bản Multi-Tool Async.
+Tài liệu hướng dẫn chạy thử nghiệm, kiểm thử hệ thống Agent phiên bản Multi-Tool Async trên môi trường Local và Docker.
 
 ---
 
-## 1. Yêu cầu trước khi chạy Test
+## 1. Yêu cầu trước khi chạy Test Local
 
 1. **Kích hoạt Virtual Environment:**
    ```bash
@@ -27,7 +27,7 @@ Tài liệu hướng dẫn chạy thử nghiệm và kiểm thử hệ thống A
 
 ---
 
-## 2. Hướng dẫn chạy Test Script chính
+## 2. Hướng dẫn chạy Test Script chính (Local)
 
 Tất cả các lệnh chạy kiểm thử phải được thực hiện từ **thư mục gốc** của dự án (`Atlas_Agent/`).
 
@@ -48,32 +48,54 @@ Tất cả các lệnh chạy kiểm thử phải được thực hiện từ **
   python test/test_async.py
   ```
 
-**Kết quả mong đợi trên Console:**
-- Nhìn thấy các dòng log điều phối từ Router:
-  ```text
-  [ROUTER] 'Câu hỏi 1: AI Agent là gì?...' -> ĐI THẲNG REASONING
-  [ROUTER] 'Câu hỏi 2: Giải thưởng bảng C là bao nhiêu?...' -> GOI WIKIPEDIA
-  [ROUTER] 'Câu hỏi 3: RAG hoạt động như thế nào?...' -> GOI WEB SEARCH
-  ```
-- Kết quả in ra dạng:
-  ```text
-  Q1: Câu hỏi 1: AI Agent là gì?
-  A: B | Lập luận: AI Agent là một thực thể trí tuệ nhân tạo...
-  --------------------------------------------------
-  ```
-- Tổng thời gian xử lý hiển thị ở cuối log (thông thường chỉ mất khoảng dưới 2-3 giây nhờ chạy song song `abatch`).
+---
+
+## 3. Hướng dẫn chạy kiểm thử trên Docker (Giả lập môi trường BTC)
+
+Nhóm đã đóng gói toàn bộ mô hình và môi trường chạy offline vào một container Standalone. Bạn có thể kiểm thử Docker trực tiếp tại máy cục bộ bằng Docker Compose:
+
+### 3.1 Chuẩn bị thư mục dữ liệu kiểm thử
+Tạo thư mục lưu dữ liệu đầu vào và đầu ra trên máy của bạn:
+```bash
+mkdir -p data output
+```
+Đảm bảo bạn có tệp tin câu hỏi mẫu tại đầu vào: `data/public_test.csv` (Có thể copy từ [data/mock_public_test.csv](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/data/mock_public_test.csv) sang).
+
+### 3.2 Khởi chạy với Docker Compose (CPU Mode)
+Build và chạy toàn bộ luồng xử lý tự động trong container:
+```bash
+docker compose up --build
+```
+*Hệ thống sẽ tự động khởi động Ollama bên trong container, nạp mô hình Qwen 3.5, gọi script `main.py` để xử lý và ghi kết quả.*
+
+### 3.3 Khởi chạy với Docker Compose (GPU Mode)
+Nếu máy của bạn có GPU NVIDIA và đã cài đặt NVIDIA Container Toolkit, hãy chạy lệnh sau để tăng tốc phần cứng:
+```bash
+docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
+```
+
+### 3.4 Kiểm tra kết quả đầu ra
+Sau khi container chạy hoàn tất và tự tắt, hãy kiểm tra tệp tin kết quả được xuất ra tại thư mục trên máy thật của bạn:
+* `output/pred.csv` (Chứa 2 cột `qid` và `answer` chuẩn theo quy chế BTC).
 
 ---
 
-## 3. Cách thêm câu hỏi kiểm thử mới
+## 4. Các điểm Tối ưu hóa hiệu năng (Performance Tuning)
 
-Nếu bạn muốn bổ sung câu hỏi để test độ chính xác của các công cụ cụ thể:
-1. Mở file [test/test_async.py](file:///c:/Users/ADMIN/Desktop/tailieuhoc/STUDYYY/REPO/Atlas_Agent/test/test_async.py).
-2. Thêm câu hỏi trắc nghiệm của bạn vào danh sách `questions`.
-3. Chạy lại test script để quan sát xem Router có định hướng đúng hay không.
+Để tối ưu hóa thời gian xử lý (Inference Time) và tránh lỗi sập tài nguyên (Out of Memory) phù hợp với phần cứng máy chấm thi, Dev 4 đã cấu hình các tham số động qua biến môi trường. Bạn có thể cấu hình chúng trong file `.env` hoặc Dockerfile:
 
-Ví dụ câu hỏi định tuyến mong đợi:
-* *Toán học / Logic* ➔ `PYTHON` (Ví dụ: `"Tính tổng 1234 + 5678"`)
-* *Thông tin lịch sử / Định nghĩa học thuật* ➔ `WIKI` (Ví dụ: `"Chiến tranh thế giới thứ hai bắt đầu năm nào?"`)
-* *Sự kiện mới / Thời tiết / EURO* ➔ `WEB` (Ví dụ: `"Đội nào vô địch Euro 2024?"`)
-* *Câu hỏi phổ thông cơ bản* ➔ `NO` (Ví dụ: `"Quả táo có màu gì?"`)
+### 4.1 Cấu hình Giới hạn chạy thử (`TEST_LIMIT`)
+* **Mặc định:** `TEST_LIMIT=0` (Xử lý toàn bộ các câu hỏi trong file CSV đầu vào).
+* **Khi muốn chạy test nhanh:** Bạn có thể đặt `TEST_LIMIT=5` để chỉ xử lý 5 câu hỏi đầu tiên rồi xuất file kết quả ngay lập tức, tránh bị dính giới hạn API của Groq hoặc tiết kiệm thời gian test local.
+  ```bash
+  TEST_LIMIT=5 docker compose up
+  ```
+
+### 4.2 Cấu hình Giới hạn luồng chạy song song (`LLM_CONCURRENCY_LIMIT`)
+* **Mặc định:** `LLM_CONCURRENCY_LIMIT=5` (Cho phép tối đa 5 luồng gọi LLM suy luận đồng thời qua Semaphore).
+* **Tối ưu hóa:** 
+  * Nếu phần cứng máy chấm thi của BTC có GPU mạnh (như A100, T4, RTX 4090), bạn có thể nâng giới hạn này lên **`10` hoặc `15`** để xử lý batch cực nhanh, rút ngắn tối đa thời gian chấm bài.
+  * Nếu chạy trên CPU yếu và bị lỗi sập hoặc tràn bộ nhớ (Out of Memory), hãy hạ giới hạn này xuống **`2` hoặc `3`** để đảm bảo hệ thống chạy bền bỉ tới câu hỏi cuối cùng.
+  ```bash
+  LLM_CONCURRENCY_LIMIT=12 docker compose up
+  ```

@@ -32,11 +32,12 @@ async def process_dataset(input_file: str, output_file: str):
             qids.append(qid)
             inputs.append({"question": full_question})
             
-    # CHỈ ĐỂ TEST: Giới hạn 5 câu hỏi đầu tiên để không bị dính giới hạn 6000 Tokens/phút của Groq API (Free Tier)
-    # Khi team mày dùng LLM tự host, hãy xoá dòng này để chạy toàn bộ file.
-    test_limit = 5
-    inputs = inputs[:test_limit]
-    qids = qids[:test_limit]
+    # Cấu hình giới hạn chạy thử nghiệm qua biến môi trường (Mặc định 0 = Chạy toàn bộ file)
+    test_limit = int(os.getenv("TEST_LIMIT", "0"))
+    if test_limit > 0:
+        print(f"[TEST MODE] Chỉ chạy giới hạn {test_limit} câu hỏi đầu tiên.")
+        inputs = inputs[:test_limit]
+        qids = qids[:test_limit]
             
     print(f"Tổng số câu hỏi sẽ xử lý (Test mode): {len(inputs)}")
     print("Đang xử lý bất đồng bộ (async) qua LangGraph...")

@@ -145,8 +145,10 @@ async def python_repl_node(state: AgentState):
         return {"context": state.get("context", "")}
 
 # Semaphore giới hạn số luồng gọi LLM đồng thời. 
-# Điều này cực kỳ quan trọng không chỉ cho Groq API mà còn để BẢO VỆ LLM tự host (vLLM) của team mày không bị sập (Out of Memory) khi nhận 80 request cùng lúc.
-concurrency_limit = asyncio.Semaphore(5)
+# Điều này cực kỳ quan trọng không chỉ cho Groq API mà còn để BẢO VỆ LLM tự host (vLLM) không bị sập (Out of Memory) khi nhận nhiều request cùng lúc.
+max_concurrency = int(os.getenv("LLM_CONCURRENCY_LIMIT", "5"))
+print(f"[*] Giới hạn số luồng gọi LLM đồng thời: {max_concurrency}")
+concurrency_limit = asyncio.Semaphore(max_concurrency)
 
 async def reasoning_node(state: AgentState):
     # Thiết lập prompt với system message và câu hỏi của user

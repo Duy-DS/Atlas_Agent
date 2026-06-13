@@ -34,6 +34,11 @@ llm = ChatOpenAI(
     temperature=0.1
 )
 
+# Semaphore giới hạn số luồng gọi LLM đồng thời để bảo vệ Ollama/LLM khỏi quá tải
+max_concurrency = int(os.getenv("LLM_CONCURRENCY_LIMIT", "5"))
+print(f"[*] Giới hạn số luồng gọi LLM đồng thời: {max_concurrency}")
+concurrency_limit = asyncio.Semaphore(max_concurrency)
+
 # Đọc sẵn dữ liệu từ file để làm ngữ cảnh thay vì dùng RAG
 KNOWLEDGE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "mock_knowledge.txt")
 try:
@@ -49,12 +54,12 @@ class AgentState(TypedDict):
     answer: str
     need_search: str
 
-ROUTER_PROMPT = """Bạn là một chuyên gia phân loại câu hỏi.
+ROUTER_PROMPT = """Bạn là một chuyên gia phân loại câu hỏi trắc nghiệm.
 Hãy phân loại câu hỏi của người dùng vào 1 trong 4 nhóm sau:
-- PYTHON: Nếu là bài toán, phép tính, giải phương trình, logic tính toán, xác suất, quy luật dãy số.
-- WIKI: Nếu là câu hỏi về lịch sử, địa lý, thông tin nhân vật, định nghĩa học thuật cố định.
-- WEB: Nếu là câu hỏi về sự kiện mới nhất, tin tức, giá cả, thời tiết, kết quả thể thao gần đây (ví dụ Euro 2024).
-- NO: Nếu là câu hỏi kiến thức phổ thông đơn giản, văn phạm cơ bản, hoặc bạn đã quá chắc chắn.
+- PYTHON: Nếu câu hỏi yêu cầu giải toán, tính toán số học, logic, xác suất, quy luật dãy số.
+- WIKI: CHỈ KHI câu hỏi chứa thông tin lịch sử, nhân vật, địa lý vô cùng chi tiết và cụ thể (ví dụ: ngày sinh chính xác của một nhân vật phụ, thông số kỹ thuật, định nghĩa học thuật rất sâu) mà bạn hoàn toàn KHÔNG NHỚ.
+- WEB: CHỈ KHI câu hỏi liên quan đến sự kiện mới nhất, thời sự, giá cả thị trường hiện tại, kết quả thể thao gần đây (từ năm 2025 trở đi).
+- NO: Đối với tất cả câu hỏi kiến thức phổ thông, lịch sử/địa lý/văn học cơ bản (như đỉnh núi cao nhất, năm chiến thắng Điện Biên Phủ, tác giả Truyện Kiều...), hoặc các kiến thức bạn chắc chắn biết.
 
 CHỈ TRẢ VỀ ĐÚNG 1 TỪ "PYTHON", "WIKI", "WEB", HOẶC "NO". KHÔNG ĐƯỢC CÓ CHỮ NÀO KHÁC.
 """
@@ -63,7 +68,8 @@ async def router_node(state: AgentState):
     system_msg = SystemMessage(content=ROUTER_PROMPT)
     human_msg = HumanMessage(content=state["question"])
     try:
-        response = await llm.ainvoke([system_msg, human_msg])
+        async with concurrency_limit:
+            response = await llm.ainvoke([system_msg, human_msg])
         decision = response.content.strip().upper()
         
         q_preview = state["question"].split('\n')[0][:50]
@@ -101,7 +107,7 @@ def my_web_search(query: str) -> str:
 async def web_search_node(state: AgentState):
     question = state.get("question", "")
     try:
-        search_results = my_web_search(question)
+        search_results = await asyncio.to_thread(my_web_search, question)
         current_context = state.get("context", "")
         new_context = f"{current_context}\n\n--- THÔNG TIN TỪ WEB SEARCH ---\n{search_results}"
         return {"context": new_context}
@@ -120,9 +126,10 @@ async def wiki_search_node(state: AgentState):
     question = state.get("question", "")
     system_msg = SystemMessage(content="Trích xuất DUY NHẤT 1 TỪ KHÓA ngắn gọn từ câu hỏi để tìm Wikipedia (VD: 'Chiến tranh thế giới thứ hai', 'Định lý Pythagoras'). Không viết gì thêm.")
     try:
-        response = await llm.ainvoke([system_msg, HumanMessage(content=question)])
+        async with concurrency_limit:
+            response = await llm.ainvoke([system_msg, HumanMessage(content=question)])
         query = response.content.strip()
-        search_results = my_wiki_search(query)
+        search_results = await asyncio.to_thread(my_wiki_search, query)
         current_context = state.get("context", "")
         new_context = f"{current_context}\n\n--- KẾT QUẢ WIKIPEDIA ---\nTừ khóa: {query}\nThông tin:\n{search_results}"
         return {"context": new_context}
@@ -133,11 +140,12 @@ async def python_repl_node(state: AgentState):
     question = state.get("question", "")
     system_msg = SystemMessage(content="Bạn là lập trình viên Python. Viết MỘT ĐOẠN CODE PYTHON ngắn gọn để tính toán/giải bài toán của người dùng. CHỈ in ra (print) kết quả cuối cùng. KHÔNG DÙNG MARKDOWN (```python). CHỈ VIẾT CODE.")
     try:
-        response = await llm.ainvoke([system_msg, HumanMessage(content=question)])
+        async with concurrency_limit:
+            response = await llm.ainvoke([system_msg, HumanMessage(content=question)])
         code = response.content.strip()
         code = re.sub(r"^```python\n|```$", "", code, flags=re.MULTILINE).strip()
         
-        result = python_repl.run(code)
+        result = await asyncio.to_thread(python_repl.run, code)
         current_context = state.get("context", "")
         new_context = f"{current_context}\n\n--- KẾT QUẢ PYTHON REPL ---\nCode chạy:\n{code}\nOutput:\n{result}"
         return {"context": new_context}
@@ -146,9 +154,6 @@ async def python_repl_node(state: AgentState):
 
 # Semaphore giới hạn số luồng gọi LLM đồng thời. 
 # Điều này cực kỳ quan trọng không chỉ cho Groq API mà còn để BẢO VỆ LLM tự host (vLLM) không bị sập (Out of Memory) khi nhận nhiều request cùng lúc.
-max_concurrency = int(os.getenv("LLM_CONCURRENCY_LIMIT", "5"))
-print(f"[*] Giới hạn số luồng gọi LLM đồng thời: {max_concurrency}")
-concurrency_limit = asyncio.Semaphore(max_concurrency)
 
 async def reasoning_node(state: AgentState):
     # Thiết lập prompt với system message và câu hỏi của user

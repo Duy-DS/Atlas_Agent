@@ -39,13 +39,22 @@ async def process_dataset(input_file: str, output_file: str):
         inputs = inputs[:test_limit]
         qids = qids[:test_limit]
             
+    # Đọc BATCH_SIZE từ biến môi trường (mặc định 20) để chia nhỏ tải chạy song song
+    batch_size = int(os.getenv("BATCH_SIZE", "20"))
+    if batch_size <= 0:
+        batch_size = 20
+        
     print(f"Tổng số câu hỏi sẽ xử lý (Test mode): {len(inputs)}")
-    print("Đang xử lý bất đồng bộ (async) qua LangGraph...")
+    print(f"Đang xử lý bất đồng bộ theo từng batch (kích thước {batch_size}) qua LangGraph...")
     
     start_time = time.time()
     
-    # Gọi abatch để xử lý đồng thời tất cả các câu hỏi
-    results = await app_graph.abatch(inputs)
+    results = []
+    for idx in range(0, len(inputs), batch_size):
+        chunk_inputs = inputs[idx : idx + batch_size]
+        print(f"[BATCH RUN] Đang xử lý câu hỏi từ {idx + 1} đến {min(idx + batch_size, len(inputs))}...")
+        chunk_results = await app_graph.abatch(chunk_inputs)
+        results.extend(chunk_results)
     
     end_time = time.time()
     print(f"Xử lý xong {len(inputs)} câu hỏi trong {end_time - start_time:.2f} giây.")

@@ -78,25 +78,9 @@ def _build_dataset(input_file: str) -> list[dict]:
     return records
 
 
-async def _process_single_question(
-    item: dict,
-    app_graph,
-    semaphore: asyncio.Semaphore,
-    timeout_seconds: float,
-) -> dict | Exception:
-    async with semaphore:
-        try:
-            return await asyncio.wait_for(
-                app_graph.ainvoke({"question": item["question"]}),
-                timeout=timeout_seconds,
-            )
-        except asyncio.TimeoutError:
-            return TimeoutError(f"Timed out after {timeout_seconds}s")
-        except Exception as exc:
-            return exc
 
 
-async def process_dataset_async(input_file: str, output_file: str) -> None:
+async def process_all_data(input_file: str, output_file: str) -> None:
     print(f"Reading data from: {input_file}")
     records = _build_dataset(input_file)
     benchmark_config = load_benchmark_config()
@@ -111,20 +95,29 @@ async def process_dataset_async(input_file: str, output_file: str) -> None:
     print("Processing batches with pure asyncio...")
 
     start_time = time.time()
-    app_graph = _load_app_graph()
+    agent = _load_app_graph()
     total_batches = len(batches)
     progress_state = {"processed": 0, "hits": 0}
 
-    # Initialize the semaphore inside the active event loop and respect config.
+    # Initialize the semaphore inside the active event loop
     semaphore = asyncio.Semaphore(concurrency_limit)
 
     results = []
+    
+    async def process_question(item):
+        async with semaphore:
+            try:
+                return await asyncio.wait_for(
+                    agent.ainvoke({"question": item["question"]}),
+                    timeout=question_timeout_seconds,
+                )
+            except asyncio.TimeoutError:
+                return TimeoutError(f"Timed out after {question_timeout_seconds}s")
+            except Exception as exc:
+                return exc
 
     for batch_index, batch in enumerate(batches):
-        tasks = [
-            _process_single_question(item, app_graph, semaphore, question_timeout_seconds)
-            for item in batch
-        ]
+        tasks = [process_question(item) for item in batch]
         
         batch_outputs = await asyncio.gather(*tasks)
         
@@ -168,8 +161,6 @@ async def process_dataset_async(input_file: str, output_file: str) -> None:
     print("Agent pipeline finished.")
 
 
-def process_dataset(input_file: str, output_file: str) -> None:
-    asyncio.run(process_dataset_async(input_file, output_file))
 
 
 def find_input_csv():
@@ -205,4 +196,4 @@ if __name__ == "__main__":
         print("Error: No CSV file found in /data or ./data")
     else:
         print(f"[CẤU HÌNH BẢNG C] - Input: {INPUT_CSV} | Output: {OUTPUT_CSV}")
-        process_dataset(INPUT_CSV, OUTPUT_CSV)
+        asyncio.run(process_all_data(INPUT_CSV, OUTPUT_CSV))

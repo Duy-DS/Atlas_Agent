@@ -21,7 +21,7 @@ python_repl = PythonREPL()
 load_dotenv()
 
 # Default to the OpenAI-compatible vLLM endpoint.
-llm_base_url = os.getenv("LLM_BASE_URL", "http://vllm:8000/v1")
+llm_base_url = os.getenv("LLM_BASE_URL", "http://127.0.0.1:8000/v1")
 llm_model_name = os.getenv("LLM_MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct-AWQ")
 llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "EMPTY"))
 

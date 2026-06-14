@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: atlas-agent
+    volumes:
+      - ./data:/data:ro
+      - ./output:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
+      - BATCH_SIZE=${BATCH_SIZE:-20}
+      - INPUT_CSV=${INPUT_CSV:-/data/public_test.csv}
+      - OUTPUT_CSV=${OUTPUT_CSV:-/output/pred.csv}
+      - AUDIT_CSV=${AUDIT_CSV:-/output/pred_audit.csv}
+      - APP_MODE=python
+    restart: "no"

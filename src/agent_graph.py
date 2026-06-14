@@ -47,7 +47,6 @@ if "NVIDIA_VISIBLE_DEVICES" in os.environ or "CUDA_VISIBLE_DEVICES" in os.enviro
     is_gpu = True
 
 is_local_ollama = any(host in llm_base_url for host in ["127.0.0.1", "localhost", "ollama"])
-
 default_concurrency = "5"
 if is_local_ollama and not is_gpu:
     default_concurrency = "1"
@@ -55,8 +54,7 @@ elif is_gpu:
     default_concurrency = "8"
 
 max_concurrency = int(os.getenv("LLM_CONCURRENCY_LIMIT", default_concurrency))
-print(f"[*] Hardware mode: {'GPU' if is_gpu else 'CPU'} | LLM concurrency limit: {max_concurrency}")
-concurrency_limit = asyncio.Semaphore(max_concurrency)
+print(f"[*] Hardware mode: {'GPU' if is_gpu else 'CPU'} | LLM concurrency hint: {max_concurrency}")
 
 
 async def run_python_code_safe(code: str, timeout: float = 3.0) -> str:
@@ -129,8 +127,7 @@ async def router_node(state: AgentState):
     max_retries = 10
     for attempt in range(max_retries):
         try:
-            async with concurrency_limit:
-                response = await llm.ainvoke([system_msg, human_msg], max_tokens=120)
+            response = await llm.ainvoke([system_msg, human_msg], max_tokens=120)
             content = response.content.strip()
 
             match = re.search(r"\{.*\}", content, re.DOTALL)
@@ -250,8 +247,7 @@ async def python_repl_node(state: AgentState):
     max_retries = 10
     for attempt in range(max_retries):
         try:
-            async with concurrency_limit:
-                response = await llm.ainvoke([system_msg, HumanMessage(content=question)], max_tokens=250)
+            response = await llm.ainvoke([system_msg, HumanMessage(content=question)], max_tokens=250)
             code = response.content.strip()
             code = re.sub(r"^```python\n|```$", "", code, flags=re.MULTILINE).strip()
             break
@@ -285,53 +281,52 @@ async def reasoning_node(state: AgentState):
     user_prompt = f"Context:\n{state.get('context', '')}\n\nQuestion:\n{state['question']}"
     human_msg = HumanMessage(content=user_prompt)
 
-    async with concurrency_limit:
-        max_retries = 10
-        for attempt in range(max_retries):
-            content = ""
-            try:
-                response = await llm.ainvoke([system_msg, human_msg], max_tokens=1000)
-                content = response.content
+    max_retries = 10
+    for attempt in range(max_retries):
+        content = ""
+        try:
+            response = await llm.ainvoke([system_msg, human_msg], max_tokens=1000)
+            content = response.content
 
-                match = re.search(r"\{.*\}", content, re.DOTALL)
-                parsed = json.loads(match.group(0) if match else content)
-                return {
-                    "reasoning": parsed.get("reasoning", "Failed to extract reasoning"),
-                    "answer": parsed.get("answer", "B"),
-                }
-            except Exception as e:
-                if content:
-                    try:
-                        reasoning_match = re.search(r'"reasoning"\s*:\s*"(.*?)"', content, re.DOTALL)
-                        answer_match = re.search(r'"answer"\s*:\s*"\s*([A-D])\s*"', content, re.IGNORECASE)
-                        if reasoning_match or answer_match:
-                            reasoning = reasoning_match.group(1) if reasoning_match else "Failed to extract reasoning"
-                            answer = answer_match.group(1).upper() if answer_match else "B"
-                            return {
-                                "reasoning": reasoning,
-                                "answer": answer,
-                            }
-                    except Exception:
-                        pass
-
-                err_msg = str(e)
-                if "429" in err_msg or "rate limit" in err_msg.lower():
-                    wait_time = 4 + attempt * 2
-                    print(f"Rate limit hit in Reasoning. Waiting {wait_time}s before retry... ({attempt + 1}/{max_retries})")
-                    await asyncio.sleep(wait_time)
-                else:
-                    print(f"LLM reasoning error: {e}")
-                    if attempt == max_retries - 1:
+            match = re.search(r"\{.*\}", content, re.DOTALL)
+            parsed = json.loads(match.group(0) if match else content)
+            return {
+                "reasoning": parsed.get("reasoning", "Failed to extract reasoning"),
+                "answer": parsed.get("answer", "B"),
+            }
+        except Exception as e:
+            if content:
+                try:
+                    reasoning_match = re.search(r'"reasoning"\s*:\s*"(.*?)"', content, re.DOTALL)
+                    answer_match = re.search(r'"answer"\s*:\s*"\s*([A-D])\s*"', content, re.IGNORECASE)
+                    if reasoning_match or answer_match:
+                        reasoning = reasoning_match.group(1) if reasoning_match else "Failed to extract reasoning"
+                        answer = answer_match.group(1).upper() if answer_match else "B"
                         return {
-                            "reasoning": f"Parse/system error: {e}",
-                            "answer": "B",
+                            "reasoning": reasoning,
+                            "answer": answer,
                         }
-                    await asyncio.sleep(1)
+                except Exception:
+                    pass
 
-        return {
-            "reasoning": "Failed after repeated retries.",
-            "answer": "B",
-        }
+            err_msg = str(e)
+            if "429" in err_msg or "rate limit" in err_msg.lower():
+                wait_time = 4 + attempt * 2
+                print(f"Rate limit hit in Reasoning. Waiting {wait_time}s before retry... ({attempt + 1}/{max_retries})")
+                await asyncio.sleep(wait_time)
+            else:
+                print(f"LLM reasoning error: {e}")
+                if attempt == max_retries - 1:
+                    return {
+                        "reasoning": f"Parse/system error: {e}",
+                        "answer": "B",
+                    }
+                await asyncio.sleep(1)
+
+    return {
+        "reasoning": "Failed after repeated retries.",
+        "answer": "B",
+    }
 
 
 def should_search(state: AgentState) -> str:

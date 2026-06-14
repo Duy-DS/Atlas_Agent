@@ -2,10 +2,8 @@ import asyncio
 import csv
 import os
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import glob
 from typing import Callable, Iterable, Iterator, List, Sequence
-
-from tqdm import tqdm
 
 from src.config import load_benchmark_config
 
@@ -17,38 +15,6 @@ def chunk_items(items: Sequence[dict], batch_size: int) -> Iterator[List[dict]]:
 
     for start in range(0, len(items), batch_size):
         yield list(items[start : start + batch_size])
-
-
-def execute_batches_with_threadpool(
-    batches: Sequence[List[dict]],
-    worker_fn: Callable[[List[dict]], list],
-    max_workers: int,
-    on_batch_complete: Callable[[int, list, float], None] | None = None,
-) -> list:
-    """Execute batch workers concurrently and return results in input order."""
-    if max_workers <= 0:
-        max_workers = 1
-
-    ordered_results = [None] * len(batches)
-
-    start_time = time.time()
-
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_index = {
-            executor.submit(worker_fn, batch): batch_index
-            for batch_index, batch in enumerate(batches)
-        }
-
-        with tqdm(total=len(future_to_index), desc="Batches", unit="batch") as pbar:
-            for future in as_completed(future_to_index):
-                batch_index = future_to_index[future]
-                batch_result = future.result()
-                ordered_results[batch_index] = batch_result
-                if on_batch_complete is not None:
-                    on_batch_complete(batch_index, batch_result, max(time.time() - start_time, 0.0))
-                pbar.update(1)
-
-    return ordered_results
 
 
 def format_batch_log(
@@ -79,7 +45,6 @@ def _count_valid_answers(batch_result: list) -> int:
 
 def _load_app_graph():
     from src.agent_graph import app_graph
-
     return app_graph
 
 
@@ -113,57 +78,72 @@ def _build_dataset(input_file: str) -> list[dict]:
     return records
 
 
-def _run_langgraph_batch(batch: list[dict], app_graph) -> list:
-    batch_inputs = [{"question": item["question"]} for item in batch]
-    try:
-        return asyncio.run(app_graph.abatch(batch_inputs, return_exceptions=True))
-    except Exception as exc:
-        return [exc for _ in batch]
+async def _process_single_question(
+    item: dict,
+    app_graph,
+    semaphore: asyncio.Semaphore,
+    timeout_seconds: float,
+) -> dict | Exception:
+    async with semaphore:
+        try:
+            return await asyncio.wait_for(
+                app_graph.ainvoke({"question": item["question"]}),
+                timeout=timeout_seconds,
+            )
+        except asyncio.TimeoutError:
+            return TimeoutError(f"Timed out after {timeout_seconds}s")
+        except Exception as exc:
+            return exc
 
 
-def process_dataset(input_file: str, output_file: str) -> None:
+async def process_dataset_async(input_file: str, output_file: str) -> None:
     print(f"Reading data from: {input_file}")
     records = _build_dataset(input_file)
     benchmark_config = load_benchmark_config()
     batch_size = benchmark_config.batch_size
     concurrency_limit = benchmark_config.concurrency_limit
+    question_timeout_seconds = float(os.getenv("QUESTION_TIMEOUT_SECONDS", "60"))
 
     batches = list(chunk_items(records, batch_size))
 
     print(f"Total questions to process: {len(records)}")
     print(f"Batch size: {batch_size} | Concurrency limit: {concurrency_limit}")
-    print("Processing batches with ThreadPoolExecutor...")
+    print("Processing batches with pure asyncio...")
 
     start_time = time.time()
     app_graph = _load_app_graph()
     total_batches = len(batches)
     progress_state = {"processed": 0, "hits": 0}
 
-    def _handle_batch_complete(batch_index: int, batch_result: list, elapsed_seconds: float) -> None:
-        progress_state["processed"] += len(batches[batch_index])
-        progress_state["hits"] += _count_valid_answers(batch_result)
+    # Initialize the semaphore inside the active event loop and respect config.
+    semaphore = asyncio.Semaphore(concurrency_limit)
+
+    results = []
+
+    for batch_index, batch in enumerate(batches):
+        tasks = [
+            _process_single_question(item, app_graph, semaphore, question_timeout_seconds)
+            for item in batch
+        ]
+        
+        batch_outputs = await asyncio.gather(*tasks)
+        
+        for record, res in zip(batch, batch_outputs):
+            results.append((record["qid"], res))
+            
+        progress_state["processed"] += len(batch)
+        progress_state["hits"] += _count_valid_answers(batch_outputs)
+        elapsed = max(time.time() - start_time, 0.0)
+        
         print(
             format_batch_log(
                 current_batch=batch_index + 1,
                 total_batches=total_batches,
                 questions_processed=progress_state["processed"],
-                elapsed_seconds=elapsed_seconds,
+                elapsed_seconds=elapsed,
                 accuracy_hits=progress_state["hits"],
             )
         )
-
-    batch_results = execute_batches_with_threadpool(
-        batches=batches,
-        worker_fn=lambda batch: _run_langgraph_batch(batch, app_graph),
-        max_workers=concurrency_limit,
-        on_batch_complete=_handle_batch_complete,
-    )
-
-    results = []
-
-    for batch_index, (batch, outputs) in enumerate(zip(batches, batch_results), start=1):
-        for record, res in zip(batch, outputs):
-            results.append((record["qid"], res))
 
     end_time = time.time()
     print(f"Processed {len(records)} questions in {end_time - start_time:.2f} seconds.")
@@ -188,7 +168,8 @@ def process_dataset(input_file: str, output_file: str) -> None:
     print("Agent pipeline finished.")
 
 
-import glob
+def process_dataset(input_file: str, output_file: str) -> None:
+    asyncio.run(process_dataset_async(input_file, output_file))
 
 
 def find_input_csv():

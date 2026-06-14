@@ -1,11 +1,10 @@
-import time
 from pathlib import Path
 import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
 
-from main import chunk_items, execute_batches_with_threadpool
+from main import chunk_items, format_batch_log
 
 
 def test_chunk_items_splits_input_into_ordered_batches():
@@ -17,23 +16,13 @@ def test_chunk_items_splits_input_into_ordered_batches():
     assert [[item["qid"] for item in batch] for batch in batches] == [["1", "2"], ["3", "4"], ["5"]]
 
 
-def test_execute_batches_with_threadpool_preserves_input_order():
-    batches = [
-        [{"qid": "1"}],
-        [{"qid": "2"}],
-        [{"qid": "3"}],
-    ]
+def test_format_batch_log_handles_zero_duration():
+    message = format_batch_log(
+        current_batch=1,
+        total_batches=4,
+        questions_processed=10,
+        elapsed_seconds=0.0,
+        accuracy_hits=7,
+    )
 
-    def worker(batch):
-        qid = batch[0]["qid"]
-        if qid == "1":
-            time.sleep(0.03)
-        elif qid == "2":
-            time.sleep(0.01)
-        else:
-            time.sleep(0.02)
-        return [{"qid": qid, "answer": qid}]
-
-    results = execute_batches_with_threadpool(batches, worker, max_workers=3)
-
-    assert [result[0]["qid"] for result in results] == ["1", "2", "3"]
+    assert message == "[INFO] Processed Batch 1/4 | Speed: 10.00 qs/sec | Acc_Estimate: 70.00%"

@@ -27,7 +27,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Điều này đảm bảo container chạy offline 100% không cần tải lại model từ internet
 RUN ollama serve > /var/log/ollama_build.log 2>&1 & \
     until curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; do sleep 1; done && \
-    ollama pull qwen3.5:4b
+    ollama pull qwen3.5:0.8b
 
 # Sao chép toàn bộ mã nguồn vào container
 COPY . .

@@ -24,6 +24,7 @@ output/
 chroma-data/
 chroma_db/
 ollama-data/
+vllm-cache/
 
 # Secrets and local machine config
 .env

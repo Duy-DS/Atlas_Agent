@@ -7,11 +7,16 @@ services:
       - ./data:/data:ro
       - ./output:/output
     environment:
-      - PYTHONUNBUFFERED=1
-      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
-      - BATCH_SIZE=${BATCH_SIZE:-20}
-      - INPUT_CSV=${INPUT_CSV:-/data/public_test.csv}
-      - OUTPUT_CSV=${OUTPUT_CSV:-/output/pred.csv}
-      - AUDIT_CSV=${AUDIT_CSV:-/output/pred_audit.csv}
-      - APP_MODE=python
+      PYTHONUNBUFFERED: "1"
+      LLM_BACKEND: ${LLM_BACKEND:-ollama}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://127.0.0.1:11434/v1}
+      LLM_MODEL_NAME: ${LLM_MODEL_NAME:-qwen3.5:4b}
+      LLM_API_KEY: ${LLM_API_KEY:-EMPTY}
+      LLM_CONCURRENCY_LIMIT: ${LLM_CONCURRENCY_LIMIT:-8}
+      MODEL_NAME: ${MODEL_NAME:-qwen3.5:4b}
+      BATCH_SIZE: ${BATCH_SIZE:-20}
+      INPUT_CSV: ${INPUT_CSV:-/data/public_test.csv}
+      OUTPUT_CSV: ${OUTPUT_CSV:-/output/pred.csv}
+      AUDIT_CSV: ${AUDIT_CSV:-/output/pred_audit.csv}
+      APP_MODE: python
     restart: "no"

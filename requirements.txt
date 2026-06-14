@@ -5,7 +5,6 @@ langchain-core==1.4.1
 langchain-community==0.4.1
 langchain-openai==1.2.2
 langchain-groq==1.1.2
-langchain-huggingface==1.2.2
 langchain-text-splitters==1.1.2
 
 # ===== LLM Providers =====
@@ -13,12 +12,8 @@ groq==0.37.1
 openai==2.41.0
 
 # ===== Vector Database =====
-chromadb==1.5.9
 
 # ===== Embedding Models =====
-sentence-transformers==5.5.1
-transformers==5.10.2
-tokenizers==0.22.2
 
 # ===== ML / Scientific =====
 torch==2.12.0

@@ -1,5 +1,12 @@
 services:
   app:
+    build:
+      context: .
+    gpus: all
+    container_name: atlas-agent
+    volumes:
+      - ./data:/data:ro
+      - ./output:/output
     deploy:
       resources:
         reservations:
@@ -9,5 +16,49 @@ services:
               capabilities:
                 - gpu
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      LLM_BACKEND: vllm
+      LLM_BASE_URL: http://vllm:8000/v1
+      LLM_MODEL_NAME: ${VLLM_SERVED_MODEL_NAME:-qwen-hackathon}
+      LLM_API_KEY: EMPTY
+      LLM_CONCURRENCY_LIMIT: ${CONCURRENCY_LIMIT:-5}
+    depends_on:
+      - vllm
+
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: atlas-vllm
+    gpus: all
+    command:
+      - --model
+      - ${VLLM_MODEL:-Qwen/Qwen1.5-4B-Chat-AWQ}
+      - --quantization
+      - awq
+      - --gpu-memory-utilization
+      - ${VLLM_GPU_MEMORY_UTILIZATION:-0.9}
+      - --swap-space
+      - ${VLLM_SWAP_SPACE:-4}
+      - --max-model-len
+      - "4096"
+      - --enable-prefix-caching
+      - --served-model-name
+      - ${VLLM_SERVED_MODEL_NAME:-qwen-hackathon}
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      HUGGING_FACE_HUB_TOKEN: ${HUGGING_FACE_HUB_TOKEN:-}
+    volumes:
+      - ./vllm-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu

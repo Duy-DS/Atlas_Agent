@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from src.agent_graph import app_graph
 
-CONCURRENCY_LIMIT = 5
+CONCURRENCY_LIMIT = 3
 
 def process_row(index_and_row):
     index, row = index_and_row

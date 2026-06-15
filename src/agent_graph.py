@@ -17,7 +17,7 @@ from langchain_openai import ChatOpenAI
 from src.system_prompt import SYSTEM_COT_PROMPT
 
 class ReasoningOutput(BaseModel):
-    reasoning: str = Field(description="Lý luận chi tiết từng bước vì sao chọn đáp án này.")
+    reasoning: str = Field(description="Lý luận cực kỳ ngắn gọn (tối đa 1-2 câu) giải thích vì sao chọn đáp án.")
     answer: str = Field(description="Chỉ ghi duy nhất 1 chữ cái in hoa: A, B, C, hoặc D.")
 
 wikipedia.set_lang("vi")
@@ -38,7 +38,7 @@ llm = ChatOpenAI(
     model=os.getenv("MODEL_NAME", "qwen3.5:4b"),
     temperature=0.1,
     max_retries=5,
-    timeout=120.0
+    timeout=300.0
 )
 
 # Ép khuôn cấu trúc

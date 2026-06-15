@@ -31,7 +31,7 @@ services:
     restart: "no"
 
   app:
-    image: thanhle0205/atlas-agent:latest
+    image: atlas_agent
     container_name: atlas-agent
     depends_on:
       ollama:

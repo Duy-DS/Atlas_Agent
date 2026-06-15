@@ -12,7 +12,7 @@ from agents.web_search import WebSearchClient, default_web_search
 from agents.web_search_graph import build_web_search_graph
 
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = BASE_DIR / "data" / "public_test_80.csv"
+PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
 PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
 AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
 VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}

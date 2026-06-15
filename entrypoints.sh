@@ -1,16 +1,15 @@
 #!/bin/sh
 set -e
 
-INPUT_CSV="${INPUT_CSV:-/data/public_test.csv}"
+INPUT_CSV="${INPUT_CSV:-/data/public_test.csv, /data/private_test.csv}"
+
 OUTPUT_CSV="${OUTPUT_CSV:-/output/pred.csv}"
-AUDIT_CSV="${AUDIT_CSV:-/output/pred_audit.csv}"
 APP_MODE="${APP_MODE:-python}"
 OLLAMA_BASE_URL="${OLLAMA_BASE_URL:-http://ollama:11434}"
 
 printf "%s\n" "Starting Atlas Agent..."
 printf "%s\n" "Input: ${INPUT_CSV}"
 printf "%s\n" "Output: ${OUTPUT_CSV}"
-printf "%s\n" "Audit: ${AUDIT_CSV}"
 
 if [ ! -f "$INPUT_CSV" ]; then
   printf "%s\n" "ERROR: input CSV not found: $INPUT_CSV"
@@ -18,7 +17,7 @@ if [ ! -f "$INPUT_CSV" ]; then
 fi
 
 mkdir -p "$(dirname "$OUTPUT_CSV")"
-mkdir -p "$(dirname "$AUDIT_CSV")"
+
 
 if [ "${WAIT_FOR_OLLAMA:-true}" = "true" ]; then
   printf "%s\n" "Waiting for Ollama at ${OLLAMA_BASE_URL}..."

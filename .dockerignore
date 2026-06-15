@@ -49,6 +49,7 @@ node_modules/
 *.delta/
 *.pdf
 *.docx
+*.md
 Article/
 Thesis/
 

@@ -1,6 +1,15 @@
 langchain
+langchain-core
+langchain-community
 langchain-ollama
+langchain-openai
+langchain-groq
+langchain-experimental
+langgraph
 pydantic
 pandas
 tqdm
-langgraph
+wikipedia
+duckduckgo-search
+python-dotenv
+requests

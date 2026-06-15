@@ -12,7 +12,6 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_experimental.utilities import PythonREPL
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel, Field
-from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 from src.system_prompt import SYSTEM_COT_PROMPT
@@ -33,10 +32,13 @@ llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "EMPTY"))
 
 print(f"[*] LLM config: Base URL={llm_base_url} | Model={llm_model_name}")
 
-llm = ChatOllama(
+llm = ChatOpenAI(
+    base_url="http://127.0.0.1:11434/v1",  # Trỏ về cổng OpenAI-compatible của Ollama
+    api_key="ollama-local",                # Bypass xác thực
     model=os.getenv("MODEL_NAME", "qwen3.5:4b"),
     temperature=0.1,
-    format="json"
+    max_retries=5,
+    timeout=120.0
 )
 
 # Ép khuôn cấu trúc

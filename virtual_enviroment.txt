@@ -1,0 +1,57 @@
+Atlas_Agent Docker Setup Guide
+
+Step 1: Prepare the required folder structure
+- Make sure the project root contains these folders:
+  - ./data
+  - ./output
+- Put the input CSV file inside ./data.
+- Example expected file names:
+  - ./data/public_test.csv
+  - ./data/private_test.csv
+
+Step 2: Verify Docker volume mapping
+- The Docker configuration must map:
+  - local ./data  -> /data inside the container
+  - local ./output -> /output inside the container
+- This ensures the application can read the dataset and write results without FileNotFoundError.
+
+Step 3: Build the Docker image
+- Run:
+  docker compose build
+
+Step 4: Start the container
+- Run:
+  docker compose up
+- If you are using the GPU stack, run:
+  docker compose -f docker-compose.yml -f docker-compose.gpu.yml up
+
+- Both step 3 and step 4:
+  docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
+
+Step 5: Check runtime behavior
+- The application reads the input file from:
+  /data/public_test.csv
+- The application writes the prediction file to:
+  /output/pred.csv
+
+Step 6: Verify the result
+- After the container finishes, open the ./output folder on your local machine.
+- Check that the file pred.csv exists.
+- The file should contain at least two columns:
+  - qid
+  - answer
+
+Step 7: Troubleshooting
+- If the container cannot find the input file, confirm that:
+  - ./data exists
+  - the CSV file is placed inside ./data
+  - the filename is correct
+- If the output file is missing, confirm that:
+  - ./output exists
+  - Docker has write permission to the folder
+  - the container finished without runtime errors
+
+Step 8: Notes for judges
+- The project is designed to run directly with Docker.
+- No manual path changes inside the container are required.
+- The code uses absolute container paths, so the benchmark workflow is stable and reproducible.

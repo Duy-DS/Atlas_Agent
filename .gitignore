@@ -35,8 +35,8 @@ dist/
 Thumbs.db
 
 # Bỏ qua file text chứa thông tin môi trường cục bộ
-virtual_enviroment.txt
-virtual_enviroment.md
+#virtual_enviroment.txt
+#virtual_enviroment.md
 
 *.pdf
 *.docx

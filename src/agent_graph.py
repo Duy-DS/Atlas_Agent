@@ -22,7 +22,7 @@ load_dotenv()
 
 # Default to the OpenAI-compatible vLLM endpoint.
 llm_base_url = os.getenv("LLM_BASE_URL", "http://127.0.0.1:8000/v1")
-llm_model_name = os.getenv("LLM_MODEL_NAME", "Qwen/Qwen2.5-7B-Instruct-AWQ")
+llm_model_name = os.getenv("LLM_MODEL_NAME", "qwen-hackathon")
 llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "EMPTY"))
 
 print(f"[*] LLM config: Base URL={llm_base_url} | Model={llm_model_name}")
@@ -32,6 +32,8 @@ llm = ChatOpenAI(
     api_key=llm_api_key,
     base_url=llm_base_url,
     temperature=0.1,
+    max_retries=5,    # Tự động thử lại ở tầng HTTP nếu bị từ chối kết nối kết nối tạm thời
+    timeout=120.0      # Tăng thời gian chờ phản hồi lên 60 giây cho các câu suy luận dài
 )
 
 is_gpu = False
@@ -156,7 +158,9 @@ async def router_node(state: AgentState):
                     decision = "NO"
                     search_query = ""
                 else:
-                    await asyncio.sleep(1)
+                    wait_time = (attempt + 1) * 2
+                    print(f"Connection/Other error. Retrying in {wait_time}s...")
+                    await asyncio.sleep(wait_time)
 
     q_preview = state["question"].split("\n")[0][:50]
 
@@ -261,7 +265,9 @@ async def python_repl_node(state: AgentState):
                 print(f"LLM code generation error ({attempt + 1}/{max_retries}): {e}")
                 if attempt == max_retries - 1:
                     return {"context": state.get("context", "")}
-                await asyncio.sleep(1)
+                wait_time = (attempt + 1) * 2
+                print(f"Connection/Other error. Retrying in {wait_time}s...")
+                await asyncio.sleep(wait_time)
 
     if not code:
         return {"context": state.get("context", "")}
@@ -321,7 +327,9 @@ async def reasoning_node(state: AgentState):
                         "reasoning": f"Parse/system error: {e}",
                         "answer": "B",
                     }
-                await asyncio.sleep(1)
+                wait_time = (attempt + 1) * 2
+                print(f"Connection/Other error. Retrying in {wait_time}s...")
+                await asyncio.sleep(wait_time)
 
     return {
         "reasoning": "Failed after repeated retries.",

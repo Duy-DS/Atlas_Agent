@@ -20,3 +20,15 @@ services:
       AUDIT_CSV: ${AUDIT_CSV:-/output/pred_audit.csv}
       APP_MODE: python
     restart: "no"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: atlas-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    environment:
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-5}
+      OLLAMA_MAX_VRAM: ${OLLAMA_MAX_VRAM:-12G}
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:--1}

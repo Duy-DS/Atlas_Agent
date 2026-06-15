@@ -11,9 +11,15 @@ from duckduckgo_search import DDGS
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_experimental.utilities import PythonREPL
 from langgraph.graph import END, StateGraph
+from pydantic import BaseModel, Field
+from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 from src.system_prompt import SYSTEM_COT_PROMPT
+
+class ReasoningOutput(BaseModel):
+    reasoning: str = Field(description="Lý luận chi tiết từng bước vì sao chọn đáp án này.")
+    answer: str = Field(description="Chỉ ghi duy nhất 1 chữ cái in hoa: A, B, C, hoặc D.")
 
 wikipedia.set_lang("vi")
 python_repl = PythonREPL()
@@ -27,14 +33,14 @@ llm_api_key = os.getenv("LLM_API_KEY", os.getenv("OPENAI_API_KEY", "EMPTY"))
 
 print(f"[*] LLM config: Base URL={llm_base_url} | Model={llm_model_name}")
 
-llm = ChatOpenAI(
-    model=llm_model_name,
-    api_key=llm_api_key,
-    base_url=llm_base_url,
+llm = ChatOllama(
+    model=os.getenv("MODEL_NAME", "qwen3.5:4b"),
     temperature=0.1,
-    max_retries=5,    # Tự động thử lại ở tầng HTTP nếu bị từ chối kết nối kết nối tạm thời
-    timeout=120.0      # Tăng thời gian chờ phản hồi lên 60 giây cho các câu suy luận dài
+    format="json"
 )
+
+# Ép khuôn cấu trúc
+structured_llm = llm.with_structured_output(ReasoningOutput)
 
 is_gpu = False
 try:
@@ -289,32 +295,13 @@ async def reasoning_node(state: AgentState):
 
     max_retries = 10
     for attempt in range(max_retries):
-        content = ""
         try:
-            response = await llm.ainvoke([system_msg, human_msg], max_tokens=1000)
-            content = response.content
-
-            match = re.search(r"\{.*\}", content, re.DOTALL)
-            parsed = json.loads(match.group(0) if match else content)
+            response = await structured_llm.ainvoke([system_msg, human_msg])
             return {
-                "reasoning": parsed.get("reasoning", "Failed to extract reasoning"),
-                "answer": parsed.get("answer", "B"),
+                "reasoning": response.reasoning,
+                "answer": response.answer,
             }
         except Exception as e:
-            if content:
-                try:
-                    reasoning_match = re.search(r'"reasoning"\s*:\s*"(.*?)"', content, re.DOTALL)
-                    answer_match = re.search(r'"answer"\s*:\s*"\s*([A-D])\s*"', content, re.IGNORECASE)
-                    if reasoning_match or answer_match:
-                        reasoning = reasoning_match.group(1) if reasoning_match else "Failed to extract reasoning"
-                        answer = answer_match.group(1).upper() if answer_match else "B"
-                        return {
-                            "reasoning": reasoning,
-                            "answer": answer,
-                        }
-                except Exception:
-                    pass
-
             err_msg = str(e)
             if "429" in err_msg or "rate limit" in err_msg.lower():
                 wait_time = 4 + attempt * 2

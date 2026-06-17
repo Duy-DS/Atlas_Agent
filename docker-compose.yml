@@ -39,7 +39,7 @@ services:
       ollama-pull:
         condition: service_completed_successfully
     volumes:
-      - ./data:/data:ro
+      - ./data:/app/data:ro
       - ./output:/output
       - ./chroma-data:/app/chroma-data
     environment:

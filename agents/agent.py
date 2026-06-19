@@ -43,13 +43,36 @@ def chat_once(user_message: str):
     )
 
 
-def answer_logprob(response, answer_token: str) -> float | None:
-    """Lấy xác suất của token đáp án (A/B/C/D) từ logprobs của response."""
+ANSWER_TOKENS = {"A", "B", "C", "D"}
+
+
+def _normalize_token(t: str) -> str:
+    return t.strip().rstrip(".,:;)").upper()
+
+
+def answer_confidence(response, chosen: str) -> float | None:
+    """
+    Tại vị trí đầu tiên model sinh token A/B/C/D,
+    lấy logprob của cả 4 token rồi normalize thành distribution.
+    Trả về P(chosen) / sum(P(A)+P(B)+P(C)+P(D)).
+    """
     content_logprobs = (response.choices[0].logprobs or {}).content or []
-    for token_data in reversed(content_logprobs):
+    for token_data in content_logprobs:
+        # Kiểm tra token tại vị trí này có phải A/B/C/D không
+        if _normalize_token(token_data.token) not in ANSWER_TOKENS:
+            continue
+        # Lấy logprob của 4 token A/B/C/D từ top_logprobs tại vị trí này
+        probs: dict[str, float] = {}
         for top in (token_data.top_logprobs or []):
-            if top.token.strip().upper() == answer_token.upper():
-                return math.exp(top.logprob)
+            norm = _normalize_token(top.token)
+            if norm in ANSWER_TOKENS and norm not in probs:
+                probs[norm] = math.exp(top.logprob)
+        if not probs:
+            return None
+        total = sum(probs.values())
+        if total == 0:
+            return None
+        return probs.get(chosen.upper(), 0.0) / total
     return None
 
 
@@ -62,7 +85,7 @@ def agent(user_message: str) -> str:
     return final_answer(response_content(response))
 
 
-def agent_with_logprob(user_message: str, answer_token: str) -> tuple[str, float | None]:
-    """Trả về (answer_text, xác suất của answer_token)."""
+def agent_with_confidence(user_message: str, answer_token: str) -> tuple[str, float | None]:
+    """Trả về (answer_text, normalized confidence của answer_token trong distribution A/B/C/D)."""
     response = chat_once(user_message)
-    return final_answer(response_content(response)), answer_logprob(response, answer_token)
+    return final_answer(response_content(response)), answer_confidence(response, answer_token)

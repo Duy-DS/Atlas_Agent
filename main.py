@@ -5,7 +5,7 @@ import sys
 from io import StringIO
 from pathlib import Path
 
-from agents.agent import agent, agent_with_logprob
+from agents.agent import agent, agent_with_confidence
 from agents.search_router import should_search
 from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
@@ -152,15 +152,15 @@ def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], d
         for row in rows
         if row.get("qid")
     }
-    # Lấy logprob cho từng câu trả lời đơn lẻ
+    # Lấy normalized confidence (distribution A/B/C/D) cho từng câu trả lời
     logprobs: dict[str, float] = {}
     for row in rows:
         qid = row.get("qid", "")
         ans = final_answers.get(qid, "N/A")
-        if ans != "N/A":
-            _, lp = agent_with_logprob(rows_to_prompt([row]), ans)
-            if lp is not None:
-                logprobs[qid] = lp
+        if ans in {"A", "B", "C", "D"}:
+            _, conf = agent_with_confidence(rows_to_prompt([row]), ans)
+            if conf is not None:
+                logprobs[qid] = conf
     return final_answers, answer_quality, logprobs
 
 

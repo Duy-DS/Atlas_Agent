@@ -6,6 +6,7 @@ from io import StringIO
 from pathlib import Path
 
 from agents.agent import agent, agent_with_batch_confidences, extract_confidences
+from agents.calculator import is_calculation_question, try_calculator
 from agents.search_router import should_search
 from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
@@ -348,6 +349,15 @@ def run(
             qid = row.get("qid", "")
             conf = batch_logprobs.get(qid)
             ans = batch_answers.get(qid, "N/A")
+
+            # Calculator: ưu tiên tuyệt đối, confidence = 1.0
+            if is_calculation_question(row):
+                calc_ans = try_calculator(row)
+                if calc_ans:
+                    batch_answers[qid] = calc_ans
+                    answer_logprobs[qid] = 1.0
+                    answer_sources[qid] = "calculator"
+                    continue
 
             if ans == "N/A":
                 answer_sources[qid] = "missing"

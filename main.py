@@ -339,30 +339,46 @@ def run(
     for batch in batched(source_rows, batch_size):
         batch_answers, answer_quality, batch_logprobs = predict_batch_details(batch)
         answer_logprobs.update(batch_logprobs)
-        for row in batch:
-            qid = row.get("qid", "")
-            answer_sources[qid] = "batch" if batch_answers.get(qid, "N/A") != "N/A" else "missing"
 
+        # Retry N/A rows trước (không có confidence)
         before_single_retry = dict(batch_answers)
         batch_answers = retry_bad_rows(batch, batch_answers)
-        for row in batch:
-            qid = row.get("qid", "")
-            if before_single_retry.get(qid, "N/A") == "N/A" and batch_answers.get(qid, "N/A") != "N/A":
-                answer_sources[qid] = "single_retry"
 
-        before_domain_retry = dict(batch_answers)
-        batch_answers = retry_domain_rows(batch, batch_answers, answer_quality)
         for row in batch:
             qid = row.get("qid", "")
-            if not should_retry_domain(row, answer_quality.get(qid, "clean")):
-                continue
-            if batch_answers.get(qid, "N/A") != before_domain_retry.get(qid, "N/A"):
-                answer_sources[qid] = "domain_retry_changed"
-            elif batch_answers.get(qid, "N/A") != "N/A":
-                answer_sources[qid] = "domain_retry_same"
+            conf = batch_logprobs.get(qid)
+            ans = batch_answers.get(qid, "N/A")
+
+            if ans == "N/A":
+                answer_sources[qid] = "missing"
+            elif before_single_retry.get(qid, "N/A") == "N/A":
+                # Vừa được single_retry từ N/A
+                answer_sources[qid] = "single_retry"
+            elif conf is None or conf > 0.8:
+                # Chắc chắn — giữ nguyên
+                answer_sources[qid] = "batch"
+            elif conf >= 0.55:
+                # 0.55 <= conf <= 0.8 — domain retry
+                decision = classify_subject(row)
+                retry_ans = predict_domain_retry(row, decision.subject)
+                if retry_ans in VALID_ANSWERS:
+                    changed = retry_ans != ans
+                    batch_answers[qid] = retry_ans
+                    answer_logprobs[qid] = conf  # giữ conf gốc để audit
+                    answer_sources[qid] = "domain_retry_changed" if changed else "domain_retry_same"
+                else:
+                    answer_sources[qid] = "batch"
+            else:
+                # conf < 0.55 — web search
+                searched_ans, search_used = predict_with_search_details(row, search_client, ans)
+                if search_used:
+                    search_used_qids.add(qid)
+                    if searched_ans != "N/A":
+                        batch_answers[qid] = searched_ans
+                answer_sources[qid] = "single_retry"  # dùng "single_retry" source cho low-conf
 
         audit_answers.update(batch_answers)
-        answers.update(apply_web_search(batch, batch_answers, search_client, search_used_qids))
+        answers.update(batch_answers)
         processed_rows += len(batch)
         if show_progress:
             print_progress(processed_rows, total_rows)

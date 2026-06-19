@@ -403,4 +403,8 @@ def run(
 
 
 if __name__ == "__main__":
-    print(run(show_progress=True))
+    import time
+    t0 = time.time()
+    result = run(show_progress=True)
+    elapsed = time.time() - t0
+    print(f"{result} — {elapsed:.1f}s")

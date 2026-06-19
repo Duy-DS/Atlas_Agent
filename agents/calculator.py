@@ -9,7 +9,8 @@ import re
 
 # Detect câu hỏi có chứa biểu thức toán học đơn giản
 _CALC_RE = re.compile(
-    r"[\d]+\s*[\+\-\*\/\^]\s*[\d]"  # số op số
+    r"[\d]+\s*[\+\-\*\/\^]\s*[\d]"         # số op số: 3+4, 2^10
+    r"|\d*x\s*[\+\-\=]"                      # phương trình ẩn x: 2x+, x-, x=
     r"|=\s*\?|bằng bao nhiêu|bang bao nhieu|tính|tinh",
     re.IGNORECASE,
 )

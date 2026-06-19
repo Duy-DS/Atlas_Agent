@@ -11,7 +11,7 @@ SYSTEM_PROMPT_PATH = Path(os.getenv("SYSTEM_PROMPT_PATH", BASE_DIR / "prompts" /
 NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 _client = OpenAI(
-    base_url=os.getenv("LLAMA_BASE_URL", "http://localhost:8080/v1"),
+    base_url=os.getenv("LLAMA_BASE_URL", "http://localhost:11434/v1"),
     api_key="unused",
 )
 

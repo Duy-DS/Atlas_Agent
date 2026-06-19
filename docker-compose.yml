@@ -1,34 +1,51 @@
 services:
-  llama:
-    image: ghcr.io/ggerganov/llama.cpp:server
-    container_name: atlas-llama
+  ollama:
+    image: ollama/ollama:latest
+    container_name: atlas-ollama
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "${OLLAMA_HOST_PORT:-11435}:11434"
     volumes:
-      - ${LLAMA_MODEL_PATH:-./models}:/models:ro
-    command: ["-m", "/models/${MODEL_FILE:-model.gguf}", "--host", "0.0.0.0", "--port", "8080"]
+      - ./ollama-data:/root/.ollama
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "ollama", "list"]
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 15s
+      start_period: 10s
+
+  ollama-pull:
+    image: curlimages/curl:latest
+    container_name: atlas-ollama-pull
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        curl -fsS -X POST http://ollama:11434/api/pull \
+          -H 'Content-Type: application/json' \
+          -d "{\"name\":\"$${MODEL_NAME}\"}"
+    restart: "no"
 
   app:
     build:
       context: .
     container_name: atlas_agent
     depends_on:
-      llama:
+      ollama:
         condition: service_healthy
+      ollama-pull:
+        condition: service_completed_successfully
     volumes:
       - ./data:/app/data:ro
       - ./output:/app/output
       - ./chroma-data:/app/chroma-data
     environment:
       - PYTHONUNBUFFERED=1
-      - LLAMA_BASE_URL=http://llama:8080/v1
+      - LLAMA_BASE_URL=http://ollama:11434/v1
       - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
       - BATCH_SIZE=${BATCH_SIZE:-20}
       - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}

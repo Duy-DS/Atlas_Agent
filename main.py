@@ -5,7 +5,7 @@ import sys
 from io import StringIO
 from pathlib import Path
 
-from agents.agent import agent, agent_with_confidence
+from agents.agent import agent, agent_with_batch_confidences, extract_confidences
 from agents.search_router import should_search
 from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
@@ -141,7 +141,8 @@ def answer_quality_for(row: dict[str, str], parsed_answers: dict[str, str], fina
 
 
 def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], dict[str, str], dict[str, float]]:
-    model_output = agent(rows_to_prompt(rows))
+    prompt = rows_to_prompt(rows)
+    model_output, response = agent_with_batch_confidences(prompt)  # 1 lần gọi duy nhất
     parsed_answers = parse_model_answers(model_output)
     answers = dict(parsed_answers)
     if len(rows) == 1:
@@ -152,15 +153,7 @@ def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], d
         for row in rows
         if row.get("qid")
     }
-    # Lấy normalized confidence (distribution A/B/C/D) cho từng câu trả lời
-    logprobs: dict[str, float] = {}
-    for row in rows:
-        qid = row.get("qid", "")
-        ans = final_answers.get(qid, "N/A")
-        if ans in {"A", "B", "C", "D"}:
-            _, conf = agent_with_confidence(rows_to_prompt([row]), ans)
-            if conf is not None:
-                logprobs[qid] = conf
+    logprobs = extract_confidences(response, final_answers)  # extract từ response đã có
     return final_answers, answer_quality, logprobs
 
 

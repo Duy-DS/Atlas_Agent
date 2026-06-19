@@ -8,5 +8,5 @@ langgraph==0.0.60
 pandas==2.2.2
 
 
-# model 
-ollama == 0.6.2 
+# model
+openai==1.57.0

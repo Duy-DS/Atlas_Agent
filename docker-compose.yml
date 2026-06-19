@@ -1,51 +1,34 @@
 services:
-  ollama:
-    image: ollama/ollama:latest
-    container_name: atlas-ollama
+  llama:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    container_name: atlas-llama
     restart: unless-stopped
     ports:
-      - "${OLLAMA_HOST_PORT:-11435}:11434"
+      - "8080:8080"
     volumes:
-      - ./ollama-data:/root/.ollama
+      - ${LLAMA_MODEL_PATH:-./models}:/models:ro
+    command: ["-m", "/models/${MODEL_FILE:-model.gguf}", "--host", "0.0.0.0", "--port", "8080"]
     healthcheck:
-      test: ["CMD", "ollama", "list"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 10s
-
-  ollama-pull:
-    image: curlimages/curl:latest
-    container_name: atlas-ollama-pull
-    depends_on:
-      ollama:
-        condition: service_healthy
-    environment:
-      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        curl -fsS -X POST http://ollama:11434/api/pull \
-          -H 'Content-Type: application/json' \
-          -d "{\"name\":\"$${MODEL_NAME}\"}"
-    restart: "no"
+      start_period: 15s
 
   app:
     build:
       context: .
     container_name: atlas_agent
     depends_on:
-      ollama:
+      llama:
         condition: service_healthy
-      ollama-pull:
-        condition: service_completed_successfully
     volumes:
       - ./data:/app/data:ro
       - ./output:/app/output
       - ./chroma-data:/app/chroma-data
     environment:
       - PYTHONUNBUFFERED=1
-      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLAMA_BASE_URL=http://llama:8080/v1
       - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
       - BATCH_SIZE=${BATCH_SIZE:-20}
       - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}
@@ -55,6 +38,5 @@ services:
       - INPUT_CSV=${INPUT_CSV:-/app/data/public_test.csv}
       - OUTPUT_CSV=${OUTPUT_CSV:-/app/output/pred.csv}
       - AUDIT_CSV=${AUDIT_CSV:-/app/output/pred_audit.csv}
-      - WAIT_FOR_OLLAMA=true
       - APP_MODE=python
     restart: "no"

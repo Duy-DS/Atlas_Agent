@@ -5,7 +5,7 @@ import sys
 from io import StringIO
 from pathlib import Path
 
-from agents.agent import agent
+from agents.agent import agent, agent_with_logprob
 from agents.search_router import should_search
 from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
@@ -140,7 +140,7 @@ def answer_quality_for(row: dict[str, str], parsed_answers: dict[str, str], fina
     return "missing"
 
 
-def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], dict[str, str]]:
+def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], dict[str, str], dict[str, float]]:
     model_output = agent(rows_to_prompt(rows))
     parsed_answers = parse_model_answers(model_output)
     answers = dict(parsed_answers)
@@ -152,11 +152,20 @@ def predict_batch_details(rows: list[dict[str, str]]) -> tuple[dict[str, str], d
         for row in rows
         if row.get("qid")
     }
-    return final_answers, answer_quality
+    # Lấy logprob cho từng câu trả lời đơn lẻ
+    logprobs: dict[str, float] = {}
+    for row in rows:
+        qid = row.get("qid", "")
+        ans = final_answers.get(qid, "N/A")
+        if ans != "N/A":
+            _, lp = agent_with_logprob(rows_to_prompt([row]), ans)
+            if lp is not None:
+                logprobs[qid] = lp
+    return final_answers, answer_quality, logprobs
 
 
 def predict_batch(rows: list[dict[str, str]]) -> dict[str, str]:
-    answers, _ = predict_batch_details(rows)
+    answers, _, _ = predict_batch_details(rows)
     return answers
 
 
@@ -261,9 +270,12 @@ def write_predictions(rows: list[dict[str, str]], output_path: Path) -> None:
 
 
 
-def confidence_for(row: dict[str, str], answer: str, answer_source: str = "batch") -> str:
+def confidence_for(row: dict[str, str], answer: str, answer_source: str = "batch", logprob: float | None = None) -> str:
     if answer == "N/A":
         return "0.00"
+    if logprob is not None:
+        return f"{logprob:.2f}"
+    # fallback khi không có logprob
     if should_search(row, answer):
         return "0.40"
     if answer_source == "single_retry":
@@ -280,9 +292,11 @@ def build_audit_rows(
     answers: dict[str, str],
     search_used_qids: set[str] | None = None,
     answer_sources: dict[str, str] | None = None,
+    logprobs: dict[str, float] | None = None,
 ) -> list[dict[str, str]]:
     search_used_qids = search_used_qids or set()
     answer_sources = answer_sources or {}
+    logprobs = logprobs or {}
     audit_rows = []
     for row in source_rows:
         qid = row["qid"]
@@ -291,7 +305,7 @@ def build_audit_rows(
             {
                 "qid": qid,
                 "answer": answer,
-                "confidence": confidence_for(row, answer, answer_sources.get(qid, "batch")),
+                "confidence": confidence_for(row, answer, answer_sources.get(qid, "batch"), logprobs.get(qid)),
                 "needs_search": "true" if should_search(row, answer) else "false",
                 "search_used": "true" if qid in search_used_qids else "false",
             }
@@ -323,13 +337,15 @@ def run(
     answers: dict[str, str] = {}
     audit_answers: dict[str, str] = {}
     answer_sources: dict[str, str] = {}
+    answer_logprobs: dict[str, float] = {}
     search_used_qids: set[str] = set()
     total_rows = len(source_rows)
     processed_rows = 0
     if show_progress:
         print_progress(0, total_rows)
     for batch in batched(source_rows, batch_size):
-        batch_answers, answer_quality = predict_batch_details(batch)
+        batch_answers, answer_quality, batch_logprobs = predict_batch_details(batch)
+        answer_logprobs.update(batch_logprobs)
         for row in batch:
             qid = row.get("qid", "")
             answer_sources[qid] = "batch" if batch_answers.get(qid, "N/A") != "N/A" else "missing"
@@ -363,7 +379,7 @@ def run(
         for row in source_rows
     ]
     write_predictions(output_rows, output_path)
-    write_audit(build_audit_rows(source_rows, audit_answers, search_used_qids, answer_sources), audit_output_path or output_path.with_name("pred_audit.csv"))
+    write_audit(build_audit_rows(source_rows, audit_answers, search_used_qids, answer_sources, answer_logprobs), audit_output_path or output_path.with_name("pred_audit.csv"))
     return output_path
 
 

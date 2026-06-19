@@ -47,33 +47,31 @@ ANSWER_TOKENS = {"A", "B", "C", "D"}
 
 
 def _normalize_token(t: str) -> str:
-    return t.strip().rstrip(".,:;)").upper()
+    return t.strip().rstrip(".,:;)").lstrip(",").upper()
 
 
 def answer_confidence(response, chosen: str) -> float | None:
     """
-    Tại vị trí đầu tiên model sinh token A/B/C/D,
-    lấy logprob của cả 4 token rồi normalize thành distribution.
-    Trả về P(chosen) / sum(P(A)+P(B)+P(C)+P(D)).
+    Tìm vị trí token A/B/C/D cuối cùng trong output (đó là đáp án CSV thực sự),
+    lấy logprob của 4 token A/B/C/D tại vị trí đó rồi normalize thành distribution.
     """
     content_logprobs = (response.choices[0].logprobs or {}).content or []
-    for token_data in content_logprobs:
-        # Kiểm tra token tại vị trí này có phải A/B/C/D không
-        if _normalize_token(token_data.token) not in ANSWER_TOKENS:
-            continue
-        # Lấy logprob của 4 token A/B/C/D từ top_logprobs tại vị trí này
-        probs: dict[str, float] = {}
-        for top in (token_data.top_logprobs or []):
-            norm = _normalize_token(top.token)
-            if norm in ANSWER_TOKENS and norm not in probs:
-                probs[norm] = math.exp(top.logprob)
-        if not probs:
-            return None
-        total = sum(probs.values())
-        if total == 0:
-            return None
-        return probs.get(chosen.upper(), 0.0) / total
-    return None
+    last_answer_idx = None
+    for i, token_data in enumerate(content_logprobs):
+        if _normalize_token(token_data.token) in ANSWER_TOKENS:
+            last_answer_idx = i
+    if last_answer_idx is None:
+        return None
+    token_data = content_logprobs[last_answer_idx]
+    probs: dict[str, float] = {}
+    for top in (token_data.top_logprobs or []):
+        norm = _normalize_token(top.token)
+        if norm in ANSWER_TOKENS and norm not in probs:
+            probs[norm] = math.exp(top.logprob)
+    if not probs:
+        return None
+    total = sum(probs.values())
+    return probs.get(chosen.upper(), 0.0) / total if total > 0 else None
 
 
 def response_content(response) -> str:

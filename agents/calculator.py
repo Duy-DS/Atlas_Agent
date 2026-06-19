@@ -1,11 +1,14 @@
 """
 Calculator tool: detect câu hỏi tính toán, eval expression, map kết quả vào A/B/C/D.
-Hỗ trợ: biểu thức số học + phương trình tuyến tính một ẩn (ax + b = c).
+Hỗ trợ: biểu thức số học + phương trình tuyến tính một ẩn (ax + b = c)
+         + code generation cho các dạng toán phức tạp hơn.
 """
 from __future__ import annotations
 
 import ast
+import math
 import re
+from pathlib import Path
 
 # Detect câu hỏi có chứa biểu thức toán học đơn giản
 _CALC_RE = re.compile(
@@ -92,5 +95,85 @@ def try_calculator(row: dict[str, str]) -> str | None:
                 return option
         except (ValueError, TypeError):
             continue
+
+    return None
+
+
+_CALC_CODE_PROMPT = (Path(__file__).resolve().parents[1] / "prompts" / "calc_code.md").read_text(encoding="utf-8").strip()
+_RESULT_RE = re.compile(r"result\s*=\s*(.+)")
+_SAFE_ASSIGN_NODES = (
+    ast.Expression, ast.BinOp, ast.UnaryOp, ast.Constant, ast.Call, ast.Attribute,
+    ast.Name, ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow, ast.USub, ast.Mod,
+    ast.FloorDiv, ast.Load, ast.List, ast.Tuple,
+)
+
+
+_SAFE_BUILTINS = {"int", "float", "round", "abs", "sum", "len", "max", "min", "range", "list"}
+_ALLOWED_NAMES = _SAFE_BUILTINS | {"math", "None", "True", "False"}
+
+
+def _safe_exec_result(expr: str) -> float | None:
+    """Exec biểu thức trong sandbox giới hạn, chỉ cho phép math + builtins an toàn."""
+    try:
+        tree = ast.parse(expr, mode="eval")
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and node.id not in _ALLOWED_NAMES:
+                return None
+            if not isinstance(node, _SAFE_ASSIGN_NODES):
+                return None
+        import builtins
+        safe_builtins = {k: getattr(builtins, k) for k in _SAFE_BUILTINS if hasattr(builtins, k)}
+        ns = {"math": math, "__builtins__": safe_builtins}
+        result = eval(compile(tree, "<calc>", "eval"), ns)  # noqa: S307
+        return float(result) if result is not None else None
+    except Exception:
+        return None
+
+
+def _parse_options(row: dict[str, str]) -> dict[str, float]:
+    """Parse A/B/C/D thành số nếu có thể. Xử lý cả format VN: 400.000 hay 9,42."""
+    opts = {}
+    for opt in ("A", "B", "C", "D"):
+        raw = row.get(opt, "").strip().split()[0]  # bỏ đơn vị như "đồng", "cm"
+        # Thử detect format VN: dấu . là phân cách nghìn (400.000), dấu , là thập phân (9,42)
+        # Nếu có dấu . mà không có dấu , → dấu . là nghìn
+        if "." in raw and "," not in raw and raw.replace(".", "").isdigit():
+            raw = raw.replace(".", "")
+        else:
+            raw = raw.replace(",", ".")
+        try:
+            opts[opt] = float(raw)
+        except (ValueError, IndexError):
+            pass
+    return opts
+
+
+def try_code_calculator(row: dict[str, str], call_agent_fn) -> str | None:
+    """
+    Dùng LLM sinh 1 dòng Python, exec an toàn, so kết quả với A/B/C/D.
+    call_agent_fn: hàm nhận prompt string, trả về string response.
+    """
+    opts = _parse_options(row)
+    if not opts:
+        return None  # options không phải số, skip
+
+    prompt = (
+        f"{_CALC_CODE_PROMPT}\n\n"
+        f"Bài toán: {row.get('question', '')}\n"
+        f"Đáp án: " + ", ".join(f"{k}={row[k]}" for k in ("A", "B", "C", "D") if k in row)
+    )
+
+    raw = call_agent_fn(prompt)
+    m = _RESULT_RE.search(raw or "")
+    if not m:
+        return None
+
+    result = _safe_exec_result(m.group(1).strip())
+    if result is None:
+        return None
+
+    for opt, val in opts.items():
+        if abs(val - result) < 1e-6:
+            return opt
 
     return None

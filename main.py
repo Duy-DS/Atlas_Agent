@@ -6,7 +6,7 @@ from io import StringIO
 from pathlib import Path
 
 from agents.agent import agent, agent_with_batch_confidences, extract_confidences
-from agents.calculator import is_calculation_question, try_calculator
+from agents.calculator import is_calculation_question, try_calculator, try_code_calculator
 from agents.search_router import should_search
 from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
@@ -352,7 +352,7 @@ def run(
 
             # Calculator: ưu tiên tuyệt đối, confidence = 1.0
             if is_calculation_question(row):
-                calc_ans = try_calculator(row)
+                calc_ans = try_calculator(row) or try_code_calculator(row, agent)
                 if calc_ans:
                     batch_answers[qid] = calc_ans
                     answer_logprobs[qid] = 1.0

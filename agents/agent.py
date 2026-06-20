@@ -8,7 +8,7 @@ import ollama
 BASE_DIR = Path(__file__).resolve().parents[1]
 MODEL_NAME = os.getenv("MODEL_NAME", "qwen3.5:4b")
 SYSTEM_PROMPT_PATH = Path(os.getenv("SYSTEM_PROMPT_PATH", BASE_DIR / "prompts" / "system_prompt.md"))
-NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "2048"))
+NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 _client = ollama.Client(host=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
 

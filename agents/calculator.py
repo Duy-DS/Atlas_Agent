@@ -28,6 +28,11 @@ _LINEAR_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Format số kiểu VN dùng dấu chấm làm phân cách nghìn: chỉ coi là phân cách
+# nghìn khi đúng dạng nhóm-3-chữ-số (vd 400.000), tránh nuốt nhầm số thập
+# phân thường viết bằng dấu chấm (vd 3.14).
+_VN_THOUSANDS_RE = re.compile(r"\d{1,3}(\.\d{3})+")
+
 _SAFE_NODES = (
     ast.Expression, ast.BinOp, ast.UnaryOp, ast.Constant,
     ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Pow, ast.USub,
@@ -54,7 +59,13 @@ def _solve_linear(question: str) -> float | None:
         return None
     a_str, b_str, c_str = m.group(1), m.group(2), m.group(3)
     try:
-        a = float(a_str.replace(" ", "") or "1")
+        a_clean = (a_str or "").replace(" ", "")
+        if a_clean in ("", "+"):
+            a = 1.0
+        elif a_clean == "-":
+            a = -1.0
+        else:
+            a = float(a_clean)
         if a == 0:
             a = 1.0
         b = float(b_str.replace(" ", "")) if b_str else 0.0
@@ -134,16 +145,22 @@ def _parse_options(row: dict[str, str]) -> dict[str, float]:
     """Parse A/B/C/D thành số nếu có thể. Xử lý cả format VN: 400.000 hay 9,42."""
     opts = {}
     for opt in ("A", "B", "C", "D"):
-        raw = row.get(opt, "").strip().split()[0]  # bỏ đơn vị như "đồng", "cm"
-        # Thử detect format VN: dấu . là phân cách nghìn (400.000), dấu , là thập phân (9,42)
-        # Nếu có dấu . mà không có dấu , → dấu . là nghìn
-        if "." in raw and "," not in raw and raw.replace(".", "").isdigit():
+        parts = row.get(opt, "").strip().split()
+        if not parts:
+            continue  # field rỗng, bỏ qua thay vì crash
+        raw = parts[0]  # bỏ đơn vị như "đồng", "cm"
+
+        if _VN_THOUSANDS_RE.fullmatch(raw):
+            # Đúng dạng nhóm-3-chữ-số (400.000) → dấu chấm là phân cách nghìn
             raw = raw.replace(".", "")
-        else:
-            raw = raw.replace(",", ".")
+        elif "," in raw:
+            # Có dấu phẩy → dấu chấm (nếu có) là phân cách nghìn, phẩy là thập phân
+            raw = raw.replace(".", "").replace(",", ".")
+        # else: giữ nguyên, coi là số thập phân chuẩn (vd "3.14")
+
         try:
             opts[opt] = float(raw)
-        except (ValueError, IndexError):
+        except ValueError:
             pass
     return opts
 

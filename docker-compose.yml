@@ -2,17 +2,17 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: atlas-ollama
-    restart: unless-stopped
+    restart: "no"
     ports:
       - "${OLLAMA_HOST_PORT:-11435}:11434"
     volumes:
       - ./ollama-data:/root/.ollama
     healthcheck:
       test: ["CMD", "ollama", "list"]
-      interval: 10s
-      timeout: 5s
-      retries: 30
-      start_period: 10s
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 30s
 
   ollama-pull:
     image: curlimages/curl:latest
@@ -25,14 +25,24 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
+        echo "Pulling model: $$MODEL_NAME"
         curl -fsS -X POST http://ollama:11434/api/pull \
           -H 'Content-Type: application/json' \
-          -d "{\"name\":\"$${MODEL_NAME}\"}"
+          -d "{\"name\":\"$$MODEL_NAME\"}" \
+          --max-time 1800
+        
+        echo "Verifying model is available..."
+        until curl -fsS http://ollama:11434/api/tags | grep -q "\"name\":\"$$MODEL_NAME\""; do
+          echo "Model not ready yet, waiting..."
+          sleep 5
+        done
+        echo "Model $$MODEL_NAME is ready!"
     restart: "no"
 
   app:
-    image: thanhle0205/atlas:latest
-    container_name: atlas-agent
+    build:
+      context: .
+    container_name: atlas_agent
     depends_on:
       ollama:
         condition: service_healthy
@@ -40,11 +50,11 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./data:/app/data:ro
-      - ./output:/output
+      - ./output:/app/output
       - ./chroma-data:/app/chroma-data
     environment:
       - PYTHONUNBUFFERED=1
-      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLAMA_BASE_URL=http://ollama:11434/v1
       - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
       - BATCH_SIZE=${BATCH_SIZE:-20}
       - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}
@@ -54,6 +64,5 @@ services:
       - INPUT_CSV=${INPUT_CSV:-/app/data/public_test.csv}
       - OUTPUT_CSV=${OUTPUT_CSV:-/app/output/pred.csv}
       - AUDIT_CSV=${AUDIT_CSV:-/app/output/pred_audit.csv}
-      - WAIT_FOR_OLLAMA=true
       - APP_MODE=python
     restart: "no"

@@ -12,14 +12,34 @@ from agents.subject_router import classify_subject, should_retry_domain
 from agents.web_search import WebSearchClient, default_web_search
 from agents.web_search_graph import build_web_search_graph
 
+def find_default_input() -> Path:
+    """Find default CSV input file in data directory."""
+    if "INPUT_CSV" in os.environ:
+        return Path(os.getenv("INPUT_CSV"))
+    
+    data_dir = BASE_DIR / "data"
+    # Look for public_test or private_test CSV files
+    for name in ["public_test*.csv", "private_test*.csv"]:
+        files = list(data_dir.glob(name))
+        if files:
+            return files[0]  # Return first match
+    
+    # Fallback to any CSV
+    files = list(data_dir.glob("*.csv"))
+    if files:
+        return files[0]
+    
+    # Final fallback
+    return BASE_DIR / "data" / "public_test.csv"
+
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = Path(os.getenv("INPUT_CSV", BASE_DIR / "data" / "public_test_80.csv"))
+PUBLIC_QUESTION = find_default_input()
 PREDICTION_OUTPUT = Path(os.getenv("OUTPUT_CSV", BASE_DIR / "output" / "pred.csv"))
 AUDIT_OUTPUT = Path(os.getenv("AUDIT_CSV", BASE_DIR / "output" / "pred_audit.csv"))
 VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
 ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|N/A)\b", re.IGNORECASE | re.DOTALL)
 ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$", re.IGNORECASE)
-FIELDNAMES = ["qid", "question", "A", "B", "C", "D"]
+FIELDNAMES = ["qid", "question", "choices"]
 DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
 DOMAIN_PROMPT_PATHS = {
     "it": BASE_DIR / "prompts" / "domain_it.md",
@@ -75,7 +95,25 @@ def build_predictions(question_csv: str, model_output: str) -> list[dict[str, st
 
 
 def normalize_row(row: dict[str, str]) -> dict[str, str]:
-    return {(key or "").lstrip("\ufeff"): value for key, value in row.items()}
+    """Normalize row and convert choices string to A,B,C,D format if needed."""
+    normalized = {(key or "").lstrip("\ufeff"): value for key, value in row.items()}
+    
+    # If choices column exists, convert to A,B,C,D format
+    if 'choices' in normalized and normalized['choices']:
+        try:
+            # Parse choices as JSON array or eval Python list
+            choices_str = normalized['choices'].strip()
+            if choices_str.startswith('[') and choices_str.endswith(']'):
+                import ast
+                choices = ast.literal_eval(choices_str)
+                normalized['A'] = choices[0] if len(choices) > 0 else ''
+                normalized['B'] = choices[1] if len(choices) > 1 else ''
+                normalized['C'] = choices[2] if len(choices) > 2 else ''
+                normalized['D'] = choices[3] if len(choices) > 3 else ''
+        except (ValueError, SyntaxError, IndexError):
+            pass  # Keep original format if parsing fails
+    
+    return normalized
 
 
 def rows_to_prompt(rows: list[dict[str, str]]) -> str:
@@ -404,7 +442,14 @@ def run(
 
 if __name__ == "__main__":
     import time
+    import sys
     t0 = time.time()
-    result = run(show_progress=True)
-    elapsed = time.time() - t0
-    print(f"{result} — {elapsed:.1f}s")
+    try:
+        result = run(show_progress=True)
+        elapsed = time.time() - t0
+        print(f"{result} — {elapsed:.1f}s")
+        print("Atlas Agent completed successfully")
+        sys.exit(0)
+    except Exception as e:
+        print(f"Atlas Agent failed: {e}")
+        sys.exit(1)

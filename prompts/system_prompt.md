@@ -34,10 +34,11 @@ nêu ta có đáp án là B
 
 
 
-đầu vào sẽ là file csv có 6 cột: 
+đầu vào sẽ là file csv có các cột: 
 - qid: id của câu hỏi 
 - question: câu hỏi 
-- 4 cột còn lại là đáp án lần lượt là của A/B/C/D
+- choices: chuỗi JSON array chứa 4 đáp án ["đáp án 1", "đáp án 2", "đáp án 3", "đáp án 4"]
+
 
 Nếu có kết quả tìm kiếm, nó sẽ được cung cấp ngay sau câu hỏi theo dạng:
 [Search Result]: ...
@@ -46,14 +47,15 @@ Phần `[Search Result]: ...` là ngữ cảnh tìm kiếm web bổ sung cho câ
 
 Xử  lý từng câu hỏi độc lập - kết quả câu trước không ảnh hưởng đến câu sau.  
 
-Ví dụ đầu vào: 
+Ví dụ đầu vào (format choices):
+
+qid,question,choices
+test_001,"1+1","[""2"", ""4"", ""5"", ""7""]"
+test_002,"Thủ đô của nước Việt Nam là?","[""Hồ Chí Minh"", ""Hà Nội"", ""Đà Nẵng"", ""Thanh Hóa""]"
+
+Ví dụ đầu vào (format A,B,C,D):
 
 
-qid,question,A,B,C,D
-
-1,1+1,2,4,5,7                                                       
-
-2,Thủ đô của nước Việt Nam là?, Hồ Chí Minh,Hà Nội,Đà Nẵng,Thanh Hóa 
 
 
 **Định dạng Đầu Ra** 

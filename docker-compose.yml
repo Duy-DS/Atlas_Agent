@@ -40,8 +40,7 @@ services:
     restart: "no"
 
   app:
-    build:
-      context: .
+    image: thanhle0205/atlas:latest
     container_name: atlas_agent
     depends_on:
       ollama:

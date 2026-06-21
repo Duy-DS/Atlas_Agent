@@ -1,0 +1,12 @@
+
+# Khung LangGraph & RAG
+langchain==0.2.0
+langgraph==0.0.60
+
+
+# Xử lý dữ liệu
+pandas==2.2.2
+
+
+# model
+ollama==0.6.2

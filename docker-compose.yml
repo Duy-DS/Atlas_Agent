@@ -41,7 +41,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./data:/app/data:ro
-      - ./output:/output
+      - ./output:/app/output
       - ./chroma-data:/app/chroma-data
     environment:
       - PYTHONUNBUFFERED=1
@@ -53,9 +53,9 @@ services:
       - WEB_SEARCH_ENABLED=${WEB_SEARCH_ENABLED:-true}
       - WEB_SEARCH_PROVIDER=${WEB_SEARCH_PROVIDER:-duckduckgo}
       - WEB_SEARCH_ENDPOINT=${WEB_SEARCH_ENDPOINT:-}
-      - INPUT_CSV=${INPUT_CSV:-/data/public_test.csv}
-      - OUTPUT_CSV=${OUTPUT_CSV:-/output/pred.csv}
-      - AUDIT_CSV=${AUDIT_CSV:-/output/pred_audit.csv}
+      - INPUT_CSV=${INPUT_CSV:-/app/data/public_test.csv}
+      - OUTPUT_CSV=${OUTPUT_CSV:-/app/output/pred.csv}
+      - AUDIT_CSV=${AUDIT_CSV:-/app/output/pred_audit.csv}
       - WAIT_FOR_OLLAMA=true
       - APP_MODE=python
     restart: "no"

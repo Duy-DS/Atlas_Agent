@@ -10,6 +10,7 @@ SYSTEM_PROMPT_PATH = Path(os.getenv("SYSTEM_PROMPT_PATH", BASE_DIR / "prompts" /
 NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
 NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
+_client = ollama.Client(host=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
 
 with open(SYSTEM_PROMPT_PATH, "r", encoding="utf-8") as f:
     SYSTEM_PROMPT = f.read()
@@ -24,18 +25,19 @@ def final_answer(content: str) -> str:
     return (content or "").strip()
 
 
-def chat_once(user_message: str, think: bool = False, temperature: float = 0.0):
+def chat_once(user_message: str):
     return ollama.chat(
         model=MODEL_NAME,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
         ],
-        think=think,
-        options={"num_predict": NUM_PREDICT,
-                 "temperature" : temperature,
-                 "num_ctx": NUM_CTX
-                 },
+        think=False,
+        options={
+            "num_predict": NUM_PREDICT,
+            "temperature": 0, # Added missing comma
+            "top_p": 1        # Added missing comma (optional, but good practice)
+        },
     )
 
 

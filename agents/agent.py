@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 MODEL_NAME = os.getenv("MODEL_NAME", "qwen3.5:4b")
 SYSTEM_PROMPT_PATH = Path(os.getenv("SYSTEM_PROMPT_PATH", BASE_DIR / "prompts" / "system_prompt.md"))
 NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
+NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 
 with open(SYSTEM_PROMPT_PATH, "r", encoding="utf-8") as f:
@@ -23,16 +24,17 @@ def final_answer(content: str) -> str:
     return (content or "").strip()
 
 
-def chat_once(user_message: str):
+def chat_once(user_message: str, think: bool = False, temperature: float = 0.0):
     return ollama.chat(
         model=MODEL_NAME,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
         ],
-        think=False,
+        think=think,
         options={"num_predict": NUM_PREDICT,
-                 "temperature" : 0
+                 "temperature" : temperature,
+                 "num_ctx": NUM_CTX
                  },
     )
 
@@ -41,6 +43,6 @@ def response_content(response) -> str:
     return response["message"]["content"]
 
 
-def agent(user_message: str) -> str:
-    response = chat_once(user_message)
+def agent(user_message: str, think: bool = False, temperature: float = 0.0) -> str:
+    response = chat_once(user_message, think=think, temperature=temperature)
     return final_answer(response_content(response))

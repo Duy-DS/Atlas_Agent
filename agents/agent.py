@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 MODEL_NAME = os.getenv("MODEL_NAME", "qwen3.5:4b")
 SYSTEM_PROMPT_PATH = Path(os.getenv("SYSTEM_PROMPT_PATH", BASE_DIR / "prompts" / "system_prompt.md"))
 NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
+NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.IGNORECASE | re.DOTALL)
 _client = ollama.Client(host=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
 
@@ -43,6 +44,6 @@ def response_content(response) -> str:
     return response["message"]["content"]
 
 
-def agent(user_message: str) -> str:
-    response = chat_once(user_message)
+def agent(user_message: str, think: bool = False, temperature: float = 0.0) -> str:
+    response = chat_once(user_message, think=think, temperature=temperature)
     return final_answer(response_content(response))

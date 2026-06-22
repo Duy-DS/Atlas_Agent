@@ -62,39 +62,24 @@ class DuckDuckGoHtmlSearch:
         self.max_results = max_results
 
     def search(self, query: str) -> WebSearchResult:
-        url = f"https://lite.duckduckgo.com/lite/?{urlencode({'q': query})}"
-        request = Request(url, headers={"User-Agent": "Mozilla/5.0"})
         try:
-            with urlopen(request, timeout=self.timeout) as response:
-                page = response.read().decode("utf-8", errors="ignore")
+            from duckduckgo_search import DDGS
+            results = DDGS().text(query, max_results=self.max_results)
+            if not results:
+                return WebSearchResult(query=query, context="", enabled=True, source="duckduckgo_search")
+            
+            snippets = [r.get("body", "") for r in results if r.get("body")]
+            return WebSearchResult(
+                query=query,
+                context="\n".join(f"- {snippet}" for snippet in snippets),
+                enabled=True,
+                source="duckduckgo_search",
+            )
+        except ImportError:
+            # Fallback nếu chưa cài pip install duckduckgo-search
+            return WebSearchResult(query=query, context="Error: Please run pip install duckduckgo-search", enabled=True, source="duckduckgo_search")
         except Exception:
-            return WebSearchResult(query=query, context="", enabled=True, source="duckduckgo")
-
-        snippets = []
-        patterns = (
-            r"class=['\"]result-link['\"].*?>(.*?)</a>",
-            r"class=['\"]result-snippet['\"].*?>(.*?)</td>",
-            r'<a rel="nofollow" class="result__a".*?>(.*?)</a>',
-            r'<a class="result__snippet".*?>(.*?)</a>',
-        )
-        for pattern in patterns:
-            for raw in re.findall(pattern, page, re.DOTALL):
-                text = re.sub(r"<.*?>", "", raw)
-                text = html.unescape(text).strip()
-                text = re.sub(r"\s+", " ", text)
-                if text:
-                    snippets.append(text)
-                if len(snippets) >= self.max_results:
-                    break
-            if len(snippets) >= self.max_results:
-                break
-
-        return WebSearchResult(
-            query=query,
-            context="\n".join(f"- {snippet}" for snippet in snippets),
-            enabled=True,
-            source="duckduckgo",
-        )
+            return WebSearchResult(query=query, context="", enabled=True, source="duckduckgo_search")
 
 
 def default_web_search() -> WebSearchClient:

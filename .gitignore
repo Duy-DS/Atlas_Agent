@@ -16,7 +16,7 @@ __pycache__/
 *.snappy
 *.delta/
 
-
+ollama-data 
 
 # 5. Cau hinh bao mat va IDE
 .env

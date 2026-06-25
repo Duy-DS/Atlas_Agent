@@ -1,0 +1,2794 @@
+╭─── Claude Code v2.1.187 ─────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                  Welcome back Lá!                  │ started                 │
+│                                                    │ Run /init to create a … │
+│                       ▐▛███▜▌                      │ ─────────────────────── │
+│                      ▝▜█████▛▘                     │ What's new              │
+│                        ▘▘ ▝▝                       │ Added `sandbox.credent… │
+│     Sonnet 4.6 · Claude Pro ·                      │ Added org-configured m… │
+│     thanhza1234554321@gmail.com's Organization     │ Added mouse click supp… │
+│    ~/workshop/hackathon/agent_alasta/Atlas_Agent   │ /release-notes for more │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+❯ giờ cài thêm cái này đi https://github.com/ccusage/ccusage                    
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Đang cài ccusage qua npm global, chờ kết quả.
+
+● Task Output bvooc3fno
+  ⎿  (No output)
+
+● Task Output bvooc3fno
+  ⎿  (No output)
+
+● Vẫn đang cài (npm global install có lúc chậm), tôi sẽ chờ thêm.
+
+● Task Output bvooc3fno
+  ⎿  (No output)
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● No process npm chạy nữa, có thể đã exit nhưng output trống. Kiểm tra lại bằng
+  cách thử cài lại trực tiếp (không background).
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Task Output buox73hg7
+  ⎿  (No output)
+
+● Background command "Install ccusage globally via npm" failed with exit code 1
+
+● First task failed with exit code 1. Let me read its output and stop the second
+  duplicate run.
+
+  Read 1 file (ctrl+o to expand)
+
+● Lỗi do npm cố kết nối qua IPv6 (ENETUNREACH) thất bại. Thử lại buộc dùng IPv4.
+
+● Stop Task
+  ⎿  npm install -g ccusage 2>&1; echo "EXIT:$?" · stopped
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Đúng rồi — IPv4 OK, IPv6 timeout. Ép Node dùng IPv4 trước rồi cài lại.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Cài thành công. Kiểm tra lại:
+
+  Ran 1 shell command (ctrl+o to expand)
+● Đã cài ccusage v20.0.14 thành công tại ~/.npm-global/bin/ccusage. Vấn đề ban
+  đầu là mạng IPv6 bị timeout (ENETUNREACH), phải ép Node dùng IPv4
+  (NODE_OPTIONS="--dns-result-order=ipv4first") thì npm install mới chạy được.
+
+  Recalled 1 memory, wrote 2 memories (ctrl+o to expand)
+
+● ccusage đã cài xong (v20.0.14, lệnh ccusage dùng được trực tiếp). Thử ngay:
+  ccusage daily hoặc ccusage blocks --live để xem usage Claude Code.
+
+✻ Churned for 13m 29s
+
+❯ hãy đọc file /home/thanh/workshop/hackathon/agent_alasta/Atlas_Agent/docs/sup 
+  erpowers/plans/2026-06-23-workflow-v2-pipeline.md tôi đã làm được vài phần    
+  hãy test thử được chưa và có vẻ là chưa có model rerank và tôi đã cài nó rồi  
+  hãy gắn vào và chạy test                                                      
+
+  Searched for 1 pattern, read 2 files, ran 7 shell commands (ctrl+o to expand)
+
+● There's an atlas_agent conda env — that's likely the right one.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Just a rootdir/path issue — need to run pytest from the repo root with it on
+  sys.path (or use python -m pytest from root with PYTHONPATH).
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● Good, now tests collect. Let me read the full saved output to see the complete
+  failure summary.
+
+  Read 1 file (ctrl+o to expand)
+
+● Tốt — toàn bộ test workflow_v2 (Task 1-5) đã pass (55 passed). Đúng như nhận
+  định: rerank() trong retrieval.py hiện chỉ cắt top-3 mà không dùng model nào.
+  Tôi sẽ gắn model dengcao/Qwen3-Reranker-4B:Q4_K_M (đã cài qua Ollama) vào đó.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Now let's wire the reranker into retrieval.py. The key design constraint: only
+  invoke the real model when BM25 actually returns more candidates than top_n —
+  this keeps all existing unit tests fast/deterministic (they never exceed 3
+  candidates) while exercising the real model in production.
+
+● Update(agents/workflow_v2/retrieval.py)
+  ⎿  Added 46 lines
+       1  from __future__ import annotations
+       2  
+       3 +import os                                                      
+       4 +import re                                                      
+       5  from collections import Counter
+       6  
+       7 +RERANK_MODEL_NAME = os.getenv("RERANK_MODEL_NAME", "dengcao/Qwe
+         +n3-Reranker-4B:Q4_K_M")                                        
+       8 +RERANK_PROMPT = """<Instruct>: Đánh giá mức độ liên quan giữa D
+         +ocument và Query trên thang điểm từ 0.0 (không liên quan) đến 1
+         +.0 (rất liên quan).                                            
+       9 +<Query>: {query}                                               
+      10 +<Document>: {document}                                         
+      11  
+      12 +Chỉ trả lời đúng một số thực từ 0.0 đến 1.0, không giải thích g
+         +ì thêm.                                                        
+      13 +Score:"""                                                      
+      14 +                                                               
+      15 +_rerank_client = None                                          
+      16 +                                                               
+      17 +                                                               
+      18 +def _get_rerank_client():                                      
+      19 +    global _rerank_client                                      
+      20 +    if _rerank_client is None:                                 
+      21 +        import ollama                                          
+      22 +                                                               
+      23 +        _rerank_client = ollama.Client(host=os.getenv("OLLAMA_B
+         +ASE_URL", "http://localhost:11434"))                           
+      24 +    return _rerank_client                                      
+      25 +                                                               
+      26 +                                                               
+      27 +def _parse_score(text: str) -> float | None:                   
+      28 +    match = re.search(r"[-+]?\d*\.?\d+", text or "")           
+      29 +    if not match:                                              
+      30 +        return None                                            
+      31 +    try:                                                       
+      32 +        return max(0.0, min(1.0, float(match.group())))        
+      33 +    except ValueError:                                         
+      34 +        return None                                            
+      35 +                                                               
+      36 +                                                               
+      37 +def model_rerank_score(query: str, document: str) -> float | No
+         +ne:                                                            
+      38 +    """Score relevance of a document to a query using the local
+         + Ollama reranker model."""                                     
+      39 +    try:                                                       
+      40 +        client = _get_rerank_client()                          
+      41 +        response = client.chat(                                
+      42 +            model=RERANK_MODEL_NAME,                           
+      43 +            messages=[{"role": "user", "content": RERANK_PROMPT
+         +.format(query=query, document=document)}],                     
+      44 +            options={"temperature": 0.0, "num_predict": 8},    
+      45 +            think=False,                                       
+      46 +        )                                                      
+      47 +        return _parse_score(response["message"]["content"])    
+      48 +    except Exception:                                          
+      49 +        return None                                            
+      50 +                                                               
+      51 +                                                               
+      52  def parse_retrieval_input(text: str) -> tuple[str, str]:
+      53      parts = (text or "").split("Câu hỏi:", 1)
+      54      context = parts[0].replace("Đoạn thông tin:", "", 1).strip(
+          )
+
+● Update(agents/workflow_v2/retrieval.py)
+  ⎿  Added 13 lines, removed 2 lines
+       84      return [chunks[index] for index, _ in ranked[:top_k]]
+       85  
+       86  
+       87 -def rerank(question: str, candidates: list[str], top_n: int = 
+          -3) -> list[str]:                                              
+       88 -    return candidates[:top_n]                                 
+       87 +def rerank(question: str, candidates: list[str], top_n: int = 
+          +3, score_fn=None) -> list[str]:                               
+       88 +    """Rerank BM25 candidates with a cross-encoder reranker mo
+          +del.                                                          
+       89  
+       90 +    Skips the model call when there is nothing to reorder (<= 
+          +top_n candidates),                                            
+       91 +    which keeps small-context callers (and unit tests) fast an
+          +d deterministic.                                              
+       92 +    Falls back to BM25 order on score failure (stable sort + s
+          +core=0.0 default).                                            
+       93 +    """                                                       
+       94 +    if len(candidates) <= top_n:                              
+       95 +        return candidates[:top_n]                             
+       96 +    score_fn = score_fn or model_rerank_score                 
+       97 +    scored = [(score_fn(question, candidate) or 0.0, candidate
+          +) for candidate in candidates]                                
+       98 +    ranked = sorted(scored, key=lambda item: item[0], reverse=
+          +True)                                                         
+       99 +    return [candidate for _, candidate in ranked[:top_n]]     
+      100  
+      101 +                                                              
+      102  def build_retrieval_context(top_chunks: list[str]) -> str:
+      103      return "\n\n".join(f"[Chunk {index + 1}]\n{chunk}" for ind
+           ex, chunk in enumerate(top_chunks))
+      104  
+
+● Now run the workflow_v2 unit tests to confirm nothing broke (no real Ollama
+  calls should occur since all test fixtures stay ≤3 candidates).
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Tests pass. Now let's verify the reranker actually fires for real with the
+  live Ollama server, using a scenario with >3 chunks.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Server is up. Let's run a real smoke test calling model_rerank_score directly
+  to make sure the model responds usefully.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Model correctly distinguishes relevant vs irrelevant. Now let's run a full
+  end-to-end solve_retrieval test with >3 chunks to confirm the rerank path
+  actually triggers and picks the right chunk for the LLM prompt.
+
+  Ran 1 shell command (ctrl+o to expand)
+● Hoạt động đúng — 5 chunk được BM25 lấy, reranker model chấm điểm và xếp đúng
+  "Hà Nội" lên đầu, loại "cá voi/bóng đá/Python" không liên quan. Giờ chạy lại
+  toàn bộ test suite workflow_v2 + main để chắc chắn không có regression.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Tất cả 17 test workflow_v2 + integration pass. Cập nhật memory về việc này:
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Tóm tắt:
+
+  Test trạng thái hiện tại của plan: Task 1–6 (agents/workflow_v2/) đã implement
+  đầy đủ và tất cả test pass (55/64 tổng test suite pass; 9 fail còn lại là
+  pre-existing, không liên quan — ở test_agent.py, test_docker_config.py,
+  test_web_search_routing.py, do các thay đổi khác đang dở trong main.py/docker
+  mà bạn đang làm song song).
+
+  Đã gắn model rerank: Trong agents/workflow_v2/retrieval.py, hàm rerank() trước
+  đây chỉ cắt top-3 mà không dùng model nào. Tôi đã wire
+  dengcao/Qwen3-Reranker-4B:Q4_K_M (model bạn cài qua Ollama) vào:
+
+  - model_rerank_score(query, document) gọi Ollama, yêu cầu model trả về điểm
+  liên quan 0.0–1.0, parse bằng regex (fallback None → coi như điểm 0, giữ
+  nguyên thứ tự BM25 nếu model lỗi/không sẵn sàng).
+  - rerank() chỉ thực sự gọi model khi số candidate sau BM25 > top_n (3) — nghĩa
+  là mọi unit test hiện tại (luôn ≤3 chunk) chạy nhanh/deterministic, không
+  đụng network; còn pipeline thật (nhiều chunk) sẽ luôn dùng model.
+
+  Đã verify thật (không chỉ unit test): Smoke test trực tiếp với Ollama server
+  đang chạy — model phân biệt đúng đoạn liên quan (score 1.0) vs không liên quan
+  (score 0.0), và test end-to-end solve_retrieval với 5 chunk cho thấy reranker
+  xếp đúng "Hà Nội" lên đầu, loại các đoạn về cá voi/bóng đá/Python.
+
+  Việc cần lưu ý: requirements.txt hiện có dòng BM25 (không hợp lệ, không phải
+  tên package PyPI thật — nên là rank_bm25==0.2.2 như plan ghi). Muốn tôi sửa
+  luôn không?
+
+✻ Brewed for 4m 34s
+
+※ recap: Building the workflow_v2 RAG pipeline; just wired the Qwen3-Reranker model into retrieval reranking and confirmed it works end-to-end. Next: fix the invalid "BM25" line in requirements.txt (should be rank_bm25==0.2.2) if you want me to proceed. (disable recaps in /config)
+
+❯ giờ hãy nói chi tiết work flow pipeline của repo đi                           
+
+  Read 5 files (ctrl+o to expand)
+
+● Đây là toàn bộ luồng xử lý của repo, từ input CSV đến output cuối, theo đúng
+  thứ tự thực thi trong main.py:run().
+
+  0. Khởi động & input
+
+  - main.py tự tìm file input: ưu tiên INPUT_CSV env, nếu không có thì quét
+  data/public_test*.csv → private_test*.csv → bất kỳ *.csv nào trong data/.
+  - Đọc CSV, normalize_row() chuẩn hoá: nếu có cột choices (dạng JSON list
+  ["A","B","C","D"]) thì convert sang cột A,B,C,D để tương thích phần xử lý cũ.
+  - Chia rows thành các batch theo BATCH_SIZE (default 20).
+
+  1. Batch prediction (LLM gọi 1 lần/batch)
+
+  predict_batch_details(rows):
+  - Gộp cả batch thành 1 prompt CSV (qid,question,choices), gọi
+  agent_with_batch_confidences() — một lần gọi Ollama (model qwen3.5:4b mặc
+  định) cho cả batch, lấy về cả text trả lời và logprobs token-level.
+  - Parse câu trả lời theo regex qid,answer mỗi dòng.
+  - Dùng extract_confidences() để tính confidence mỗi câu từ logprob của token
+  A/B/C/D thực tế trong response (so với top-logprob candidates) → đây là cơ chế
+  confidence "thật" dựa trên xác suất model, không phải tự model tự chấm.
+  - Nếu batch chỉ có 1 row và không parse được → apply_single_row_fallback cố
+  gắng lấy câu trả lời cuối cùng dạng "đáp án: X" bằng regex.
+
+  retry_bad_rows: với row nào ra N/A, gọi lại riêng từng row
+  (predict_single_retry) bằng prompt ép buộc trả lời đúng 2 dòng CSV.
+
+  2. Routing per-row — đây là phần lõi, theo đúng thứ tự ưu tiên
+
+  Với mỗi row trong batch, sau khi có ans (từ batch) và conf (logprob
+  confidence):
+
+  workflow_v2_answer(row)  ──nếu match──▶ dùng kết quả workflow_v2,
+  answer_source = "workflow_v2:<task>"
+          │ (nếu None/knowledge/conf thấp)
+          ▼
+  is_calculation_question(row) + try_calculator/try_code_calculator  ──nếu
+  match──▶ answer_source = "calculator", confidence = 1.0
+          │ (nếu không phải tính toán)
+          ▼
+  phân loại theo answer_quality + conf:
+    - ans == N/A                      → answer_source = "missing"
+    - weak_parse                      → domain_retry (subject-specific prompt)
+    - vừa được single_retry từ N/A     → answer_source = "single_retry"
+    - conf is None hoặc conf > 0.8     → giữ "batch", chỉ web-search nếu câu hỏi
+  "volatile" (giá, CEO, hiện nay...)
+    - 0.55 <= conf <= 0.8              → domain_retry (math/physics/it/...)
+    - conf < 0.55                      → web search fallback
+
+  2a. Workflow V2 (agents/workflow_v2/) — pipeline mới, chạy TRƯỚC mọi nhánh cũ
+
+  workflow_v2_answer(row):
+  1. classify(text, row) — ưu tiên cứng theo thứ tự: retrieval (nếu prompt chứa
+  cả "Đoạn thông tin" + "Câu hỏi") > calculation (regex biểu thức/phương trình
+  hoặc heuristic: ≥2 số + đơn vị + từ khoá tính toán + options toàn số) >
+  knowledge (fallback).
+  2. Theo task:
+    - retrieval: parse context/question → chunk theo đoạn (\n\n, min 20 ký tự) →
+  BM25 (package rank_bm25 nếu có, fallback token-overlap thủ công) lấy top-10 →
+  rerank bằng model dengcao/Qwen3-Reranker-4B (mới gắn) lấy top-3 → build
+  prompt "chỉ dùng thông tin trong đoạn" → gọi LLM → confidence cố định 0.8.
+    - calculation: phân loại arithmetic/equation/word_problem/complex → giải
+  bằng ast-safe-eval (arithmetic/equation) hoặc nhờ LLM sinh result = <expr>
+  (word_problem/complex) → so khớp với option số gần nhất → confidence theo loại
+  + sai số (0.95 arithmetic → 0.6 fallback).
+    - knowledge: build prompt CoT có format ANSWER:/CONFIDENCE: → gọi LLM 3 lần
+  (temperature 0.7) → majority vote + blend confidence = 0.7*consistency + 
+  0.3*avg_self_confidence.
+  3. Trong main.py, task "knowledge" bị bỏ qua hoàn toàn (if task == 
+  "knowledge": return None) — workflow_v2 chỉ thực sự ghi đè kết quả batch khi
+  là retrieval hoặc calculation; knowledge vẫn để các nhánh cũ (domain retry,
+  web search) xử lý.
+
+  2b. Calculator cũ (agents/calculator.py)
+
+  Vẫn còn là lưới an toàn thứ 2: regex riêng phát hiện biểu thức/phương trình
+  tuyến tính, try_calculator (an toàn, không LLM) hoặc try_code_calculator (sinh
+  code, chạy qua agent) — confidence luôn = 1.0 khi match.
+
+  2c. Domain retry (agents/subject_router.py)
+
+  classify_subject gắn câu hỏi vào 1 trong 7 domain
+  (it/math/physics/geography/history/english/logic/other) bằng keyword matching,
+  có thêm "risk keywords" (ngoại trừ, mâu thuẫn, suy ra...) để biết câu nào dễ
+  sai cần double-check bằng domain-specific prompt (prompts/domain_*.md).
+
+  2d. Web search (agents/search_router.py + agents/web_search_graph.py)
+
+  should_search trigger theo VOLATILE_KEYWORDS (giá, CEO, hiện nay, GDP...) hoặc
+  khi answer = N/A. Search thực hiện qua LangGraph state machine 3 node: route 
+  → search → finalize, dùng WebSearchClient
+  (DisabledWebSearch/StaticWebSearch/HttpJsonWebSearch/DuckDuckGo) trả context
+  rồi hỏi lại LLM với context đó.
+
+  3. Output
+
+  - pred.csv: chỉ qid,answer.
+  - pred_audit.csv: thêm confidence, needs_search, search_used, answer_source —
+  cột answer_source cho biết câu trả lời đến từ nhánh nào
+  (workflow_v2:retrieval, workflow_v2:calculation, calculator, batch,
+  domain_retry_changed/same, single_retry, missing...) — dùng để debug/audit
+  chất lượng.
+
+  Điểm cần lưu ý
+
+  - Workflow_v2 hiện không xử lý nhánh knowledge trong main.py dù module
+  knowledge.py đã viết đầy đủ (majority-vote 3 samples) — đây có vẻ là quyết
+  định thận trọng để giữ pipeline cũ (domain retry + web search) làm chủ lực cho
+  câu hỏi kiến thức thuần, chỉ để workflow_v2 đảm nhận phần nó tự tin nhất
+  (retrieval có ngữ cảnh rõ, calculation có thể verify bằng số).
+  - requirements.txt đang ghi BM25 (sai tên package) thay vì rank_bm25==0.2.2 —
+  chưa sửa theo đề xuất trước, vẫn chạy được nhờ fallback token-overlap nhưng
+  chưa dùng BM25 thật.
+
+✻ Brewed for 55s
+
+❯ giờ hãy làm sạch và chỉ giữ lại pipeline v2 thôi đi bỏ v1 để dễ đọc           
+
+● User answered Claude's questions:
+  ⎿  · Pipeline cũ (v1) gồm nhiều phần riêng biệt: batch LLM call nền, legacy 
+     calculator (agents/calculator.py), domain retry (subject_router), web 
+     search (search_router + web_search_graph), và single-retry cho N/A. 
+     Workflow_v2 hiện chưa có web search và chưa active task 'knowledge' trong 
+     main.py. Bỏ "v1", giữ lại gì? → workflow_v2 + giữ web search + giữ 
+     single-retry N/A
+
+  Searched for 1 pattern, read 1 file, listed 1 directory (ctrl+o to expand)
+
+● Entered plan mode
+  Claude is now exploring and designing an implementation approach.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Updated plan
+  ⎿  /plan to preview
+
+● User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/encapsulated-riding-dijkstra.md · /plan to 
+     edit
+     Remove v1 pipeline from main.py, keep only workflow_v2 (+ web search + 
+     single-retry)
+
+     Context
+
+     main.py currently runs two pipelines side by side: a v1 batch-CSV pipeline
+     (shared LLM call per batch, legacy agents/calculator.py, domain retry via
+     agents/subject_router.py) and the new agents/workflow_v2/ pipeline bolted
+     on top as a short-circuit. This dual-path design makes main.py hard to
+     read. The user asked to delete v1 and keep only workflow_v2, while
+     explicitly keeping (per earlier clarification):
+     - Web search fallback (agents/search_router.py +
+     agents/web_search_graph.py) — workflow_v2 has no web-search capability for
+     volatile/current-events questions.
+     - Single-retry fallback for rows where workflow_v2 can't produce a usable
+     answer.
+
+     This also means activating workflow_v2's knowledge task (currently main.py
+     special-cases if task == "knowledge": return None, deferring 100% to v1) —
+     there's no v1 left to defer to.
+
+     New per-row flow in main.py
+
+     For every row (no more batch CSV prompting — workflow_v2 is row-level by
+     design):
+
+     workflow_v2_answer(row)  -- run_pipeline covers retrieval / calculation /
+     knowledge now
+        │ valid (answer in A-D, confidence > 0)
+        ├──▶ use it: source = "workflow_v2:<task>"
+        │ invalid/N/A
+        ▼
+     predict_single_retry(row)  -- existing forced single-row CSV prompt,
+     unchanged
+        │ valid
+        ├──▶ use it: source = "single_retry", confidence = 0.55
+        │ still N/A
+        ▼
+     source = "missing", confidence = 0.0
+
+     then, regardless of branch taken:
+     should_search(row, current_answer) -- existing volatile-keyword router
+        └──▶ if true: predict_with_search_details (existing LangGraph search
+     node)
+             if search produced a non-N/A answer (or current was N/A): adopt it,
+             source = "search", confidence = 0.40; mark search_used
+
+     Files to change
+
+     main.py — remove:
+     - predict_batch, predict_batch_details, batched, retry_bad_rows,
+     agent_with_batch_confidences/extract_confidences usage,
+     build_predictions/question_ids (only used by the removed batch path)
+     - DOMAIN_PROMPT_PATHS, _DOMAIN_PROMPT_CACHE, domain_prompt_for,
+     domain_retry_prompt, predict_domain_retry, retry_domain_rows
+     (subject_router-based domain retry)
+     - imports of is_calculation_question/try_calculator/try_code_calculator
+     (calculator.py) and classify_subject/should_retry_domain
+     (subject_router.py)
+     - batch_size param from run() signature and DEFAULT_BATCH_SIZE/BATCH_SIZE
+     env read (no batching left)
+     - the if task == "knowledge": return None guard in workflow_v2_answer (and
+     the now-unneeded standalone classify_workflow_v2 call before it —
+     run_pipeline already classifies internally)
+
+     Keep as-is: find_default_input, normalize_row, parse_model_answers,
+     apply_single_row_fallback, extract_single_answer,
+     force_single_answer_prompt, predict_single_retry,
+     rows_to_prompt/FIELDNAMES, answer_with_search_context,
+     predict_with_search_details/predict_with_search, write_predictions,
+     print_progress.
+
+     Simplify: confidence_for/build_audit_rows to take an explicit per-row
+     confidence (no more should_search-based heuristic guessing — every row now
+     carries a real confidence from the branch that produced it) and
+     answer_source always one of workflow_v2:<task>, single_retry, search,
+     missing.
+
+     New run(): loop rows one at a time (no batched()), call a new
+     predict_row(row, search_client) helper implementing the flow above, collect
+     into answers/answer_sources/answer_confidences/search_used_qids, write
+     predictions + audit same as today.
+
+     Delete (dead after v1 removal, not imported anywhere else — confirmed via
+     grep):
+     - agents/calculator.py
+     - agents/subject_router.py
+     - tests/test_subject_router.py
+
+     Keep unchanged: agents/search_router.py, agents/web_search.py,
+     agents/web_search_graph.py, agents/agent.py, all of agents/workflow_v2/,
+     tests/test_search_router.py, tests/test_web_search_routing.py
+     (web_search_routing test currently asserts a CSV-batch-shaped prompt
+     substring "qid,question,A,B,C,D" for the single-row search-context prompt —
+     that prompt builder (rows_to_prompt) is unchanged and already
+     single-row-only via FIELDNAMES = ["qid","question","choices"], so this test
+     needs no behavior change, just re-verify it still passes).
+
+     Rewrite tests/test_main.py (full rewrite — old tests assert v1
+     batching/domain-retry semantics that no longer exist). New test list:
+     1. parse_model_answers preamble/colon parsing — unchanged, keep as-is.
+     2. predict_single_retry forced single call — unchanged, keep as-is.
+     3. run() uses workflow_v2 calculation directly, no LLM call needed for pure
+     arithmetic (confidence 0.95, answer_source workflow_v2:calculation).
+     4. run() uses workflow_v2 retrieval (Đoạn thông tin / Câu hỏi shaped
+     question), confidence 0.8, source workflow_v2:retrieval.
+     5. run() uses workflow_v2 knowledge (now active): fake agent returns
+     ANSWER: X\nCONFIDENCE: Y for the 3-sample knowledge prompt (distinguish via
+     "Các lựa chọn:" substring), majority vote drives the answer, source
+     workflow_v2:knowledge.
+     6. run() falls back to single_retry when workflow_v2 can't parse an answer
+     (knowledge prompt response doesn't match ANSWER: format) — confidence 0.55,
+     source single_retry.
+     7. run() marks missing/confidence 0.00 when both workflow_v2 and
+     single_retry fail.
+     8. run() still triggers web search for volatile questions (e.g. "CEO hiện
+     nay là ai?") even after workflow_v2/single_retry already produced an answer
+     — adapt existing StaticWebSearch tests, source becomes search, confidence
+     0.40, distinguishing the search-context prompt via "Ngu canh web"
+     substring.
+     9. run() keeps the prior answer when the web-search reanswer comes back
+     N/A.
+     10. UTF-8 BOM CSV read test — unchanged behavior, keep.
+     11. Progress printing test — keep, just drop batch_size.
+
+     Update tests/test_main_workflow_v2.py: drop the now-removed batch_size=10
+     kwarg from both main.run(...) calls; behavior of both tests is unchanged
+     (arithmetic path needs no LLM call at all; the knowledge-fallback test now
+     lands on single_retry exactly as before since neither old nor new code
+     treats unparseable knowledge LLM output as a valid answer).
+
+     Out of scope (explicitly not touching, belongs to other in-flight changes
+     per git status): docker-compose.yml, .env.example, entrypoint.sh,
+     docs/*.md, requirements.txt's BM25 typo, agents/agent.py internals (its
+     batch-confidence helpers become unused by main.py but stay as tested public
+     API).
+
+     Verification
+
+     1. PYTHONPATH=. python -m pytest tests/ -q (conda env atlas_agent) — expect
+     only the 9 pre-existing unrelated failures (test_agent.py /
+     test_docker_config.py / test_web_search_routing.py tied to other
+     in-progress work) to remain, everything touched by this change green.
+     2. Manually run python -c smoke test feeding a tiny CSV with one arithmetic
+     row, one retrieval-shaped row, and one generic knowledge row through
+     main.run, inspect pred_audit.csv to confirm answer_source values look right
+     end-to-end against the live Ollama server.
+     3. grep -rn "calculator\|subject_router" main.py agents/ tests/ returns
+     nothing after the change (confirms full removal).
+
+● Auto mode lets Claude handle permission prompts automatically — Claude
+  checks each tool call for risky actions and prompt injection before 
+  executing. Actions Claude identifies as safe are executed, while 
+  actions Claude identifies as risky are blocked and Claude may try a 
+  different approach. Ideal for long-running tasks. Sessions are 
+  slightly more expensive. Claude can make mistakes that allow harmful 
+  commands to run, it's recommended to only use in isolated 
+  environments. Shift+Tab to change mode.
+
+● Plan approved. Implementing now.
+  Read 1 file (ctrl+o to expand)
+
+● Now writing the new clean main.py.
+
+● Write(main.py)
+  ⎿  Added 52 lines, removed 246 lines
+       5  from io import StringIO
+       6  from pathlib import Path
+       7  
+       8 -from agents.agent import agent, agent_with_batch_confidences, e
+         -xtract_confidences                                             
+       9 -from agents.calculator import is_calculation_question, try_calc
+         -ulator, try_code_calculator                                    
+       8 +from agents.agent import agent                                 
+       9  from agents.search_router import should_search
+      11 -from agents.subject_router import classify_subject, should_retr
+         -y_domain                                                       
+      10  from agents.web_search import WebSearchClient, default_web_sear
+          ch
+      11  from agents.web_search_graph import build_web_search_graph
+      14 -from agents.workflow_v2.classifier import classify as classify_
+         -workflow_v2                                                    
+      12  from agents.workflow_v2.pipeline import run_pipeline as run_wor
+          kflow_v2
+      13  
+      14 +                                                               
+      15  def find_default_input() -> Path:
+      16      """Find default CSV input file in data directory."""
+      17      if "INPUT_CSV" in os.environ:
+      18          return Path(os.getenv("INPUT_CSV"))
+      21 -                                                               
+      19 +                                                               
+      20      data_dir = BASE_DIR / "data"
+      21      # Look for public_test or private_test CSV files
+      22      for name in ["public_test*.csv", "private_test*.csv"]:
+      23          files = list(data_dir.glob(name))
+      24          if files:
+      25              return files[0]  # Return first match
+      28 -                                                               
+      26 +                                                               
+      27      # Fallback to any CSV
+      28      files = list(data_dir.glob("*.csv"))
+      29      if files:
+      30          return files[0]
+      33 -                                                               
+      31 +                                                               
+      32      # Final fallback
+      33      return BASE_DIR / "data" / "public_test.csv"
+      34  
+     ...
+      40  ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|
+          N/A)\b", re.IGNORECASE | re.DOTALL)
+      41  ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$
+          ", re.IGNORECASE)
+      42  FIELDNAMES = ["qid", "question", "choices"]
+      45 -DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))        
+      46 -DOMAIN_PROMPT_PATHS = {                                        
+      47 -    "it": BASE_DIR / "prompts" / "domain_it.md",               
+      48 -    "math": BASE_DIR / "prompts" / "domain_math.md",           
+      49 -    "physics": BASE_DIR / "prompts" / "domain_physics.md",     
+      50 -    "geography": BASE_DIR / "prompts" / "domain_geography.md", 
+      51 -    "history": BASE_DIR / "prompts" / "domain_history.md",     
+      52 -    "english": BASE_DIR / "prompts" / "domain_english.md",     
+      53 -    "logic": BASE_DIR / "prompts" / "domain_logic.md",         
+      54 -    "other": BASE_DIR / "prompts" / "domain_other.md",         
+      55 -}                                                              
+      56 -_DOMAIN_PROMPT_CACHE: dict[str, str] = {}                      
+      43  
+      44 +SINGLE_RETRY_CONFIDENCE = 0.55                                 
+      45 +SEARCH_CONFIDENCE = 0.40                                       
+      46  
+      59 -def read_text(path: Path) -> str:                              
+      60 -    return path.read_text(encoding="utf-8-sig")                
+      47  
+      62 -                                                               
+      63 -def question_ids(csv_text: str) -> list[str]:                  
+      64 -    reader = csv.DictReader(StringIO(csv_text.lstrip("\ufeff"))
+         -)                                                              
+      65 -    return [row["qid"] for row in reader if row.get("qid")]    
+      66 -                                                               
+      67 -                                                               
+      48  def parse_model_answers(model_output: str) -> dict[str, str]:
+      49      answers = {}
+      50      for line in (model_output or "").splitlines():
+     ...
+       68      return answers
+       69  
+       70  
+       91 -def build_predictions(question_csv: str, model_output: str) ->
+          - list[dict[str, str]]:                                        
+       92 -    answers = parse_model_answers(model_output)               
+       93 -    return [                                                  
+       94 -        {"qid": qid, "answer": answers.get(qid, "N/A")}       
+       95 -        for qid in question_ids(question_csv)                 
+       96 -    ]                                                         
+       97 -                                                              
+       98 -                                                              
+       71  def normalize_row(row: dict[str, str]) -> dict[str, str]:
+       72      """Normalize row and convert choices string to A,B,C,D for
+           mat if needed."""
+      101 -    normalized = {(key or "").lstrip("\ufeff"): value for key,
+          - value in row.items()}                                        
+      102 -                                                              
+       73 +    normalized = {(key or "").lstrip(""): value for key, value
+          + in row.items()}                                              
+       74 +                                                              
+       75      # If choices column exists, convert to A,B,C,D format
+       76      if 'choices' in normalized and normalized['choices']:
+       77          try:
+     ...
+       86                  normalized['D'] = choices[3] if len(choices) >
+            3 else ''
+       87          except (ValueError, SyntaxError, IndexError):
+       88              pass  # Keep original format if parsing fails
+      117 -                                                              
+       89 +                                                              
+       90      return normalized
+       91  
+       92  
+     ...
+       99      return buffer.getvalue()
+      100  
+      101  
+      130 -def batched(rows: list[dict[str, str]], batch_size: int):     
+      131 -    for start in range(0, len(rows), batch_size):             
+      132 -        yield rows[start : start + batch_size]                
+      133 -                                                              
+      134 -                                                              
+      102  def print_progress(done: int, total: int, width: int = 30) -> 
+           None:
+      103      if total <= 0:
+      104          return
+     ...
+      118      return answer if answer in VALID_ANSWERS else "N/A"
+      119  
+      120  
+      154 -                                                              
+      121  def force_single_answer_prompt(row: dict[str, str]) -> str:
+      122      return (
+      123          "Chi tra ve dung 2 dong CSV: header qid,answer va mot 
+           dong dap an cho qid nay. "
+     ...
+      125          + rows_to_prompt([row])
+      126      )
+      127  
+      128 +                                                              
+      129  def apply_single_row_fallback(row: dict[str, str], model_outpu
+           t: str, answers: dict[str, str]) -> dict[str, str]:
+      130      qid = row.get("qid", "")
+      131      if qid not in answers and len(answers) == 1:
+     ...
+      135      return answers
+      136  
+      137  
+      171 -def answer_quality_for(row: dict[str, str], parsed_answers: di
+          -ct[str, str], final_answers: dict[str, str]) -> str:          
+      172 -    qid = row.get("qid", "")                                  
+      173 -    parsed_answer = parsed_answers.get(qid)                   
+      174 -    final_answer = final_answers.get(qid, "N/A")              
+      175 -    if parsed_answer in VALID_ANSWERS and parsed_answer != "N/
+          -A":                                                           
+      176 -        return "clean"                                        
+      177 -    if final_answer in VALID_ANSWERS and final_answer != "N/A"
+          -:                                                             
+      178 -        return "weak_parse"                                   
+      179 -    if qid in parsed_answers:                                 
+      180 -        return "invalid"                                      
+      181 -    return "missing"                                          
+      182 -                                                              
+      183 -                                                              
+      184 -def predict_batch_details(rows: list[dict[str, str]]) -> tuple
+          -[dict[str, str], dict[str, str], dict[str, float]]:           
+      185 -    prompt = rows_to_prompt(rows)                             
+      186 -    model_output, response = agent_with_batch_confidences(prom
+          -pt)  # 1 lần gọi duy nhất                                     
+      187 -    if not model_output:                                      
+      188 -        model_output = agent(prompt)                          
+      189 -        response = {}                                         
+      190 -    parsed_answers = parse_model_answers(model_output)        
+      191 -    answers = dict(parsed_answers)                            
+      192 -    if len(rows) == 1:                                        
+      193 -        answers = apply_single_row_fallback(rows[0], model_out
+          -put, answers)                                                 
+      194 -    final_answers = {row["qid"]: answers.get(row["qid"], "N/A"
+          -) for row in rows if row.get("qid")}                          
+      195 -    answer_quality = {                                        
+      196 -        row["qid"]: answer_quality_for(row, parsed_answers, fi
+          -nal_answers)                                                  
+      197 -        for row in rows                                       
+      198 -        if row.get("qid")                                     
+      199 -    }                                                         
+      200 -    logprobs = extract_confidences(response, final_answers)  #
+          - extract từ response đã có                                    
+      201 -    return final_answers, answer_quality, logprobs            
+      202 -                                                              
+      203 -                                                              
+      204 -def predict_batch(rows: list[dict[str, str]]) -> dict[str, str
+          -]:                                                            
+      205 -    answers, _, _ = predict_batch_details(rows)               
+      206 -    return answers                                            
+      207 -                                                              
+      208 -                                                              
+      138  def predict_single_retry(row: dict[str, str]) -> str:
+      139      qid = row.get("qid", "")
+      140      model_output = agent(force_single_answer_prompt(row))
+     ...
+      143  
+      144  
+      145  def workflow_v2_answer(row: dict[str, str]) -> tuple[str, floa
+           t, str] | None:
+      217 -    task = classify_workflow_v2(row.get("question", ""), row) 
+      218 -    if task == "knowledge":                                   
+      219 -        return None                                           
+      220 -                                                              
+      146      def call_llm(prompt: str, **kwargs) -> str:
+      147          return agent(prompt)
+      148  
+      149      result = run_workflow_v2(row.get("question", ""), row, cal
+           l_llm)
+      150      answer = str(result.get("answer") or "N/A").strip().upper(
+           )
+      226 -    if answer not in VALID_ANSWERS:                           
+      151 +    if answer not in VALID_ANSWERS or answer == "N/A":        
+      152          return None
+      153      confidence = float(result.get("confidence") or 0.0)
+      229 -    if answer == "N/A" or confidence <= 0.0:                  
+      154 +    if confidence <= 0.0:                                     
+      155          return None
+      156      return answer, confidence, f"workflow_v2:{result.get('task
+           ', 'unknown')}"
+      157  
+      158  
+      234 -def domain_prompt_for(subject: str) -> str:                   
+      235 -    normalized_subject = subject if subject in DOMAIN_PROMPT_P
+          -ATHS else "other"                                             
+      236 -    if normalized_subject not in _DOMAIN_PROMPT_CACHE:        
+      237 -        _DOMAIN_PROMPT_CACHE[normalized_subject] = read_text(D
+          -OMAIN_PROMPT_PATHS[normalized_subject]).strip()               
+      238 -    return _DOMAIN_PROMPT_CACHE[normalized_subject]           
+      239 -                                                              
+      240 -                                                              
+      241 -def domain_retry_prompt(row: dict[str, str], subject: str) -> 
+          -str:                                                          
+      242 -    return domain_prompt_for(subject) + "\n\n" + rows_to_promp
+          -t([row])                                                      
+      243 -                                                              
+      244 -                                                              
+      245 -def predict_domain_retry(row: dict[str, str], subject: str) ->
+          - str:                                                         
+      246 -    model_output = agent(domain_retry_prompt(row, subject))   
+      247 -    answers = apply_single_row_fallback(row, model_output, par
+          -se_model_answers(model_output))                               
+      248 -    return answers.get(row.get("qid", ""), "N/A")             
+      249 -                                                              
+      250 -                                                              
+      251 -def retry_domain_rows(                                        
+      252 -    rows: list[dict[str, str]],                               
+      253 -    answers: dict[str, str],                                  
+      254 -    answer_quality: dict[str, str] | None = None,             
+      255 -) -> dict[str, str]:                                          
+      256 -    answer_quality = answer_quality or {}                     
+      257 -    for row in rows:                                          
+      258 -        qid = row.get("qid", "")                              
+      259 -        decision = classify_subject(row)                      
+      260 -        if not should_retry_domain(row, answer_quality.get(qid
+          -, "clean")):                                                  
+      261 -            continue                                          
+      262 -        retry_answer = predict_domain_retry(row, decision.subj
+          -ect)                                                          
+      263 -        if retry_answer in VALID_ANSWERS:                     
+      264 -            answers[qid] = retry_answer                       
+      265 -    return answers                                            
+      266 -                                                              
+      267 -                                                              
+      268 -                                                              
+      159  def answer_with_search_context(row: dict[str, str], context: s
+           tr) -> str:
+      160      prompt = (
+      161          "Dung ngu canh web de tra loi cau hoi. Chi tra ve CSV 
+           qid,answer. "
+     ...
+      179      final_answer, _ = predict_with_search_details(row, search_
+           client, answer)
+      180      return final_answer
+      181  
+      292 -def retry_bad_rows(rows: list[dict[str, str]], answers: dict[s
+          -tr, str]) -> dict[str, str]:                                  
+      293 -    bad_rows = [row for row in rows if answers.get(row.get("qi
+          -d", ""), "N/A") == "N/A"]                                     
+      294 -    for row in bad_rows:                                      
+      295 -        qid = row.get("qid", "")                              
+      296 -        answers[qid] = predict_single_retry(row)              
+      297 -    return answers                                            
+      182  
+      183 +def predict_row(row: dict[str, str], search_client: WebSearchC
+          +lient) -> tuple[str, float, str, bool]:                       
+      184 +    """Resolve one row: workflow_v2 first, single-retry fallba
+          +ck, then web search for volatile questions."""                
+      185 +    workflow_answer = workflow_v2_answer(row)                 
+      186 +    if workflow_answer is not None:                           
+      187 +        answer, confidence, source = workflow_answer          
+      188 +    else:                                                     
+      189 +        retry_answer = predict_single_retry(row)              
+      190 +        if retry_answer in VALID_ANSWERS and retry_answer != "
+          +N/A":                                                         
+      191 +            answer, confidence, source = retry_answer, SINGLE_
+          +RETRY_CONFIDENCE, "single_retry"                              
+      192 +        else:                                                 
+      193 +            answer, confidence, source = "N/A", 0.0, "missing"
+      194  
+      300 -def apply_web_search(                                         
+      301 -    rows: list[dict[str, str]],                               
+      302 -    answers: dict[str, str],                                  
+      303 -    search_client: WebSearchClient,                           
+      304 -    search_used_qids: set[str],                               
+      305 -) -> dict[str, str]:                                          
+      306 -    for row in rows:                                          
+      307 -        qid = row.get("qid", "")                              
+      308 -        current_answer = answers.get(qid, "N/A")              
+      309 -        if not should_search(row, current_answer):            
+      310 -            continue                                          
+      311 -        searched_answer, search_used = predict_with_search_det
+          -ails(row, search_client, current_answer)                      
+      312 -        if search_used:                                       
+      313 -            search_used_qids.add(qid)                         
+      314 -            if searched_answer != "N/A" or current_answer == "
+          -N/A":                                                         
+      315 -                answers[qid] = searched_answer                
+      316 -    return answers                                            
+      195 +    if should_search(row, answer):                            
+      196 +        searched_answer, search_used = predict_with_search_det
+          +ails(row, search_client, answer)                              
+      197 +        if search_used and (searched_answer != "N/A" or answer
+          + == "N/A"):                                                   
+      198 +            return searched_answer, SEARCH_CONFIDENCE if searc
+          +hed_answer != "N/A" else 0.0, "search", True                  
+      199 +        return answer, confidence, source, search_used        
+      200  
+      201 +    return answer, confidence, source, False                  
+      202  
+      203 +                                                              
+      204  def write_predictions(rows: list[dict[str, str]], output_path:
+            Path) -> None:
+      205      output_path.parent.mkdir(parents=True, exist_ok=True)
+      206      with output_path.open("w", newline="", encoding="utf-8") a
+           s f:
+     ...
+      209          writer.writerows(rows)
+      210  
+      211  
+      327 -                                                              
+      328 -def confidence_for(row: dict[str, str], answer: str, answer_so
+          -urce: str = "batch", logprob: float | None = None) -> str:    
+      212 +def confidence_for(answer: str, confidence: float) -> str:    
+      213      if answer == "N/A":
+      214          return "0.00"
+      331 -    if logprob is not None:                                   
+      332 -        return f"{logprob:.2f}"                               
+      333 -    # fallback khi không có logprob                           
+      334 -    if should_search(row, answer):                            
+      335 -        return "0.40"                                         
+      336 -    if answer_source == "single_retry":                       
+      337 -        return "0.55"                                         
+      338 -    if answer_source == "domain_retry_changed":               
+      339 -        return "0.60"                                         
+      340 -    if answer_source == "domain_retry_same":                  
+      341 -        return "0.80"                                         
+      342 -    return "0.70"                                             
+      215 +    return f"{confidence:.2f}"                                
+      216  
+      217  
+      218  def build_audit_rows(
+     ...
+      220      answers: dict[str, str],
+      221      search_used_qids: set[str] | None = None,
+      222      answer_sources: dict[str, str] | None = None,
+      350 -    logprobs: dict[str, float] | None = None,                 
+      223 +    confidences: dict[str, float] | None = None,              
+      224  ) -> list[dict[str, str]]:
+      225      search_used_qids = search_used_qids or set()
+      226      answer_sources = answer_sources or {}
+      354 -    logprobs = logprobs or {}                                 
+      227 +    confidences = confidences or {}                           
+      228      audit_rows = []
+      229      for row in source_rows:
+      230          qid = row["qid"]
+     ...
+      233              {
+      234                  "qid": qid,
+      235                  "answer": answer,
+      363 -                "confidence": confidence_for(row, answer, answ
+          -er_sources.get(qid, "batch"), logprobs.get(qid)),             
+      236 +                "confidence": confidence_for(answer, confidenc
+          +es.get(qid, 0.0)),                                            
+      237                  "needs_search": "true" if should_search(row, a
+           nswer) else "false",
+      238                  "search_used": "true" if qid in search_used_qi
+           ds else "false",
+      366 -                "answer_source": answer_sources.get(qid, "batc
+          -h"),                                                          
+      239 +                "answer_source": answer_sources.get(qid, "miss
+          +ing"),                                                        
+      240              }
+      241          )
+      242      return audit_rows
+     ...
+      249          writer.writeheader()
+      250          writer.writerows(rows)
+      251  
+      252 +                                                              
+      253  def run(
+      254      input_path: Path = PUBLIC_QUESTION,
+      255      output_path: Path = PREDICTION_OUTPUT,
+      382 -    batch_size: int = DEFAULT_BATCH_SIZE,                     
+      256      search_client: WebSearchClient | None = None,
+      257      audit_output_path: Path | None = None,
+      258      show_progress: bool = False,
+     ...
+      264      search_client = search_client or default_web_search()
+      265  
+      266      answers: dict[str, str] = {}
+      394 -    audit_answers: dict[str, str] = {}                        
+      267      answer_sources: dict[str, str] = {}
+      396 -    answer_logprobs: dict[str, float] = {}                    
+      268 +    answer_confidences: dict[str, float] = {}                 
+      269      search_used_qids: set[str] = set()
+      270      total_rows = len(source_rows)
+      399 -    processed_rows = 0                                        
+      271      if show_progress:
+      272          print_progress(0, total_rows)
+      402 -    for batch in batched(source_rows, batch_size):            
+      403 -        batch_answers, answer_quality, batch_logprobs = predic
+          -t_batch_details(batch)                                        
+      404 -        answer_logprobs.update(batch_logprobs)                
+      273  
+      406 -        # Retry N/A rows trước (không có confidence)          
+      407 -        before_single_retry = dict(batch_answers)             
+      408 -        batch_answers = retry_bad_rows(batch, batch_answers)  
+      409 -                                                              
+      410 -        for row in batch:                                     
+      411 -            qid = row.get("qid", "")                          
+      412 -            conf = batch_logprobs.get(qid)                    
+      413 -            ans = batch_answers.get(qid, "N/A")               
+      414 -                                                              
+      415 -            workflow_answer = workflow_v2_answer(row)         
+      416 -            if workflow_answer is not None:                   
+      417 -                wf_answer, wf_confidence, wf_source = workflow
+          -_answer                                                       
+      418 -                batch_answers[qid] = wf_answer                
+      419 -                answer_logprobs[qid] = wf_confidence          
+      420 -                answer_sources[qid] = wf_source               
+      421 -                continue                                      
+      422 -                                                              
+      423 -            # Calculator: ưu tiên tuyệt đối, confidence = 1.0 
+      424 -            if is_calculation_question(row):                  
+      425 -                calc_ans = try_calculator(row) or try_code_cal
+          -culator(row, agent)                                           
+      426 -                if calc_ans:                                  
+      427 -                    batch_answers[qid] = calc_ans             
+      428 -                    answer_logprobs[qid] = 1.0                
+      429 -                    answer_sources[qid] = "calculator"        
+      430 -                    continue                                  
+      431 -                                                              
+      432 -            if ans == "N/A":                                  
+      433 -                answer_sources[qid] = "missing"               
+      434 -            elif answer_quality.get(qid) == "weak_parse":     
+      435 -                decision = classify_subject(row)              
+      436 -                retry_ans = predict_domain_retry(row, decision
+          -.subject)                                                     
+      437 -                if retry_ans in VALID_ANSWERS:                
+      438 -                    changed = retry_ans != ans                
+      439 -                    batch_answers[qid] = retry_ans            
+      440 -                    answer_sources[qid] = "domain_retry_change
+          -d" if changed else "domain_retry_same"                        
+      441 -                else:                                         
+      442 -                    answer_sources[qid] = "single_retry"      
+      443 -            elif before_single_retry.get(qid, "N/A") == "N/A":
+      444 -                # Vừa được single_retry từ N/A                
+      445 -                answer_sources[qid] = "single_retry"          
+      446 -            elif conf is None or conf > 0.8:                  
+      447 -                # Chắc chắn — giữ nguyên, nhưng vẫn dùng web s
+          -earch cho câu hỏi thời sự.                                    
+      448 -                answer_sources[qid] = "batch"                 
+      449 -                if should_search(row, ans):                   
+      450 -                    searched_ans, search_used = predict_with_s
+          -earch_details(row, search_client, ans)                        
+      451 -                    if search_used:                           
+      452 -                        search_used_qids.add(qid)             
+      453 -                        if searched_ans != "N/A":             
+      454 -                            batch_answers[qid] = searched_ans 
+      455 -            elif conf >= 0.55:                                
+      456 -                # 0.55 <= conf <= 0.8 — domain retry          
+      457 -                decision = classify_subject(row)              
+      458 -                retry_ans = predict_domain_retry(row, decision
+          -.subject)                                                     
+      459 -                if retry_ans in VALID_ANSWERS:                
+      460 -                    changed = retry_ans != ans                
+      461 -                    batch_answers[qid] = retry_ans            
+      462 -                    answer_logprobs[qid] = conf  # giữ conf gố
+          -c để audit                                                    
+      463 -                    answer_sources[qid] = "domain_retry_change
+          -d" if changed else "domain_retry_same"                        
+      464 -                else:                                         
+      465 -                    answer_sources[qid] = "batch"             
+      466 -            else:                                             
+      467 -                # conf < 0.55 — web search                    
+      468 -                searched_ans, search_used = predict_with_searc
+          -h_details(row, search_client, ans)                            
+      469 -                if search_used:                               
+      470 -                    search_used_qids.add(qid)                 
+      471 -                    if searched_ans != "N/A":                 
+      472 -                        batch_answers[qid] = searched_ans     
+      473 -                answer_sources[qid] = "single_retry"  # dùng "
+          -single_retry" source cho low-conf                             
+      474 -                                                              
+      475 -        audit_answers.update(batch_answers)                   
+      476 -        answers.update(batch_answers)                         
+      477 -        processed_rows += len(batch)                          
+      274 +    for index, row in enumerate(source_rows, start=1):        
+      275 +        qid = row.get("qid", "")                              
+      276 +        answer, confidence, source, search_used = predict_row(
+          +row, search_client)                                           
+      277 +        answers[qid] = answer                                 
+      278 +        answer_sources[qid] = source                          
+      279 +        answer_confidences[qid] = confidence                  
+      280 +        if search_used:                                       
+      281 +            search_used_qids.add(qid)                         
+      282          if show_progress:
+      479 -            print_progress(processed_rows, total_rows)        
+      283 +            print_progress(index, total_rows)                 
+      284  
+      285      output_rows = [
+      286          {"qid": row["qid"], "answer": answers.get(row["qid"], 
+           "N/A")}
+      287          for row in source_rows
+      288      ]
+      289      write_predictions(output_rows, output_path)
+      486 -    write_audit(build_audit_rows(source_rows, audit_answers, s
+          -earch_used_qids, answer_sources, answer_logprobs), audit_outpu
+          -t_path or output_path.with_name("pred_audit.csv"))            
+      290 +    write_audit(                                              
+      291 +        build_audit_rows(source_rows, answers, search_used_qid
+          +s, answer_sources, answer_confidences),                       
+      292 +        audit_output_path or output_path.with_name("pred_audit
+          +.csv"),                                                       
+      293 +    )                                                         
+      294      return output_path
+      295  
+      296  
+      297  if __name__ == "__main__":
+      298      import time
+      492 -    import sys                                                
+      299      t0 = time.time()
+      300      try:
+      301          result = run(show_progress=True)
+
+● Update(main.py)
+  ⎿  Error editing file
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Good — it's actually the correct \ufeff escape, just rendered as the literal
+  glyph in the tool view. No fix needed.
+  ⎿  Invalid tool parameters
+
+● Now delete the dead v1 files.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(tests/test_main.py)
+  ⎿  Added 90 lines, removed 252 lines
+       8  from pathlib import Path
+       9  from unittest.mock import patch
+      10  
+      11 +                                                               
+      12  class _FakeOllamaClient:
+      13      def __init__(self, *args, **kwargs):
+      14          pass
+     ...
+       83  from agents.web_search import StaticWebSearch
+       84  
+       85  
+       85 -class MainOutputTest(unittest.TestCase):                      
+       86 -    def test_build_predictions_keeps_valid_answers_and_marks_i
+          -nvalid_or_missing_na(self):                                   
+       87 -        questions = "qid,question,A,B,C,D\n1,one,a,b,c,d\n2,tw
+          -o,a,b,c,d\n3,three,a,b,c,d\n"                                 
+       88 -        model_output = "qid,answer\n1,A\n2,E\n"               
+       86 +KNOWLEDGE_MARKER = "Các lựa chọn:"                            
+       87 +SEARCH_CONTEXT_MARKER = "Ngu canh web"                        
+       88 +SINGLE_RETRY_MARKER = "Chi tra ve dung 2 dong CSV"            
+       89  
+       90 -        rows = main.build_predictions(questions, model_output)
+       90  
+       92 -        self.assertEqual(                                     
+       93 -            rows,                                             
+       94 -            [                                                 
+       95 -                {"qid": "1", "answer": "A"},                  
+       96 -                {"qid": "2", "answer": "N/A"},                
+       97 -                {"qid": "3", "answer": "N/A"},                
+       98 -            ],                                                
+       99 -        )                                                     
+       91 +def _refuse_agent(prompt):                                    
+       92 +    raise AssertionError(f"agent() should not be called for th
+          +is row, got prompt: {prompt!r}")                              
+       93  
+      101 -    def test_run_batches_questions_and_writes_pred_csv(self): 
+      102 -        with tempfile.TemporaryDirectory() as tmp:            
+      103 -            tmp_path = Path(tmp)                              
+      104 -            input_path = tmp_path / "public_test.csv"         
+      105 -            output_path = tmp_path / "pred.csv"               
+      106 -            input_path.write_text(                            
+      107 -                "qid,question,A,B,C,D\n"                      
+      108 -                "1,one,a,b,c,d\n"                             
+      109 -                "2,two,a,b,c,d\n"                             
+      110 -                "3,three,a,b,c,d\n",                          
+      111 -                encoding="utf-8",                             
+      112 -            )                                                 
+      113 -            calls = []                                        
+       94  
+      115 -            def fake_agent(prompt):                           
+      116 -                calls.append(prompt)                          
+      117 -                if "3,three" in prompt:                       
+      118 -                    return "qid,answer\n3,C\n"                
+      119 -                return "qid,answer\n1,A\n2,B\n"               
+      120 -                                                              
+      121 -            with patch.object(main, "agent", fake_agent):     
+      122 -                result_path = main.run(input_path=input_path, 
+          -output_path=output_path, batch_size=2)                        
+      123 -                                                              
+      124 -            self.assertEqual(result_path, output_path)        
+      125 -            self.assertEqual(len(calls), 2)                   
+      126 -            self.assertIn("1,one", calls[0])                  
+      127 -            self.assertIn("2,two", calls[0])                  
+      128 -            self.assertIn("3,three", calls[1])                
+      129 -            with output_path.open(newline="", encoding="utf-8"
+          -) as f:                                                       
+      130 -                self.assertEqual(                             
+      131 -                    list(csv.DictReader(f)),                  
+      132 -                    [                                         
+      133 -                        {"qid": "1", "answer": "A"},          
+      134 -                        {"qid": "2", "answer": "B"},          
+      135 -                        {"qid": "3", "answer": "C"},          
+      136 -                    ],                                        
+      137 -                )                                             
+      138 -            audit_path = output_path.with_name("pred_audit.csv
+          -")                                                            
+      139 -            with audit_path.open(newline="", encoding="utf-8")
+          - as f:                                                        
+      140 -                self.assertEqual(                             
+      141 -                    list(csv.DictReader(f)),                  
+      142 -                    [                                         
+      143 -                        {"qid": "1", "answer": "A", "confidenc
+          -e": "0.70", "needs_search": "false", "search_used": "false", "
+          -answer_source": "batch"},                                     
+      144 -                        {"qid": "2", "answer": "B", "confidenc
+          -e": "0.70", "needs_search": "false", "search_used": "false", "
+          -answer_source": "batch"},                                     
+      145 -                        {"qid": "3", "answer": "C", "confidenc
+          -e": "0.70", "needs_search": "false", "search_used": "false", "
+          -answer_source": "batch"},                                     
+      146 -                    ],                                        
+      147 -                )                                             
+      148 -                                                              
+      149 -    def test_run_can_print_progress_to_stderr(self):          
+      150 -        with tempfile.TemporaryDirectory() as tmp:            
+      151 -            tmp_path = Path(tmp)                              
+      152 -            input_path = tmp_path / "public_test.csv"         
+      153 -            output_path = tmp_path / "pred.csv"               
+      154 -            input_path.write_text(                            
+      155 -                "qid,question,A,B,C,D\n"                      
+      156 -                "1,one,a,b,c,d\n"                             
+      157 -                "2,two,a,b,c,d\n"                             
+      158 -                "3,three,a,b,c,d\n",                          
+      159 -                encoding="utf-8",                             
+      160 -            )                                                 
+      161 -                                                              
+      162 -            def fake_agent(prompt):                           
+      163 -                if "3,three" in prompt:                       
+      164 -                    return "qid,answer\n3,C\n"                
+      165 -                return "qid,answer\n1,A\n2,B\n"               
+      166 -                                                              
+      167 -            stderr = io.StringIO()                            
+      168 -            with patch.object(main, "agent", fake_agent), cont
+          -extlib.redirect_stderr(stderr):                               
+      169 -                main.run(                                     
+      170 -                    input_path=input_path,                    
+      171 -                    output_path=output_path,                  
+      172 -                    batch_size=2,                             
+      173 -                    search_client=StaticWebSearch({}),        
+      174 -                    show_progress=True,                       
+      175 -                )                                             
+      176 -                                                              
+      177 -            progress_output = stderr.getvalue()               
+      178 -            self.assertIn("Progress:", progress_output)       
+      179 -            self.assertIn("3/3 (100%)", progress_output)      
+      180 -                                                              
+      181 -                                                              
+      182 -    def test_run_retries_missing_or_invalid_rows_one_by_one_wi
+          -th_one_retry_each(self):                                      
+      183 -        with tempfile.TemporaryDirectory() as tmp:            
+      184 -            tmp_path = Path(tmp)                              
+      185 -            input_path = tmp_path / "public_test.csv"         
+      186 -            output_path = tmp_path / "pred.csv"               
+      187 -            input_path.write_text(                            
+      188 -                "qid,question,A,B,C,D\n"                      
+      189 -                "1,one,a,b,c,d\n"                             
+      190 -                "2,two,a,b,c,d\n"                             
+      191 -                "3,three,a,b,c,d\n",                          
+      192 -                encoding="utf-8",                             
+      193 -            )                                                 
+      194 -            calls = []                                        
+      195 -                                                              
+      196 -            def fake_agent(prompt):                           
+      197 -                calls.append(prompt)                          
+      198 -                if len(calls) == 1:                           
+      199 -                    return "qid,answer\n1,A\n2,E\n"           
+      200 -                if "2,two" in prompt:                         
+      201 -                    return "qid,answer\n2,B\n"                
+      202 -                return "qid,answer\n3,C\n"                    
+      203 -                                                              
+      204 -            with patch.object(main, "agent", fake_agent):     
+      205 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=3)                                      
+      206 -                                                              
+      207 -            self.assertEqual(len(calls), 3)                   
+      208 -            self.assertIn("Chi tra ve dung 2 dong CSV", calls[
+          -1])                                                           
+      209 -            self.assertIn("Chi tra ve dung 2 dong CSV", calls[
+          -2])                                                           
+      210 -            self.assertNotIn("1,one", calls[1])               
+      211 -            self.assertIn("2,two", calls[1])                  
+      212 -            self.assertNotIn("3,three", calls[1])             
+      213 -            self.assertIn("3,three", calls[2])                
+      214 -            with output_path.open(newline="", encoding="utf-8"
+          -) as f:                                                       
+      215 -                self.assertEqual(                             
+      216 -                    list(csv.DictReader(f)),                  
+      217 -                    [                                         
+      218 -                        {"qid": "1", "answer": "A"},          
+      219 -                        {"qid": "2", "answer": "B"},          
+      220 -                        {"qid": "3", "answer": "C"},          
+      221 -                    ],                                        
+      222 -                )                                             
+      223 -                                                              
+      224 -                                                              
+       95 +class MainOutputTest(unittest.TestCase):                      
+       96      def test_parse_model_answers_handles_preamble_and_colon_ro
+           ws(self):
+       97          output = "dau ra:\nqid,answer  \n5:A\n6, B\n"
+       98  
+       99          self.assertEqual(main.parse_model_answers(output), {"5
+           ": "A", "6": "B"})
+      100  
+      230 -                                                              
+      101      def test_predict_single_retry_uses_one_forced_call(self):
+      102          row = {"qid": "4", "question": "one", "A": "a", "B": "
+           b", "C": "c", "D": "d"}
+      103          calls = []
+     ...
+      112          self.assertEqual(len(calls), 1)
+      113          self.assertIn("Chi tra ve dung 2 dong CSV", calls[0])
+      114  
+      245 -    def test_predict_batch_single_row_uses_only_valid_answer_w
+          -hen_qid_is_wrong(self):                                       
+      246 -        row = {"qid": "4", "question": "one", "A": "a", "B": "
+          -b", "C": "c", "D": "d"}                                       
+      247 -        model_output = "dau ra:\nqid,answer\n1,B"             
+      115 +    def test_run_uses_workflow_v2_calculation_without_any_llm_
+          +call(self):                                                   
+      116 +        with tempfile.TemporaryDirectory() as tmp:            
+      117 +            tmp_path = Path(tmp)                              
+      118 +            input_path = tmp_path / "public_test.csv"         
+      119 +            output_path = tmp_path / "pred.csv"               
+      120 +            input_path.write_text(                            
+      121 +                "qid,question,A,B,C,D\n"                      
+      122 +                "1,Tính 2 + 2 bằng bao nhiêu?,3,4,5,6\n",     
+      123 +                encoding="utf-8",                             
+      124 +            )                                                 
+      125  
+      249 -        with patch.object(main, "agent", return_value=model_ou
+          -tput):                                                        
+      250 -            self.assertEqual(main.predict_batch([row]), {"4": 
+          -"B"})                                                         
+      126 +            with patch.object(main, "agent", _refuse_agent):  
+      127 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      128  
+      252 -    def test_predict_batch_extracts_single_prose_answer_when_m
+          -odel_ignores_csv(self):                                       
+      253 -        row = {"qid": "1", "question": "one", "A": "a", "B": "
+          -b", "C": "c", "D": "d"}                                       
+      254 -        prose_output = "**KẾT LUẬN**:\nĐáp án đúng là **C**." 
+      129 +            with output_path.open(newline="", encoding="utf-8"
+          +) as f:                                                       
+      130 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "1", "answer": "B"}])                                    
+      131 +            with output_path.with_name("pred_audit.csv").open(
+          +newline="", encoding="utf-8") as f:                           
+      132 +                self.assertEqual(                             
+      133 +                    list(csv.DictReader(f)),                  
+      134 +                    [{"qid": "1", "answer": "B", "confidence":
+          + "0.95", "needs_search": "false", "search_used": "false", "ans
+          +wer_source": "workflow_v2:calculation"}],                     
+      135 +                )                                             
+      136  
+      256 -        with patch.object(main, "agent", return_value=prose_ou
+          -tput):                                                        
+      257 -            self.assertEqual(main.predict_batch([row]), {"1": 
+          -"C"})                                                         
+      258 -                                                              
+      259 -                                                              
+      260 -    def test_audit_marks_current_questions_as_needing_search(s
+          -elf):                                                         
+      261 -        row = {"qid": "9", "question": "CEO hiện nay là ai?", 
+          -"A": "a", "B": "b", "C": "c", "D": "d"}                       
+      262 -                                                              
+      263 -        audit = main.build_audit_rows([row], {"9": "A"})      
+      264 -                                                              
+      265 -        self.assertEqual(audit, [{"qid": "9", "answer": "A", "
+          -confidence": "0.40", "needs_search": "true", "search_used": "f
+          -alse", "answer_source": "batch"}])                            
+      266 -                                                              
+      267 -                                                              
+      268 -    def test_audit_marks_search_used_qids(self):              
+      269 -        row = {"qid": "9", "question": "CEO hiện nay là ai?", 
+          -"A": "a", "B": "b", "C": "c", "D": "d"}                       
+      270 -                                                              
+      271 -        audit = main.build_audit_rows([row], {"9": "A"}, {"9"}
+          -)                                                             
+      272 -                                                              
+      273 -        self.assertEqual(audit, [{"qid": "9", "answer": "A", "
+          -confidence": "0.40", "needs_search": "true", "search_used": "t
+          -rue", "answer_source": "batch"}])                             
+      274 -                                                              
+      275 -                                                              
+      276 -    def test_run_scores_single_retry_lower_than_batch_answer(s
+          -elf):                                                         
+      137 +    def test_run_uses_workflow_v2_retrieval(self):            
+      138          with tempfile.TemporaryDirectory() as tmp:
+      139              tmp_path = Path(tmp)
+      140              input_path = tmp_path / "public_test.csv"
+      141              output_path = tmp_path / "pred.csv"
+      142              input_path.write_text(
+      143                  "qid,question,A,B,C,D\n"
+      283 -                "1,one,a,b,c,d\n"                             
+      284 -                "2,two,a,b,c,d\n",                            
+      144 +                '1,"Đoạn thông tin: Hà Nội là thủ đô Việt Nam.
+          +\n\nCâu hỏi: Thủ đô là gì?",Huế,Hà Nội,Đà Nẵng,Huế\n',        
+      145                  encoding="utf-8",
+      146              )
+      147  
+      288 -            calls = []                                        
+      289 -                                                              
+      148              def fake_agent(prompt):
+      291 -                calls.append(prompt)                          
+      292 -                if len(calls) == 1:                           
+      293 -                    return "qid,answer\n1,A\n"                
+      294 -                return "qid,answer\n2,B\n"                    
+      149 +                self.assertIn("Chỉ sử dụng thông tin", prompt)
+      150 +                return "B"                                    
+      151  
+      152              with patch.object(main, "agent", fake_agent):
+      297 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=2, search_client=StaticWebSearch({}))   
+      153 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      154  
+      155 +            with output_path.open(newline="", encoding="utf-8"
+          +) as f:                                                       
+      156 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "1", "answer": "B"}])                                    
+      157              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      158                  self.assertEqual(
+      159                      list(csv.DictReader(f)),
+      302 -                    [                                         
+      303 -                        {"qid": "1", "answer": "A", "confidenc
+          -e": "0.70", "needs_search": "false", "search_used": "false", "
+          -answer_source": "batch"},                                     
+      304 -                        {"qid": "2", "answer": "B", "confidenc
+          -e": "0.55", "needs_search": "false", "search_used": "false", "
+          -answer_source": "single_retry"},                              
+      305 -                    ],                                        
+      160 +                    [{"qid": "1", "answer": "B", "confidence":
+          + "0.80", "needs_search": "false", "search_used": "false", "ans
+          +wer_source": "workflow_v2:retrieval"}],                       
+      161                  )
+      162  
+      308 -                                                              
+      309 -    def test_run_skips_simple_domain_retry_when_batch_answer_i
+          -s_clean(self):                                                
+      163 +    def test_run_uses_workflow_v2_knowledge_majority_vote(self
+          +):                                                            
+      164          with tempfile.TemporaryDirectory() as tmp:
+      165              tmp_path = Path(tmp)
+      166              input_path = tmp_path / "public_test.csv"
+      167              output_path = tmp_path / "pred.csv"
+      168              input_path.write_text(
+      169                  "qid,question,A,B,C,D\n"
+      316 -                "1,Toán học là môn học về điều gì?,số học,văn 
+          -học,lịch sử,địa lý\n",                                        
+      170 +                "1,Thủ đô của Việt Nam là gì?,Hà Nội,Huế,Đà Nẵ
+          +ng,Cần Thơ\n",                                                
+      171                  encoding="utf-8",
+      172              )
+      319 -            calls = []                                        
+      173  
+      174              def fake_agent(prompt):
+      322 -                calls.append(prompt)                          
+      323 -                return "qid,answer\n1,A\n"                    
+      175 +                self.assertIn(KNOWLEDGE_MARKER, prompt)       
+      176 +                return "ANSWER: A\nCONFIDENCE: 0.9"           
+      177  
+      178              with patch.object(main, "agent", fake_agent):
+      326 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1, search_client=StaticWebSearch({}))   
+      179 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      180  
+      328 -            self.assertEqual(len(calls), 1)                   
+      329 -            self.assertNotIn("domain Toán học", calls[0])     
+      181              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      182                  self.assertEqual(list(csv.DictReader(f)), [{"q
+           id": "1", "answer": "A"}])
+      183              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      184                  self.assertEqual(
+      185                      list(csv.DictReader(f)),
+      335 -                    [{"qid": "1", "answer": "A", "confidence":
+          - "0.70", "needs_search": "false", "search_used": "false", "ans
+          -wer_source": "batch"}],                                       
+      186 +                    [{"qid": "1", "answer": "A", "confidence":
+          + "0.97", "needs_search": "false", "search_used": "false", "ans
+          +wer_source": "workflow_v2:knowledge"}],                       
+      187                  )
+      188  
+      338 -                                                              
+      339 -    def test_run_retries_simple_domain_when_batch_output_neede
+          -d_single_row_fallback(self):                                  
+      189 +    def test_run_falls_back_to_single_retry_when_workflow_v2_c
+          +annot_parse_an_answer(self):                                  
+      190          with tempfile.TemporaryDirectory() as tmp:
+      191              tmp_path = Path(tmp)
+      192              input_path = tmp_path / "public_test.csv"
+      193              output_path = tmp_path / "pred.csv"
+      194              input_path.write_text(
+      195                  "qid,question,A,B,C,D\n"
+      346 -                "1,Toán học là môn học về điều gì?,số học,văn 
+          -học,lịch sử,địa lý\n",                                        
+      196 +                "1,Thủ đô của Việt Nam là gì?,Hà Nội,Huế,Đà Nẵ
+          +ng,Cần Thơ\n",                                                
+      197                  encoding="utf-8",
+      198              )
+      349 -            calls = []                                        
+      199  
+      200              def fake_agent(prompt):
+      352 -                calls.append(prompt)                          
+      353 -                if "domain Toán học" in prompt:               
+      354 -                    return "qid,answer\n1,A\n"                
+      355 -                return "qid,answer\nwrong_id,A\n"             
+      201 +                if KNOWLEDGE_MARKER in prompt:                
+      202 +                    return "Tôi không biết."                  
+      203 +                if SINGLE_RETRY_MARKER in prompt:             
+      204 +                    return "qid,answer\n1,C\n"                
+      205 +                raise AssertionError(f"unexpected prompt: {pro
+          +mpt!r}")                                                      
+      206  
+      207              with patch.object(main, "agent", fake_agent):
+      358 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1, search_client=StaticWebSearch({}))   
+      208 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      209  
+      360 -            self.assertEqual(len(calls), 2)                   
+      361 -            self.assertIn("domain Toán học", calls[1])        
+      210 +            with output_path.open(newline="", encoding="utf-8"
+          +) as f:                                                       
+      211 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "1", "answer": "C"}])                                    
+      212              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      213                  self.assertEqual(
+      214                      list(csv.DictReader(f)),
+      365 -                    [{"qid": "1", "answer": "A", "confidence":
+          - "0.80", "needs_search": "false", "search_used": "false", "ans
+          -wer_source": "domain_retry_same"}],                           
+      215 +                    [{"qid": "1", "answer": "C", "confidence":
+          + "0.55", "needs_search": "false", "search_used": "false", "ans
+          +wer_source": "single_retry"}],                                
+      216                  )
+      217  
+      368 -                                                              
+      369 -    def test_run_retries_math_with_domain_prompt_before_web_se
+          -arch(self):                                                   
+      218 +    def test_run_marks_missing_when_workflow_v2_and_single_ret
+          +ry_both_fail(self):                                           
+      219          with tempfile.TemporaryDirectory() as tmp:
+      220              tmp_path = Path(tmp)
+      221              input_path = tmp_path / "public_test.csv"
+      222              output_path = tmp_path / "pred.csv"
+      223              input_path.write_text(
+      224                  "qid,question,A,B,C,D\n"
+      376 -                "1,Tính 2 + 2 bằng bao nhiêu?,3,4,5,6\n",     
+      225 +                "1,Thủ đô của Việt Nam là gì?,Hà Nội,Huế,Đà Nẵ
+          +ng,Cần Thơ\n",                                                
+      226                  encoding="utf-8",
+      227              )
+      379 -            calls = []                                        
+      228  
+      381 -            def fake_agent(prompt):                           
+      382 -                calls.append(prompt)                          
+      383 -                if "domain Toán học" in prompt:               
+      384 -                    return "qid,answer\n1,B\n"                
+      385 -                return "qid,answer\n1,A\n"                    
+      229 +            with patch.object(main, "agent", return_value="Tôi
+          + không biết."):                                               
+      230 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      231  
+      387 -            with patch.object(main, "agent", fake_agent):     
+      388 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1, search_client=StaticWebSearch({}))   
+      389 -                                                              
+      390 -            self.assertEqual(len(calls), 1)                   
+      232              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      392 -                self.assertEqual(list(csv.DictReader(f)), [{"q
+          -id": "1", "answer": "B"}])                                    
+      233 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "1", "answer": "N/A"}])                                  
+      234              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      235                  self.assertEqual(
+      236                      list(csv.DictReader(f)),
+      396 -                    [{"qid": "1", "answer": "B", "confidence":
+          - "0.95", "needs_search": "false", "search_used": "false", "ans
+          -wer_source": "workflow_v2:calculation"}],                     
+      237 +                    [{"qid": "1", "answer": "N/A", "confidence
+          +": "0.00", "needs_search": "true", "search_used": "false", "an
+          +swer_source": "missing"}],                                    
+      238                  )
+      239  
+      399 -                                                              
+      400 -    def test_run_searches_rows_marked_needs_search_when_search
+          -_enabled(self):                                               
+      240 +    def test_run_searches_volatile_question_after_workflow_v2_
+          +answer(self):                                                 
+      241          with tempfile.TemporaryDirectory() as tmp:
+      242              tmp_path = Path(tmp)
+      243              input_path = tmp_path / "public_test.csv"
+     ...
+      248                  encoding="utf-8",
+      249              )
+      250              search = StaticWebSearch({"CEO hiện nay là ai?": "
+           Nguồn web: đáp án là C."})
+      411 -            calls = []                                        
+      251  
+      252              def fake_agent(prompt):
+      414 -                calls.append(prompt)                          
+      415 -                if "Nguon canh web" in prompt or "Ngu canh web
+          -" in prompt:                                                  
+      253 +                if KNOWLEDGE_MARKER in prompt:                
+      254 +                    return "ANSWER: A\nCONFIDENCE: 0.9"       
+      255 +                if SEARCH_CONTEXT_MARKER in prompt:           
+      256                      return "qid,answer\n1,C\n"
+      417 -                return "qid,answer\n1,A\n"                    
+      257 +                raise AssertionError(f"unexpected prompt: {pro
+          +mpt!r}")                                                      
+      258  
+      259              with patch.object(main, "agent", fake_agent):
+      420 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1, search_client=search)                
+      260 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=search)                              
+      261  
+      262              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      263                  self.assertEqual(list(csv.DictReader(f)), [{"q
+           id": "1", "answer": "C"}])
+      264              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      265                  self.assertEqual(
+      266                      list(csv.DictReader(f)),
+      427 -                    [{"qid": "1", "answer": "C", "confidence":
+          - "0.40", "needs_search": "true", "search_used": "true", "answe
+          -r_source": "batch"}],                                         
+      267 +                    [{"qid": "1", "answer": "C", "confidence":
+          + "0.40", "needs_search": "true", "search_used": "true", "answe
+          +r_source": "search"}],                                        
+      268                  )
+      269  
+      430 -                                                              
+      270      def test_run_keeps_existing_answer_when_search_reanswer_is
+           _na(self):
+      271          with tempfile.TemporaryDirectory() as tmp:
+      272              tmp_path = Path(tmp)
+     ...
+      280              search = StaticWebSearch({"CEO hiện nay là ai?": "
+           Nguồn web không đủ để chọn đáp án."})
+      281  
+      282              def fake_agent(prompt):
+      444 -                if "Nguồn web không đủ" in prompt:            
+      283 +                if KNOWLEDGE_MARKER in prompt:                
+      284 +                    return "ANSWER: A\nCONFIDENCE: 0.9"       
+      285 +                if SEARCH_CONTEXT_MARKER in prompt:           
+      286                      return "qid,answer\n2,N/A\n"
+      446 -                return "qid,answer\n2,C\n"                    
+      287 +                raise AssertionError(f"unexpected prompt: {pro
+          +mpt!r}")                                                      
+      288  
+      289              with patch.object(main, "agent", fake_agent):
+      449 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1, search_client=search)                
+      290 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=search)                              
+      291  
+      292              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      452 -                self.assertEqual(list(csv.DictReader(f)), [{"q
+          -id": "2", "answer": "C"}])                                    
+      293 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "2", "answer": "A"}])                                    
+      294              with output_path.with_name("pred_audit.csv").open(
+           newline="", encoding="utf-8") as f:
+      295                  self.assertEqual(
+      296                      list(csv.DictReader(f)),
+      456 -                    [{"qid": "2", "answer": "C", "confidence":
+          - "0.40", "needs_search": "true", "search_used": "true", "answe
+          -r_source": "batch"}],                                         
+      297 +                    [{"qid": "2", "answer": "A", "confidence":
+          + "0.97", "needs_search": "true", "search_used": "true", "answe
+          +r_source": "workflow_v2:knowledge"}],                         
+      298                  )
+      299  
+      459 -                                                              
+      460 -    def test_run_uses_default_web_search_and_marks_audit_when_
+          -context_exists(self):                                         
+      300 +    def test_run_can_print_progress_to_stderr(self):          
+      301          with tempfile.TemporaryDirectory() as tmp:
+      302              tmp_path = Path(tmp)
+      303              input_path = tmp_path / "public_test.csv"
+      304              output_path = tmp_path / "pred.csv"
+      305              input_path.write_text(
+      306                  "qid,question,A,B,C,D\n"
+      467 -                "1,CEO hiện nay là ai?,a,b,c,d\n",            
+      307 +                "1,Tính 1 + 1,1,2,3,4\n"                      
+      308 +                "2,Tính 2 + 2,3,4,5,6\n"                      
+      309 +                "3,Tính 3 + 3,5,6,7,8\n",                     
+      310                  encoding="utf-8",
+      311              )
+      470 -            search = StaticWebSearch({"CEO hiện nay là ai?": "
+          -Nguồn web: đáp án là C."})                                    
+      312  
+      472 -            def fake_agent(prompt):                           
+      473 -                if "Nguồn web" in prompt:                     
+      474 -                    return "qid,answer\n1,C\n"                
+      475 -                return "qid,answer\n1,A\n"                    
+      476 -                                                              
+      477 -            with patch.object(main, "agent", fake_agent), patc
+          -h.object(main, "default_web_search", return_value=search):    
+      478 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1)                                      
+      479 -                                                              
+      480 -            with output_path.with_name("pred_audit.csv").open(
+          -newline="", encoding="utf-8") as f:                           
+      481 -                self.assertEqual(                             
+      482 -                    list(csv.DictReader(f)),                  
+      483 -                    [{"qid": "1", "answer": "C", "confidence":
+          - "0.40", "needs_search": "true", "search_used": "true", "answe
+          -r_source": "batch"}],                                         
+      313 +            stderr = io.StringIO()                            
+      314 +            with patch.object(main, "agent", _refuse_agent), c
+          +ontextlib.redirect_stderr(stderr):                            
+      315 +                main.run(                                     
+      316 +                    input_path=input_path,                    
+      317 +                    output_path=output_path,                  
+      318 +                    search_client=StaticWebSearch({}),        
+      319 +                    show_progress=True,                       
+      320                  )
+      321  
+      322 +            progress_output = stderr.getvalue()               
+      323 +            self.assertIn("Progress:", progress_output)       
+      324 +            self.assertIn("3/3 (100%)", progress_output)      
+      325  
+      326      def test_run_reads_utf8_sig_csv_with_bom_header(self):
+      327          with tempfile.TemporaryDirectory() as tmp:
+     ...
+      329              input_path = tmp_path / "public_test.csv"
+      330              output_path = tmp_path / "pred.csv"
+      331              input_path.write_text(
+      493 -                "\ufeffqid,question,A,B,C,D\n"                
+      494 -                "1,one,a,b,c,d\n",                            
+      332 +                "qid,question,A,B,C,D\n"                      
+      333 +                "1,Tính 1 + 1,1,2,3,4\n",                     
+      334                  encoding="utf-8",
+      335              )
+      336  
+      498 -            with patch.object(main, "agent", return_value="qid
+          -,answer\n1,A\n"):                                             
+      499 -                main.run(input_path=input_path, output_path=ou
+          -tput_path, batch_size=1)                                      
+      337 +            with patch.object(main, "agent", _refuse_agent):  
+      338 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      339  
+      340              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      502 -                self.assertEqual(list(csv.DictReader(f)), [{"q
+          -id": "1", "answer": "A"}])                                    
+      341 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "1", "answer": "B"}])                                    
+      342  
+      343  
+      505 -                                                              
+      344  if __name__ == "__main__":
+      345      unittest.main()
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All 11 pass. Now update test_main_workflow_v2.py.
+  Read 1 file (ctrl+o to expand)
+
+● Update(tests/test_main_workflow_v2.py)
+  ⎿  Added 1 line, removed 1 line
+      91          )
+      92  
+      93          with patch.object(main, "agent", return_value="qid,answ
+          er\n1,A\n"):
+      94 -            main.run(input_path=input_path, output_path=output_
+         -path, batch_size=10, search_client=StaticWebSearch({}))        
+      94 +            main.run(input_path=input_path, output_path=output_
+         +path, search_client=StaticWebSearch({}))                       
+      95  
+      96          with output_path.open(newline="", encoding="utf-8") as 
+          f:
+      97              assert list(csv.DictReader(f)) == [{"qid": "1", "an
+          swer": "B"}]
+
+● Update(tests/test_main_workflow_v2.py)
+  ⎿  Added 1 line, removed 1 line
+      114          )
+      115  
+      116          with patch.object(main, "agent", return_value="qid,ans
+           wer\n1,C\n"):
+      117 -            main.run(input_path=input_path, output_path=output
+          -_path, batch_size=10, search_client=StaticWebSearch({}))      
+      117 +            main.run(input_path=input_path, output_path=output
+          +_path, search_client=StaticWebSearch({}))                     
+      118  
+      119          with output_path.open(newline="", encoding="utf-8") as
+            f:
+      120              assert list(csv.DictReader(f)) == [{"qid": "1", "a
+           nswer": "C"}]
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Exact same 9 pre-existing unrelated failures as before my change
+  (test_agent.py/test_docker_config.py/test_web_search_routing.py — these
+  existed before I touched anything, tied to other in-flight work). Everything I
+  touched is green. Let's confirm the grep check from the plan's verification
+  step.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Clean — no references left. Now a live end-to-end smoke test against the real
+  Ollama server.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Row 3 ("Thủ đô của Pháp là gì?") ended up wrong (A=Berlin instead of C=Paris)
+  via search fallback, and row 2 (retrieval) fell back to single_retry instead
+  of using the retrieval answer directly. Let me debug both live.
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● Refactor is done and matches the plan — full suite shows the same 9
+  pre-existing unrelated failures as before, nothing new broke. But the live
+  smoke test surfaced a real bug that the refactor exposed (previously hidden
+  because knowledge/retrieval were barely exercised):
+
+  Root cause: agents/agent.py's agent() always injects the hardcoded
+  prompts/system_prompt.md, which forces "chỉ trả về CSV qid,answer, không giải 
+  thích, không markdown" on every single call — that's a v1-era instruction.
+  Workflow_v2 reuses this same agent() as its call_llm_fn, so its own prompt
+  instructions (knowledge wants ANSWER: X\nCONFIDENCE: Y; retrieval wants a
+  direct text answer) get overridden by the system prompt. Confirmed live:
+
+  - Knowledge task: model reasoned correctly to "Paris = C" but the system
+  prompt made it write a free-form essay instead of ANSWER: C — extract_answer
+  regex found nothing, the correct answer got thrown away, and it fell through
+  single_retry → real DuckDuckGo web search → wrong answer.
+  - Retrieval task: model ignored the retrieval prompt entirely and replied
+  "qid,answer\n1,A" (its system-prompt-trained reflex) instead of answering the
+  question — rejected by VALID_ANSWERS check, fell back to single_retry too.
+
+  So right now workflow_v2's retrieval and knowledge tasks are largely not 
+  actually usable against the real model — only calculation worked cleanly in
+  the smoke test (it doesn't need the LLM at all for arithmetic).
+
+  This is a separate, fixable problem (give workflow_v2 a call_llm_fn that talks
+  to Ollama without the v1 system prompt baked in), but it's outside what we
+  agreed to in this refactor. How do you want to proceed?
+
+● User answered Claude's questions:
+  ⎿  · system_prompt.md ép model luôn trả về CSV qid,answer, khiến workflow_v2's
+     retrieval/knowledge không nhận được đúng format cần. Sửa ngay trong lần 
+     này hay tách ra task khác? → Sửa ngay (Recommended)
+
+  Read 1 file (ctrl+o to expand)
+
+● Add a raw_chat function that calls Ollama without the v1 CSV-forcing system
+  prompt.
+
+● Update(agents/agent.py)
+  ⎿  Added 16 lines
+      116  def agent(user_message: str) -> str:
+      117      response = chat_once(user_message)
+      118      return final_answer(response["message"]["content"])
+      119 +                                                              
+      120 +                                                              
+      121 +def raw_chat(user_message: str, temperature: float = 0.0) -> s
+          +tr:                                                           
+      122 +    """Call the model without SYSTEM_PROMPT's CSV-only instruc
+          +tions.                                                        
+      123 +                                                              
+      124 +    Used by callers (e.g. workflow_v2) whose own prompt alread
+          +y specifies the                                               
+      125 +    exact output format it needs — SYSTEM_PROMPT would otherwi
+          +se override it                                                
+      126 +    and force a "qid,answer" CSV reply regardless of what was 
+          +asked.                                                        
+      127 +    """                                                       
+      128 +    response = _client.chat(                                  
+      129 +        model=MODEL_NAME,                                     
+      130 +        messages=[{"role": "user", "content": user_message}], 
+      131 +        options={"num_predict": NUM_PREDICT, "temperature": te
+          +mperature, "top_p": 1},                                       
+      132 +        think=False,                                          
+      133 +    )                                                         
+      134 +    return final_answer(response["message"]["content"])       
+
+● Now wire it into main.py's workflow_v2_answer, forwarding the temperature
+  kwarg knowledge.py passes:
+
+● Update(main.py)
+  ⎿  Added 1 line, removed 1 line
+       5  from io import StringIO
+       6  from pathlib import Path
+       7  
+       8 -from agents.agent import agent                                 
+       8 +from agents.agent import agent, raw_chat                       
+       9  from agents.search_router import should_search
+      10  from agents.web_search import WebSearchClient, default_web_sear
+          ch
+      11  from agents.web_search_graph import build_web_search_graph
+
+● Update(main.py)
+  ⎿  Added 1 line, removed 1 line
+      144  
+      145  def workflow_v2_answer(row: dict[str, str]) -> tuple[str, floa
+           t, str] | None:
+      146      def call_llm(prompt: str, **kwargs) -> str:
+      147 -        return agent(prompt)                                  
+      147 +        return raw_chat(prompt, temperature=kwargs.get("temper
+          +ature", 0.0))                                                 
+      148  
+      149      result = run_workflow_v2(row.get("question", ""), row, cal
+           l_llm)
+      150      answer = str(result.get("answer") or "N/A").strip().upper(
+           )
+
+● Now I need to update test_main.py since workflow_v2 calls now go through
+  raw_chat instead of agent — let's patch both appropriately per test.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(tests/test_main.py)  ⎿  Added 4 lines
+       92      raise AssertionError(f"agent() should not be called for th
+           is row, got prompt: {prompt!r}")
+       93  
+       94  
+       95 +def _refuse_raw_chat(prompt, **kwargs):                       
+       96 +    raise AssertionError(f"raw_chat() should not be called for
+          + this row, got prompt: {prompt!r}")                           
+       97 +                                                              
+       98 +                                                              
+       99  class MainOutputTest(unittest.TestCase):
+      100      def test_parse_model_answers_handles_preamble_and_colon_ro
+           ws(self):
+      101          output = "dau ra:\nqid,answer  \n5:A\n6, B\n"
+
+● Now update each test that touches workflow_v2's LLM calls:
+
+● Update(tests/test_main.py)
+  ⎿  Added 1 line, removed 1 line
+      127                  encoding="utf-8",
+      128              )
+      129  
+      130 -            with patch.object(main, "agent", _refuse_agent):  
+      130 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", _refuse_raw_chat):              
+      131                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      132  
+      133              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Update(tests/test_main.py)
+  ⎿  Added 2 lines, removed 2 lines
+      149                  encoding="utf-8",
+      150              )
+      151  
+      152 -            def fake_agent(prompt):                           
+      152 +            def fake_raw_chat(prompt, **kwargs):              
+      153                  self.assertIn("Chỉ sử dụng thông tin", prompt)
+      154                  return "B"
+      155  
+      156 -            with patch.object(main, "agent", fake_agent):     
+      156 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", fake_raw_chat):                 
+      157                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      158  
+      159              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Update(tests/test_main.py)
+  ⎿  Added 2 lines, removed 2 lines
+      175                  encoding="utf-8",
+      176              )
+      177  
+      178 -            def fake_agent(prompt):                           
+      178 +            def fake_raw_chat(prompt, **kwargs):              
+      179                  self.assertIn(KNOWLEDGE_MARKER, prompt)
+      180                  return "ANSWER: A\nCONFIDENCE: 0.9"
+      181  
+      182 -            with patch.object(main, "agent", fake_agent):     
+      182 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", fake_raw_chat):                 
+      183                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      184  
+      185              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Now the mixed-prompt tests (single retry / search-context still use agent,
+  knowledge uses raw_chat):
+
+● Update(tests/test_main.py)
+  ⎿  Added 7 lines, removed 6 lines
+      201                  encoding="utf-8",
+      202              )
+      203  
+      204 +            def fake_raw_chat(prompt, **kwargs):              
+      205 +                self.assertIn(KNOWLEDGE_MARKER, prompt)       
+      206 +                return "Tôi không biết."                      
+      207 +                                                              
+      208              def fake_agent(prompt):
+      205 -                if KNOWLEDGE_MARKER in prompt:                
+      206 -                    return "Tôi không biết."                  
+      207 -                if SINGLE_RETRY_MARKER in prompt:             
+      208 -                    return "qid,answer\n1,C\n"                
+      209 -                raise AssertionError(f"unexpected prompt: {pro
+          -mpt!r}")                                                      
+      209 +                self.assertIn(SINGLE_RETRY_MARKER, prompt)    
+      210 +                return "qid,answer\n1,C\n"                    
+      211  
+      211 -            with patch.object(main, "agent", fake_agent):     
+      212 +            with patch.object(main, "agent", fake_agent), patc
+          +h.object(main, "raw_chat", fake_raw_chat):                    
+      213                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      214  
+      215              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Update(tests/test_main.py)
+  ⎿  Added 1 line, removed 1 line
+      231                  encoding="utf-8",
+      232              )
+      233  
+      234 -            with patch.object(main, "agent", return_value="Tôi
+          - không biết."):                                               
+      234 +            with patch.object(main, "agent", return_value="Tôi
+          + không biết."), patch.object(main, "raw_chat", return_value="T
+          +ôi không biết."):                                             
+      235                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      236  
+      237              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Update(tests/test_main.py)
+  ⎿  Added 7 lines, removed 6 lines
+      254              )
+      255              search = StaticWebSearch({"CEO hiện nay là ai?": "
+           Nguồn web: đáp án là C."})
+      256  
+      257 +            def fake_raw_chat(prompt, **kwargs):              
+      258 +                self.assertIn(KNOWLEDGE_MARKER, prompt)       
+      259 +                return "ANSWER: A\nCONFIDENCE: 0.9"           
+      260 +                                                              
+      261              def fake_agent(prompt):
+      258 -                if KNOWLEDGE_MARKER in prompt:                
+      259 -                    return "ANSWER: A\nCONFIDENCE: 0.9"       
+      260 -                if SEARCH_CONTEXT_MARKER in prompt:           
+      261 -                    return "qid,answer\n1,C\n"                
+      262 -                raise AssertionError(f"unexpected prompt: {pro
+          -mpt!r}")                                                      
+      262 +                self.assertIn(SEARCH_CONTEXT_MARKER, prompt)  
+      263 +                return "qid,answer\n1,C\n"                    
+      264  
+      264 -            with patch.object(main, "agent", fake_agent):     
+      265 +            with patch.object(main, "agent", fake_agent), patc
+          +h.object(main, "raw_chat", fake_raw_chat):                    
+      266                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=search)
+      267  
+      268              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Update(tests/test_main.py)
+  ⎿  Added 7 lines, removed 6 lines
+      285              )
+      286              search = StaticWebSearch({"CEO hiện nay là ai?": "
+           Nguồn web không đủ để chọn đáp án."})
+      287  
+      288 +            def fake_raw_chat(prompt, **kwargs):              
+      289 +                self.assertIn(KNOWLEDGE_MARKER, prompt)       
+      290 +                return "ANSWER: A\nCONFIDENCE: 0.9"           
+      291 +                                                              
+      292              def fake_agent(prompt):
+      289 -                if KNOWLEDGE_MARKER in prompt:                
+      290 -                    return "ANSWER: A\nCONFIDENCE: 0.9"       
+      291 -                if SEARCH_CONTEXT_MARKER in prompt:           
+      292 -                    return "qid,answer\n2,N/A\n"              
+      293 -                raise AssertionError(f"unexpected prompt: {pro
+          -mpt!r}")                                                      
+      293 +                self.assertIn(SEARCH_CONTEXT_MARKER, prompt)  
+      294 +                return "qid,answer\n2,N/A\n"                  
+      295  
+      295 -            with patch.object(main, "agent", fake_agent):     
+      296 +            with patch.object(main, "agent", fake_agent), patc
+          +h.object(main, "raw_chat", fake_raw_chat):                    
+      297                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=search)
+      298  
+      299              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+● Now the progress and BOM tests — both arithmetic-only, add raw_chat refusal
+  too for safety:
+
+● Update(tests/test_main.py)
+  ⎿  Added 1 line, removed 1 line
+      318              )
+      319  
+      320              stderr = io.StringIO()
+      321 -            with patch.object(main, "agent", _refuse_agent), c
+          -ontextlib.redirect_stderr(stderr):                            
+      321 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", _refuse_raw_chat), contextlib.re
+          +direct_stderr(stderr):                                        
+      322                  main.run(
+      323                      input_path=input_path,
+      324                      output_path=output_path,
+
+● Update(tests/test_main.py)
+  ⎿  Added 1 line, removed 1 line
+      341                  encoding="utf-8",
+      342              )
+      343  
+      344 -            with patch.object(main, "agent", _refuse_agent):  
+      344 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", _refuse_raw_chat):              
+      345                  main.run(input_path=input_path, output_path=ou
+           tput_path, search_client=StaticWebSearch({}))
+      346  
+      347              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(tests/test_main_workflow_v2.py)
+  ⎿  Added 1 line, removed 1 line
+      113              encoding="utf-8",
+      114          )
+      115  
+      116 -        with patch.object(main, "agent", return_value="qid,ans
+          -wer\n1,C\n"):                                                 
+      116 +        with patch.object(main, "agent", return_value="qid,ans
+          +wer\n1,C\n"), patch.object(main, "raw_chat", return_value="qid
+          +,answer\n1,C\n"):                                             
+      117              main.run(input_path=input_path, output_path=output
+           _path, search_client=StaticWebSearch({}))
+      118  
+      119          with output_path.open(newline="", encoding="utf-8") as
+            f:
+
+● Now let's run the full suite again.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Same 9 pre-existing failures, all my tests still green. Now rerun the live
+  smoke test against the real Ollama server with raw_chat wired in.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Row 3 (knowledge) now fixed — correctly answers "C" via workflow_v2:knowledge
+  with confidence 1.0. Row 2 (retrieval) still falls back. Let me debug that
+  specifically.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Good news: the system-prompt fix resolved the knowledge task. But I found
+  raw_chat now correctly answers retrieval too — "...Thủ đô của Việt Nam là **Hà
+  Nội**." — the model gets it right in free text. The problem is a separate,
+  structural gap in agents/workflow_v2/retrieval.py: build_retrieval_prompt()
+  never asks the model to map its answer to A/B/C/D. It only asks an open-ended
+  question, so solve_retrieval returns a full sentence as "answer", which
+  main.py's VALID_ANSWERS check always rejects — retrieval can never produce a
+  usable answer in this exam format as currently written.
+
+  Fixing this means threading the row's options into
+  solve_retrieval/build_retrieval_prompt and asking the model to pick a letter —
+  a contract change across retrieval.py, pipeline.py, and their unit tests
+  (bigger than the raw_chat fix, which only swapped the LLM call target).
+
+● User answered Claude's questions:
+  ⎿  · retrieval task không bao giờ trả được đáp án hợp lệ (A/B/C/D) vì prompt 
+     chỉ hỏi mở, không đưa options vào để model chọn chữ. Sửa luôn hay để sau? →
+     Sửa luôn (Recommended)
+  Read 4 files (ctrl+o to expand)
+
+● Update(agents/workflow_v2/retrieval.py)
+  ⎿  Added 1 line
+      3  import os
+      4  import re
+      5  from collections import Counter
+      6 +from typing import Any                                          
+      7  
+      8  RERANK_MODEL_NAME = os.getenv("RERANK_MODEL_NAME", "dengcao/Qwen
+         3-Reranker-4B:Q4_K_M")
+      9  RERANK_PROMPT = """<Instruct>: Đánh giá mức độ liên quan giữa Do
+         cument và Query trên thang điểm từ 0.0 (không liên quan) đến 1.0
+          (rất liên quan).
+
+● Update(agents/workflow_v2/retrieval.py)
+  ⎿  Added 19 lines, removed 3 lines
+      104      return "\n\n".join(f"[Chunk {index + 1}]\n{chunk}" for ind
+           ex, chunk in enumerate(top_chunks))
+      105  
+      106  
+      107 -def build_retrieval_prompt(context: str, question: str) -> str
+          -:                                                             
+      107 +def row_options(row: dict[str, Any]) -> dict[str, Any]:       
+      108 +    if isinstance(row.get("options"), dict):                  
+      109 +        return row["options"]                                 
+      110 +    return {key: row.get(key, "") for key in ("A", "B", "C", "
+          +D") if key in row}                                            
+      111 +                                                              
+      112 +                                                              
+      113 +def build_retrieval_prompt(context: str, question: str, option
+          +s: dict[str, Any] | None = None) -> str:                      
+      114 +    options = options or {}                                   
+      115 +    options_text = "\n".join(f"{key}. {value}" for key, value 
+          +in options.items())                                           
+      116 +    options_block = f"\nCác lựa chọn:\n{options_text}\n" if op
+          +tions_text else ""                                            
+      117 +    answer_instruction = (                                    
+      118 +        "Chỉ trả lời bằng đúng một chữ cái đáp án (A, B, C hoặ
+          +c D) dựa trên đoạn thông tin trên."                           
+      119 +        if options_text                                       
+      120 +        else "Hãy trả lời câu hỏi dựa trên đoạn thông tin trên
+          +."                                                            
+      121 +    )                                                         
+      122      return f"""Dựa vào đoạn thông tin dưới đây, hãy trả lời câ
+           u hỏi.
+      123  Chỉ sử dụng thông tin trong đoạn văn, không thêm kiến thức bên
+            ngoài.
+      124  
+     ...
+      127  
+      128  Câu hỏi:
+      129  {question}
+      130 +{options_block}                                               
+      131 +{answer_instruction}                                          
+      132  """
+      133  
+      134  
+      119 -def solve_retrieval(text: str, call_llm_fn) -> dict:          
+      135 +def solve_retrieval(text: str, row: dict[str, Any], call_llm_f
+          +n) -> dict:                                                   
+      136      context, question = parse_retrieval_input(text)
+      137      chunks = chunk_context(context)
+      138      top10 = bm25_retrieve(question, chunks, top_k=10)
+      139      top3 = rerank(question, top10, top_n=3)
+      124 -    prompt = build_retrieval_prompt(build_retrieval_context(to
+          -p3), question)                                                
+      140 +    prompt = build_retrieval_prompt(build_retrieval_context(to
+          +p3), question, row_options(row))                              
+      141      return {"answer": call_llm_fn(prompt), "confidence": 0.8}
+
+● Update(agents/workflow_v2/pipeline.py)
+  ⎿  Added 1 line, removed 1 line
+      11  def run_pipeline(text: str, row: dict[str, Any], call_llm_fn) -
+          > dict:
+      12      task = classify(text, row)
+      13      if task == "retrieval":
+      14 -        result = solve_retrieval(text, call_llm_fn)            
+      14 +        result = solve_retrieval(text, row, call_llm_fn)       
+      15      elif task == "calculation":
+      16          result = solve_calculation(text, row, call_llm_fn)
+      17      else:
+
+● Now update the unit tests for the new contract:
+
+● Update(tests/test_workflow_v2_retrieval.py)
+  ⎿  Added 14 lines, removed 4 lines
+      24      assert "Q?" in prompt
+      25  
+      26  
+      27 -def test_solve_retrieval_calls_llm_with_ranked_context():      
+      27 +def test_build_retrieval_prompt_includes_options_and_asks_for_a
+         +_letter():                                                     
+      28 +    prompt = build_retrieval_prompt("ctx", "Q?", {"A": "Huế", "
+         +B": "Hà Nội"})                                                 
+      29 +    assert "Các lựa chọn:" in prompt                           
+      30 +    assert "A. Huế" in prompt                                  
+      31 +    assert "B. Hà Nội" in prompt                               
+      32 +    assert "một chữ cái đáp án" in prompt                      
+      33 +                                                               
+      34 +                                                               
+      35 +def test_solve_retrieval_calls_llm_with_ranked_context_and_opti
+         +ons():                                                         
+      36      calls = []
+      37  
+      38      def fake_llm(prompt, **kwargs):
+      39          calls.append(prompt)
+      32 -        return "Hà Nội"                                        
+      40 +        return "B"                                             
+      41  
+      42      text = "Đoạn thông tin: Hà Nội là thủ đô Việt Nam và nằm ở 
+          miền Bắc.\n\nHuế từng là kinh đô.\n\nCâu hỏi: Thủ đô Việt Nam l
+          à gì?"
+      35 -    result = solve_retrieval(text, fake_llm)                   
+      36 -    assert result["answer"] == "Hà Nội"                        
+      43 +    row = {"A": "Huế", "B": "Hà Nội"}                          
+      44 +    result = solve_retrieval(text, row, fake_llm)              
+      45 +    assert result["answer"] == "B"                             
+      46      assert result["confidence"] == 0.8
+      47      assert "Hà Nội là thủ đô" in calls[0]
+      48 +    assert "B. Hà Nội" in calls[0]                             
+
+● Update(tests/test_workflow_v2_pipeline.py)
+  ⎿  Added 2 lines, removed 2 lines
+       3  
+       4  def test_pipeline_routes_retrieval_before_calculation():
+       5      text = "Đoạn thông tin: 2 + 2 = 4 trong đoạn này.\n\nCâu hỏ
+          i: Kết quả là gì?"
+       6 -    result = run_pipeline(text, {"A": "4", "B": "5"}, lambda pr
+         -ompt, **kwargs: "4")                                           
+       6 +    result = run_pipeline(text, {"A": "4", "B": "5"}, lambda pr
+         +ompt, **kwargs: "A")                                           
+       7      assert result["task"] == "retrieval"
+       8 -    assert result["answer"] == "4"                             
+       8 +    assert result["answer"] == "A"                             
+       9      assert result["confidence"] == 0.8
+      10  
+      11  
+
+● Now also need to update the retrieval test I wrote in test_main.py since the
+  prompt now includes the options block and asks for a letter — that test
+  already returns "B" which is still valid. Let's run the full suite.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Same 9 pre-existing unrelated failures, 45 passed (1 more than before since I
+  added a new test). Now rerun the live smoke test for the final check.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All 3 rows now correct end-to-end, all routed cleanly through workflow_v2 with
+  no fallbacks needed: calculation→C(42), retrieval→B(Hà Nội),
+  knowledge→C(Paris). Let's clean up the scratch files and finalize.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Tóm tắt
+
+  Đã làm sạch main.py — chỉ còn workflow_v2:
+  - Xóa toàn bộ v1: batch-CSV LLM call, agents/calculator.py,
+  agents/subject_router.py (đã xóa file + test tương ứng), domain retry.
+  - Mỗi row giờ đi qua: workflow_v2_answer (retrieval/calculation/knowledge) →
+  fallback single_retry nếu không ra đáp án hợp lệ → web search nếu câu hỏi
+  volatile (giữ theo yêu cầu).
+  - main.py ngắn hơn đáng kể, một luồng duy nhất, dễ đọc.
+
+  2 bug phát hiện qua live smoke-test (không phải lỗi refactor, mà là lỗi 
+  pre-existing bị "lộ ra" vì giờ workflow_v2 chạy thật cho mọi câu hỏi) — đã fix
+  theo xác nhận của bạn:
+  1. agent() luôn nhồi prompts/system_prompt.md (ép format CSV qid,answer của
+  v1) đè lên mọi prompt, khiến knowledge/retrieval của workflow_v2 không bao giờ
+  nhận đúng format cần. → Thêm raw_chat() trong agents/agent.py (gọi Ollama
+  không kèm system prompt), dùng làm call_llm_fn cho workflow_v2.
+  2. build_retrieval_prompt không đưa options A/B/C/D vào nên model trả lời tự
+  do, không bao giờ khớp VALID_ANSWERS. → Thêm options + yêu cầu trả lời 1 chữ
+  cái vào retrieval.py, cập nhật solve_retrieval/run_pipeline nhận thêm row.
+
+  Verify:
+  - Test suite: 45 passed, đúng 9 fail pre-existing không liên quan
+  (test_agent.py/test_docker_config.py/test_web_search_routing.py — thuộc các
+  thay đổi khác đang dở của bạn).
+  - Live smoke test với Ollama thật, 3 câu hỏi (1 mỗi loại task): cả 3 đều đúng
+  và đều đi qua workflow_v2:* trực tiếp, không cần fallback nào.
+
+✻ Worked for 19m 1s
+
+※ recap: Cleaned up Atlas_Agent's pipeline to use only workflow_v2 (calculation/retrieval/knowledge), fixing prompt bugs along the way. All tests pass and a live smoke test confirms correct answers; next step is up to you. (disable recaps in /config)
+
+❯ repo đó chỉ nhận file csv thôi đúng ko hãy thêm cái là nhận file json nữa đi  
+  và trong các prompts cũng thêm json cho LLM chạy tốt hơn                      
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● User answered Claude's questions:
+  ⎿  · File JSON input nên có cấu trúc thế nào? (hiện CSV đang dùng cột qid, 
+     question, choices hoặc A/B/C/D) → (notes only)
+     · "Thêm json cho LLM chạy tốt hơn" trong prompts nghĩa là gì? → Đổi format 
+     câu hỏi gởi LLM sang JSON (Recommended)
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(agents/workflow_v2/knowledge.py)
+  ⎿  Added 1 line
+      1  from __future__ import annotations
+      2  
+      3  from collections import Counter
+      4 +import json                                                     
+      5  import re
+      6  from typing import Any
+      7  
+
+● Update(agents/workflow_v2/knowledge.py)
+  ⎿  Added 1 line, removed 1 line
+      26  
+      27  
+      28  def build_knowledge_prompt(question: str, options: dict[str, An
+          y]) -> str:
+      29 -    options_text = "\n".join(f"{key}. {value}" for key, value i
+         -n options.items())                                             
+      29 +    options_text = json.dumps(options, ensure_ascii=False)     
+      30      return KNOWLEDGE_PROMPT.format(question=question, options_t
+          ext=options_text)
+      31  
+      32  
+
+● Now retrieval.py's options block:
+
+● Update(agents/workflow_v2/retrieval.py)
+  ⎿  Added 1 line
+      1  from __future__ import annotations
+      2  
+      3 +import json                                                     
+      4  import os
+      5  import re
+      6  from collections import Counter
+
+● Update(agents/workflow_v2/retrieval.py)  ⎿  Added 1 line, removed 1 line
+      113  
+      114  def build_retrieval_prompt(context: str, question: str, option
+           s: dict[str, Any] | None = None) -> str:
+      115      options = options or {}
+      116 -    options_text = "\n".join(f"{key}. {value}" for key, value 
+          -in options.items())                                           
+      116 +    options_text = json.dumps(options, ensure_ascii=False) if 
+          +options else ""                                               
+      117      options_block = f"\nCác lựa chọn:\n{options_text}\n" if op
+           tions_text else ""
+      118      answer_instruction = (
+      119          "Chỉ trả lời bằng đúng một chữ cái đáp án (A, B, C hoặ
+           c D) dựa trên đoạn thông tin trên."
+
+● Update the matching test in test_workflow_v2_retrieval.py for the new JSON
+  options format:
+
+● Update(tests/test_workflow_v2_retrieval.py)
+  ⎿  Added 3 lines, removed 3 lines
+      24      assert "Q?" in prompt
+      25  
+      26  
+      27 -def test_build_retrieval_prompt_includes_options_and_asks_for_a
+         -_letter():                                                     
+      27 +def test_build_retrieval_prompt_includes_options_as_json_and_as
+         +ks_for_a_letter():                                             
+      28      prompt = build_retrieval_prompt("ctx", "Q?", {"A": "Huế", "
+          B": "Hà Nội"})
+      29      assert "Các lựa chọn:" in prompt
+      30 -    assert "A. Huế" in prompt                                  
+      31 -    assert "B. Hà Nội" in prompt                               
+      30 +    assert '"A": "Huế"' in prompt                              
+      31 +    assert '"B": "Hà Nội"' in prompt                           
+      32      assert "một chữ cái đáp án" in prompt
+      33  
+      34  
+
+● Update(tests/test_workflow_v2_retrieval.py)
+  ⎿  Added 1 line, removed 1 line
+      45      assert result["answer"] == "B"
+      46      assert result["confidence"] == 0.8
+      47      assert "Hà Nội là thủ đô" in calls[0]
+      48 -    assert "B. Hà Nội" in calls[0]                             
+      48 +    assert '"B": "Hà Nội"' in calls[0]                         
+
+● Now let's tackle main.py: add JSON input file support and switch
+  rows_to_prompt to JSON.
+
+  Read 1 file (ctrl+o to expand)
+
+● Now implementing all the changes:
+
+● Update(main.py)
+  ⎿  Added 1 line
+      1  import csv
+      2 +import json                                                     
+      3  import os
+      4  import re
+      5  import sys
+
+● Update(main.py)
+  ⎿  Added 8 lines, removed 7 lines
+      14  
+      15  
+      16  def find_default_input() -> Path:
+      17 -    """Find default CSV input file in data directory."""       
+      17 +    """Find default CSV or JSON input file in data directory.""
+         +"                                                              
+      18      if "INPUT_CSV" in os.environ:
+      19          return Path(os.getenv("INPUT_CSV"))
+      20  
+      21      data_dir = BASE_DIR / "data"
+      22 -    # Look for public_test or private_test CSV files           
+      23 -    for name in ["public_test*.csv", "private_test*.csv"]:     
+      22 +    # Look for public_test or private_test CSV/JSON files      
+      23 +    for name in ["public_test*.csv", "public_test*.json", "priv
+         +ate_test*.csv", "private_test*.json"]:                         
+      24          files = list(data_dir.glob(name))
+      25          if files:
+      26              return files[0]  # Return first match
+      27  
+      28 -    # Fallback to any CSV                                      
+      29 -    files = list(data_dir.glob("*.csv"))                       
+      30 -    if files:                                                  
+      31 -        return files[0]                                        
+      28 +    # Fallback to any CSV or JSON file                         
+      29 +    for pattern in ["*.csv", "*.json"]:                        
+      30 +        files = list(data_dir.glob(pattern))                   
+      31 +        if files:                                              
+      32 +            return files[0]                                    
+      33  
+      34      # Final fallback
+      35      return BASE_DIR / "data" / "public_test.csv"
+
+● Now normalize_row to accept a real list for choices (from JSON), plus a
+  load_source_rows reader and rows_to_prompt rewritten to JSON:
+
+● Update(main.py)
+  ⎿  Added 40 lines, removed 17 lines
+       71  
+       72  
+       73  def normalize_row(row: dict[str, str]) -> dict[str, str]:
+       74 -    """Normalize row and convert choices string to A,B,C,D for
+          -mat if needed."""                                             
+       74 +    """Normalize row and convert choices (JSON list or JSON-st
+          +ring) to A,B,C,D format if needed."""                         
+       75      normalized = {(key or "").lstrip(""): value for key, value
+            in row.items()}
+       76  
+       77 -    # If choices column exists, convert to A,B,C,D format     
+       78 -    if 'choices' in normalized and normalized['choices']:     
+       77 +    choices = normalized.get("choices")                       
+       78 +    if isinstance(choices, str) and choices:                  
+       79          try:
+       80 -            # Parse choices as JSON array or eval Python list 
+       81 -            choices_str = normalized['choices'].strip()       
+       80 +            choices_str = choices.strip()                     
+       81              if choices_str.startswith('[') and choices_str.end
+           swith(']'):
+       82                  import ast
+       83                  choices = ast.literal_eval(choices_str)
+       85 -                normalized['A'] = choices[0] if len(choices) >
+          - 0 else ''                                                    
+       86 -                normalized['B'] = choices[1] if len(choices) >
+          - 1 else ''                                                    
+       87 -                normalized['C'] = choices[2] if len(choices) >
+          - 2 else ''                                                    
+       88 -                normalized['D'] = choices[3] if len(choices) >
+          - 3 else ''                                                    
+       89 -        except (ValueError, SyntaxError, IndexError):         
+       90 -            pass  # Keep original format if parsing fails     
+       84 +        except (ValueError, SyntaxError):                     
+       85 +            choices = None                                    
+       86  
+       87 +    if isinstance(choices, list):                             
+       88 +        normalized['A'] = choices[0] if len(choices) > 0 else 
+          +''                                                            
+       89 +        normalized['B'] = choices[1] if len(choices) > 1 else 
+          +''                                                            
+       90 +        normalized['C'] = choices[2] if len(choices) > 2 else 
+          +''                                                            
+       91 +        normalized['D'] = choices[3] if len(choices) > 3 else 
+          +''                                                            
+       92 +                                                              
+       93 +    if normalized.get("qid") is not None:                     
+       94 +        normalized["qid"] = str(normalized["qid"])            
+       95 +                                                              
+       96      return normalized
+       97  
+       98  
+       99 +def load_source_rows(input_path: Path) -> list[dict[str, str]]
+          +:                                                             
+      100 +    """Load rows from a CSV file or a JSON array of {qid, ques
+          +tion, choices} objects."""                                    
+      101 +    if input_path.suffix.lower() == ".json":                  
+      102 +        with input_path.open(encoding="utf-8-sig") as f:      
+      103 +            records = json.load(f)                            
+      104 +        return [normalize_row(record) for record in records]  
+      105 +                                                              
+      106 +    with input_path.open(newline="", encoding="utf-8-sig") as 
+          +f:                                                            
+      107 +        return [normalize_row(row) for row in csv.DictReader(f
+          +)]                                                            
+      108 +                                                              
+      109 +                                                              
+      110 +def row_choices(row: dict[str, str]) -> list[str]:            
+      111 +    choices = row.get("choices")                              
+      112 +    if isinstance(choices, list):                             
+      113 +        return [str(c) for c in choices]                      
+      114 +    return [row[key] for key in ("A", "B", "C", "D") if row.ge
+          +t(key)]                                                       
+      115 +                                                              
+      116 +                                                              
+      117  def rows_to_prompt(rows: list[dict[str, str]]) -> str:
+       96 -    buffer = StringIO()                                       
+       97 -    writer = csv.DictWriter(buffer, fieldnames=FIELDNAMES)    
+       98 -    writer.writeheader()                                      
+       99 -    for row in rows:                                          
+      100 -        writer.writerow({field: row.get(field, "") for field i
+          -n FIELDNAMES})                                                
+      101 -    return buffer.getvalue()                                  
+      118 +    """Render rows as a JSON array — more reliable for the LLM
+          + to parse than CSV                                            
+      119 +    when question/choice text itself contains commas or quotes
+          +."""                                                          
+      120 +    payload = [                                               
+      121 +        {"qid": row.get("qid", ""), "question": row.get("quest
+          +ion", ""), "choices": row_choices(row)}                       
+      122 +        for row in rows                                       
+      123 +    ]                                                         
+      124 +    return json.dumps(payload, ensure_ascii=False)            
+      125  
+      126  
+      127  def print_progress(done: int, total: int, width: int = 30) -> 
+           None:
+
+● Now remove the now-unused FIELDNAMES constant and update run() to use
+  load_source_rows:
+
+● Update(main.py)
+  ⎿  Removed 1 line
+      41  VALID_ANSWERS = {"A", "B", "C", "D", "N/A"}
+      42  ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b(A|B|C|D|
+          N/A)\b", re.IGNORECASE | re.DOTALL)
+      43  ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*(A|B|C|D|N/A)\s*$
+          ", re.IGNORECASE)
+      44 -FIELDNAMES = ["qid", "question", "choices"]                    
+      44  
+      45  SINGLE_RETRY_CONFIDENCE = 0.55
+      46  SEARCH_CONFIDENCE = 0.40
+
+● Update(main.py)
+  ⎿  Added 1 line, removed 3 lines
+      281      audit_output_path: Path | None = None,
+      282      show_progress: bool = False,
+      283  ) -> Path:
+      284 -    with input_path.open(newline="", encoding="utf-8-sig") as 
+          -f:                                                            
+      285 -        source_rows = [normalize_row(row) for row in csv.DictR
+          -eader(f)]                                                     
+      286 -        source_rows = [row for row in source_rows if row.get("
+          -qid")]                                                        
+      284 +    source_rows = [row for row in load_source_rows(input_path)
+          + if row.get("qid")]                                           
+      285  
+      286      search_client = search_client or default_web_search()
+      287  
+
+● Update(main.py)
+  ⎿  Added 1 line
+      80              if choices_str.startswith('[') and choices_str.ends
+          with(']'):
+      81                  import ast
+      82                  choices = ast.literal_eval(choices_str)
+      83 +                normalized["choices"] = choices                
+      84          except (ValueError, SyntaxError):
+      85              choices = None
+      86  
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Still the same 9 pre-existing unrelated failures, all green elsewhere. Now
+  let's add a test confirming JSON input files actually work end-to-end.
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(tests/test_main.py)
+  ⎿  Added 29 lines
+      347              with output_path.open(newline="", encoding="utf-8"
+           ) as f:
+      348                  self.assertEqual(list(csv.DictReader(f)), [{"q
+           id": "1", "answer": "B"}])
+      349  
+      350 +    def test_run_reads_json_input_file_with_choices_array(self
+          +):                                                            
+      351 +        with tempfile.TemporaryDirectory() as tmp:            
+      352 +            tmp_path = Path(tmp)                              
+      353 +            input_path = tmp_path / "public_test.json"        
+      354 +            output_path = tmp_path / "pred.csv"               
+      355 +            input_path.write_text(                            
+      356 +                json.dumps(                                   
+      357 +                    [{"qid": "test_0001", "question": "Tính 1 
+          ++ 1", "choices": ["1", "2", "3", "4"]}],                      
+      358 +                    ensure_ascii=False,                       
+      359 +                ),                                            
+      360 +                encoding="utf-8",                             
+      361 +            )                                                 
+      362  
+      363 +            with patch.object(main, "agent", _refuse_agent), p
+          +atch.object(main, "raw_chat", _refuse_raw_chat):              
+      364 +                main.run(input_path=input_path, output_path=ou
+          +tput_path, search_client=StaticWebSearch({}))                 
+      365 +                                                              
+      366 +            with output_path.open(newline="", encoding="utf-8"
+          +) as f:                                                       
+      367 +                self.assertEqual(list(csv.DictReader(f)), [{"q
+          +id": "test_0001", "answer": "B"}])                            
+      368 +                                                              
+      369 +    def test_rows_to_prompt_renders_json_array_with_choices(se
+          +lf):                                                          
+      370 +        row = {"qid": "1", "question": "Câu hỏi có, dấu phẩy?"
+          +, "A": "X", "B": "Y"}                                         
+      371 +                                                              
+      372 +        prompt = main.rows_to_prompt([row])                   
+      373 +                                                              
+      374 +        self.assertEqual(                                     
+      375 +            json.loads(prompt),                               
+      376 +            [{"qid": "1", "question": "Câu hỏi có, dấu phẩy?",
+          + "choices": ["X", "Y"]}],                                     
+      377 +        )                                                     
+      378 +                                                              
+      379 +                                                              
+      380  if __name__ == "__main__":
+      381      unittest.main()
+
+● Need to add the json import at the top of the test file:
+
+● Update(tests/test_main.py)
+  ⎿  Added 1 line
+      1  import csv
+      2  import contextlib
+      3  import io
+      4 +import json                                                     
+      5  import sys
+      6  import tempfile
+      7  import types
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All 13 pass. Now full suite + live smoke test to confirm everything
+  end-to-end.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Same 9 pre-existing, 47 passed. Now live end-to-end smoke test with an actual
+  .json input file against the real Ollama server.
+
+  Ran 2 shell commands (ctrl+o to expand)
+● All 3 correct via JSON input file, qid preserved as the "test_0001"-style
+  string. Clean up scratch files.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Tóm tắt
+
+  Input JSON:
+  - main.py giờ nhận cả .csv và .json. File JSON là 1 array các object {"qid": 
+  "test_0001", "question": "...", "choices": ["A","B","C","D"]} —
+  find_default_input() tự tìm cả public_test*.json/private_test*.json,
+  load_source_rows() route theo extension, normalize_row() xử lý choices là list
+  thật (JSON) hoặc list-string (CSV cell cũ).
+
+  Prompt JSON hóa (cho LLM chạy ổn hơn):
+  - rows_to_prompt() (dùng trong single_retry + search-context) đổi từ CSV row
+  sang JSON object — tránh lỗi khi câu hỏi/đáp án chứa dấu phẩy. Output
+  instruction vẫn yêu cầu trả CSV qid,answer nên parser không đổi.
+  - agents/workflow_v2/knowledge.py và retrieval.py: phần "Các lựa chọn:" giờ là
+  JSON object ({"A": "...", "B": "..."}) thay vì text dòng.
+  - Đồng thời sửa luôn 1 bug có sẵn: trước đây nếu input chỉ có cột A/B/C/D
+  (không có choices), prompt gửi cho single_retry/search-context bị thiếu hẳn
+  đáp án — giờ row_choices() tự build lại list từ A/B/C/D.
+
+  Verify:
+  - Test suite: 47 passed, đúng 9 fail pre-existing không liên quan (như trước).
+  - Live smoke test thật với Ollama: file .json (qid dạng test_0001) chạy đúng
+  cả 3 task workflow_v2 (calculation/retrieval/knowledge), kết quả đúng 100%.
+
+✻ Cooked for 6m 15s
+
+※ recap: Refactored Atlas Agent's pipeline to use only workflow_v2, plus added JSON input/prompt support — all changes tested and verified live against Ollama, everything passing except 9 pre-existing unrelated failures. Next: awaiting your review or further requests. (disable recaps in /config)
+
+❯ /add-dir                                                                      
+  ⎿  Did not add a working directory.

@@ -116,3 +116,19 @@ def extract_confidences(response: ollama.ChatResponse, answers: dict[str, str]) 
 def agent(user_message: str) -> str:
     response = chat_once(user_message)
     return final_answer(response["message"]["content"])
+
+
+def raw_chat(user_message: str, temperature: float = 0.0) -> str:
+    """Call the model without SYSTEM_PROMPT's CSV-only instructions.
+
+    Used by callers (e.g. workflow_v2) whose own prompt already specifies the
+    exact output format it needs — SYSTEM_PROMPT would otherwise override it
+    and force a "qid,answer" CSV reply regardless of what was asked.
+    """
+    response = _client.chat(
+        model=MODEL_NAME,
+        messages=[{"role": "user", "content": user_message}],
+        options={"num_predict": NUM_PREDICT, "temperature": temperature, "top_p": 1},
+        think=False,
+    )
+    return final_answer(response["message"]["content"])

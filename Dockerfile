@@ -7,13 +7,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
+    && apt-get install -y --no-install-recommends curl dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
-RUN chmod +x /app/entrypoints.sh
+RUN dos2unix /app/entrypoints.sh && chmod +x /app/entrypoints.sh
 
 ENTRYPOINT ["/app/entrypoints.sh"]

@@ -82,8 +82,23 @@ class DuckDuckGoHtmlSearch:
             return WebSearchResult(query=query, context="", enabled=True, source="duckduckgo_search")
 
 
+def is_online(host="1.1.1.1", port=53, timeout=0.5) -> bool:
+    import socket
+    try:
+        socket.setdefaulttimeout(timeout)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((host, port))
+        return True
+    except socket.error:
+        return False
+
+
 def default_web_search() -> WebSearchClient:
     if os.getenv("WEB_SEARCH_ENABLED", "true").lower() in {"0", "false", "no", "off"}:
+        return DisabledWebSearch()
+    if not is_online():
+        import sys
+        print("Warning: No internet connection detected. Disabling web search.", file=sys.stderr)
         return DisabledWebSearch()
     endpoint = os.getenv("WEB_SEARCH_ENDPOINT")
     if endpoint:
@@ -92,6 +107,7 @@ def default_web_search() -> WebSearchClient:
     if provider == "duckduckgo":
         return DuckDuckGoHtmlSearch()
     return DisabledWebSearch()
+
 
 
 def build_search_tool(search_client: WebSearchClient):

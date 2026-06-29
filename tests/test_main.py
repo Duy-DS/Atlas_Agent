@@ -8,7 +8,13 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-sys.modules.setdefault("ollama", types.SimpleNamespace(chat=lambda **kwargs: None))
+class FakeClient:
+    def __init__(self, *args, **kwargs):
+        pass
+    def chat(self, *args, **kwargs):
+        return {"message": {"content": ""}}
+
+sys.modules.setdefault("ollama", types.SimpleNamespace(Client=FakeClient, chat=lambda **kwargs: None))
 
 
 class _FakeTool:
@@ -75,6 +81,13 @@ from agents.web_search import StaticWebSearch
 
 
 class MainOutputTest(unittest.TestCase):
+    def setUp(self):
+        self.patcher = patch.object(main, "extract_search_keywords", lambda q: q)
+        self.patcher.start()
+
+    def tearDown(self):
+        self.patcher.stop()
+
     def test_build_predictions_keeps_valid_answers_and_marks_invalid_or_missing_na(self):
         questions = "qid,question,A,B,C,D\n1,one,a,b,c,d\n2,two,a,b,c,d\n3,three,a,b,c,d\n"
         model_output = "qid,answer\n1,A\n2,E\n"
@@ -104,7 +117,7 @@ class MainOutputTest(unittest.TestCase):
             )
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if "3,three" in prompt:
                     return "qid,answer\n3,C\n"
@@ -151,7 +164,7 @@ class MainOutputTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 if "3,three" in prompt:
                     return "qid,answer\n3,C\n"
                 return "qid,answer\n1,A\n2,B\n"
@@ -185,7 +198,7 @@ class MainOutputTest(unittest.TestCase):
             )
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if len(calls) == 1:
                     return "qid,answer\n1,A\n2,E\n"
@@ -224,7 +237,7 @@ class MainOutputTest(unittest.TestCase):
         row = {"qid": "4", "question": "one", "A": "a", "B": "b", "C": "c", "D": "d"}
         calls = []
 
-        def fake_agent(prompt):
+        def fake_agent(prompt, *args, **kwargs):
             calls.append(prompt)
             return "dau ra:\nqid,answer\n1,B"
 
@@ -279,7 +292,7 @@ class MainOutputTest(unittest.TestCase):
 
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if len(calls) == 1:
                     return "qid,answer\n1,A\n"
@@ -310,7 +323,7 @@ class MainOutputTest(unittest.TestCase):
             )
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 return "qid,answer\n1,A\n"
 
@@ -340,7 +353,7 @@ class MainOutputTest(unittest.TestCase):
             )
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if "domain Toán học" in prompt:
                     return "qid,answer\n1,A\n"
@@ -370,7 +383,7 @@ class MainOutputTest(unittest.TestCase):
             )
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if "domain Toán học" in prompt:
                     return "qid,answer\n1,B\n"
@@ -404,7 +417,7 @@ class MainOutputTest(unittest.TestCase):
             search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web: đáp án là C."})
             calls = []
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 calls.append(prompt)
                 if "Nguon canh web" in prompt or "Ngu canh web" in prompt:
                     return "qid,answer\n1,C\n"
@@ -434,7 +447,7 @@ class MainOutputTest(unittest.TestCase):
             )
             search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web không đủ để chọn đáp án."})
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 if "Nguồn web không đủ" in prompt:
                     return "qid,answer\n2,N/A\n"
                 return "qid,answer\n2,C\n"
@@ -463,7 +476,7 @@ class MainOutputTest(unittest.TestCase):
             )
             search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web: đáp án là C."})
 
-            def fake_agent(prompt):
+            def fake_agent(prompt, *args, **kwargs):
                 if "Nguồn web" in prompt:
                     return "qid,answer\n1,C\n"
                 return "qid,answer\n1,A\n"

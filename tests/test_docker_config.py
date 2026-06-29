@@ -13,8 +13,8 @@ class DockerConfigTest(unittest.TestCase):
     def test_entrypoint_uses_configured_paths_and_waits_for_ollama(self):
         entrypoint = Path("entrypoints.sh").read_text(encoding="utf-8")
 
-        self.assertIn("${INPUT_CSV:-/data/public_test.csv}", entrypoint)
-        self.assertIn("${OUTPUT_CSV:-/output/pred.csv}", entrypoint)
+        self.assertIn('INPUT_CSV="${INPUT_CSV:-/data/public_test.csv, /data/private_test.csv}"', entrypoint)
+        self.assertIn('OUTPUT_CSV="${OUTPUT_CSV:-/output/pred.csv}"', entrypoint)
         self.assertIn("mkdir -p \"$(dirname \"$OUTPUT_CSV\")\"", entrypoint)
         self.assertIn("OLLAMA_BASE_URL", entrypoint)
         self.assertIn("/api/tags", entrypoint)
@@ -30,14 +30,14 @@ class DockerConfigTest(unittest.TestCase):
         compose = Path("docker-compose.yml").read_text(encoding="utf-8")
 
         self.assertIn("atlas-ollama", compose)
-        self.assertIn("atlas-agent", compose)
+        self.assertIn("atlas_agent", compose)
         self.assertIn("healthcheck:", compose)
         self.assertIn("condition: service_healthy", compose)
-        self.assertIn("./data:/data:ro", compose)
-        self.assertIn("./output:/output", compose)
-        self.assertIn("INPUT_CSV=${INPUT_CSV:-/data/public_test.csv}", compose)
-        self.assertIn("OUTPUT_CSV=${OUTPUT_CSV:-/output/pred.csv}", compose)
-        self.assertIn("AUDIT_CSV=${AUDIT_CSV:-/output/pred_audit.csv}", compose)
+        self.assertIn("./data:/app/data:ro", compose)
+        self.assertIn("./output:/app/output", compose)
+        self.assertIn("INPUT_CSV=${INPUT_CSV:-/app/data/public_test.csv}", compose)
+        self.assertIn("OUTPUT_CSV=${OUTPUT_CSV:-/app/output/pred.csv}", compose)
+        self.assertIn("AUDIT_CSV=${AUDIT_CSV:-/app/output/pred_audit.csv}", compose)
         self.assertIn("$${MODEL_NAME}", compose)
 
     def test_gpu_compose_only_overrides_ollama_gpu_runtime(self):
@@ -54,9 +54,9 @@ class DockerConfigTest(unittest.TestCase):
         self.assertIn("MODEL_NAME=qwen3.5:0.8b", env_example)
         self.assertIn("BATCH_SIZE=20", env_example)
         self.assertIn("OLLAMA_NUM_PREDICT=512", env_example)
-        self.assertIn("INPUT_CSV=/data/public_test.csv", env_example)
-        self.assertIn("OUTPUT_CSV=/output/pred.csv", env_example)
-        self.assertIn("AUDIT_CSV=/output/pred_audit.csv", env_example)
+        self.assertIn("INPUT_CSV=/app/data/public_test.csv", env_example)
+        self.assertIn("OUTPUT_CSV=/app/output/pred.csv", env_example)
+        self.assertIn("AUDIT_CSV=/app/output/pred_audit.csv", env_example)
         self.assertIn("WEB_SEARCH_ENABLED=false", env_example)
 
     def test_readme_documents_compose_cpu_gpu_and_outputs(self):

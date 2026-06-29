@@ -14,9 +14,9 @@ from agents.web_search import WebSearchClient, default_web_search
 from agents.web_search_graph import build_web_search_graph
 
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
-PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
-AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
+PUBLIC_QUESTION = Path(os.getenv("INPUT_CSV", BASE_DIR / "data" / "public_test.csv"))
+PREDICTION_OUTPUT = Path(os.getenv("OUTPUT_CSV", BASE_DIR / "output" / "pred.csv"))
+AUDIT_OUTPUT = Path(os.getenv("AUDIT_CSV", BASE_DIR / "output" / "pred_audit.csv"))
 VALID_ANSWERS = set("ABCDEFGHIJKLMNOPQRSTUVWXYZ").union({"N/A"})
 ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b([A-Z]|N/A)\b", re.IGNORECASE | re.DOTALL)
 ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*([A-Z]|N/A)\s*$", re.IGNORECASE)
@@ -68,10 +68,24 @@ def parse_model_answers(model_output: str) -> dict[str, str]:
 
 def build_predictions(question_csv: str, model_output: str) -> list[dict[str, str]]:
     answers = parse_model_answers(model_output)
-    return [
-        {"qid": qid, "answer": answers.get(qid, "N/A")}
-        for qid in question_ids(question_csv)
-    ]
+    choices_by_qid = {}
+    try:
+        reader = csv.DictReader(StringIO(question_csv.lstrip("\ufeff")))
+        for row in reader:
+            qid = row.get("qid")
+            if qid:
+                choices = {k for k in row.keys() if len(k) == 1 and k.isupper() and row.get(k)}
+                choices_by_qid[qid] = choices
+    except Exception:
+        pass
+
+    results = []
+    for qid in question_ids(question_csv):
+        ans = answers.get(qid, "N/A")
+        if qid in choices_by_qid and ans != "N/A" and ans not in choices_by_qid[qid]:
+            ans = "N/A"
+        results.append({"qid": qid, "answer": ans})
+    return results
 
 
 def normalize_row(row: dict[str, str]) -> dict[str, str]:
@@ -163,174 +177,25 @@ def extract_single_answer(model_output: str) -> str:
 
 
 
-def force_single_answer_prompt(row: dict[str, str]) -> str:
-    return (
-        "Chi tra ve dung 2 dong CSV: header qid,answer va mot dong dap an cho qid nay. "
-        "Khong phan tich. answer chi la A, B, C... hoac N/A.\n\n"
-        + rows_to_prompt([row])
-    )
-
-import csv
-import json
-import os
-import re
-import sys
-from io import StringIO
-from pathlib import Path
-import collections
-
-from agents.agent import agent
-from agents.search_router import should_search
-from agents.subject_router import classify_subject, should_retry_domain
-from agents.web_search import WebSearchClient, default_web_search
-from agents.web_search_graph import build_web_search_graph
-
-BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_QUESTION = BASE_DIR / "data" / "public_test.csv"
-PREDICTION_OUTPUT = BASE_DIR / "output" / "pred.csv"
-AUDIT_OUTPUT = BASE_DIR / "output" / "pred_audit.csv"
-VALID_ANSWERS = set("ABCDEFGHIJKLMNOPQRSTUVWXYZ").union({"N/A"})
-ANSWER_RE = re.compile(r"(?:đáp án|dap an|answer).*?\b([A-Z]|N/A)\b", re.IGNORECASE | re.DOTALL)
-ROW_RE = re.compile(r"^\s*([^,;:]+)\s*[,;:]\s*([A-Z]|N/A)\s*$", re.IGNORECASE)
-DEFAULT_BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
-DOMAIN_PROMPT_PATHS = {
-    "it": BASE_DIR / "prompts" / "domain_it.md",
-    "math": BASE_DIR / "prompts" / "domain_math.md",
-    "physics": BASE_DIR / "prompts" / "domain_physics.md",
-    "geography": BASE_DIR / "prompts" / "domain_geography.md",
-    "history": BASE_DIR / "prompts" / "domain_history.md",
-    "english": BASE_DIR / "prompts" / "domain_english.md",
-    "logic": BASE_DIR / "prompts" / "domain_logic.md",
-    "other": BASE_DIR / "prompts" / "domain_other.md",
-}
-_DOMAIN_PROMPT_CACHE: dict[str, str] = {}
-
-
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8-sig")
-
-
-def question_ids(csv_text: str) -> list[str]:
-    reader = csv.DictReader(StringIO(csv_text.lstrip("\ufeff")))
-    return [row["qid"] for row in reader if row.get("qid")]
-
-
-def parse_model_answers(model_output: str) -> dict[str, str]:
-    answers = {}
-    for line in (model_output or "").splitlines():
-        match = ROW_RE.match(line.strip())
-        if not match:
-            continue
-        qid, answer = match.groups()
-        qid = qid.strip()
-        if qid.lower() == "qid":
-            continue
-        answers[qid] = answer.upper()
-    if answers:
-        return answers
-
-    reader = csv.DictReader(StringIO((model_output or "").strip()))
-    for row in reader:
-        qid = (row.get("qid") or "").strip()
-        answer = (row.get("answer") or "").strip().upper()
-        if qid:
-            answers[qid] = answer if answer in VALID_ANSWERS else "N/A"
+def apply_single_row_fallback(row: dict[str, str], model_output: str, answers: dict[str, str]) -> dict[str, str]:
+    qid = row.get("qid", "")
+    valid_choices = {k for k in row.keys() if len(k) == 1 and k.isupper() and row.get(k)}
+    if qid not in answers and len(answers) == 1:
+        answers[qid] = next(iter(answers.values()))
+    if qid not in answers:
+        answers[qid] = extract_single_answer(model_output)
+    ans = answers.get(qid, "N/A")
+    if ans != "N/A" and valid_choices and ans not in valid_choices:
+        answers[qid] = "N/A"
     return answers
 
 
-def build_predictions(question_csv: str, model_output: str) -> list[dict[str, str]]:
-    answers = parse_model_answers(model_output)
-    return [
-        {"qid": qid, "answer": answers.get(qid, "N/A")}
-        for qid in question_ids(question_csv)
-    ]
-
-
-def normalize_row(row: dict[str, str]) -> dict[str, str]:
-    return {(key or "").lstrip("\ufeff"): value for key, value in row.items()}
-
-
-def _json_choices_to_row(item: dict) -> dict[str, str]:
-    """Chuyển đổi entry JSON có field 'choices' sang dict row với A, B, C..."""
-    choices = item.get("choices", [])
-    labels = [chr(ord('A') + i) for i in range(len(choices))]
-    row = {
-        "qid": str(item.get("qid", "")),
-        "question": str(item.get("question", "")),
-    }
-    for label, choice in zip(labels, choices):
-        row[label] = str(choice)
-    return row
-
-
-def load_source_rows(input_path: Path) -> list[dict[str, str]]:
-    """Tự động đọc cả JSON lẫn CSV, hỗ trợ choices dạng mảng."""
-    suffix = input_path.suffix.lower()
-    if suffix == ".json":
-        with input_path.open(encoding="utf-8-sig") as f:
-            data = json.load(f)
-        rows = [_json_choices_to_row(item) for item in data]
-        return [row for row in rows if row.get("qid")]
-    else:
-        with input_path.open(newline="", encoding="utf-8-sig") as f:
-            rows = [normalize_row(row) for row in csv.DictReader(f)]
-        return [row for row in rows if row.get("qid")]
-
-
-def rows_to_prompt(rows: list[dict[str, str]]) -> str:
-    if not rows: return ""
-    choice_keys = sorted({k for row in rows for k in row.keys() if len(k) == 1 and k.isupper()})
-    fieldnames = ["qid", "question"] + choice_keys
-    buffer = StringIO()
-    writer = csv.DictWriter(buffer, fieldnames=fieldnames, extrasaction='ignore')
-    writer.writeheader()
-    for row in rows:
-        writer.writerow(row)
-    return buffer.getvalue()
-
-
-def batched(rows: list[dict[str, str]], batch_size: int, max_chars: int = 1500):
-    batch = []
-    current_len = 0
-    for row in rows:
-        row_len = len(row.get("question", "")) + sum(len(row.get(k, "")) for k in row.keys() if len(k) == 1 and k.isupper())
-        
-        if row_len >= max_chars:
-            if batch:
-                yield batch
-                batch = []
-                current_len = 0
-            yield [row]
-            continue
-            
-        if len(batch) >= batch_size or (current_len + row_len >= max_chars and batch):
-            yield batch
-            batch = [row]
-            current_len = row_len
-        else:
-            batch.append(row)
-            current_len += row_len
-            
-    if batch:
-        yield batch
-
-
-
-
-
-
-
-
-
 def force_single_answer_prompt(row: dict[str, str]) -> str:
     return (
         "Chi tra ve dung 2 dong CSV: header qid,answer va mot dong dap an cho qid nay. "
         "Khong phan tich. answer chi la A, B, C... hoac N/A.\n\n"
         + rows_to_prompt([row])
     )
-
-
-
 
 def answer_quality_for(row: dict[str, str], parsed_answers: dict[str, str], final_answers: dict[str, str]) -> str:
     qid = row.get("qid", "")
@@ -348,10 +213,12 @@ def answer_quality_for(row: dict[str, str], parsed_answers: dict[str, str], fina
 def predict_batch_details(rows: list[dict[str, str]], force_think: bool = False, n_samples: int = 3) -> tuple[dict[str, str], dict[str, str], dict[str, float]]:
     prompt = "Chỉ trả về định dạng CSV có qid,answer. Khong giai thich.\n\n" + rows_to_prompt(rows)
     all_answers = []
+    parsed_original = {}
     
     for _ in range(n_samples):
         model_output = agent(prompt, think=force_think, temperature=0.4 if n_samples > 1 else 0.0)
         parsed = parse_model_answers(model_output)
+        parsed_original = dict(parsed)
         if len(rows) == 1:
             parsed = apply_single_row_fallback(rows[0], model_output, parsed)
         all_answers.append(parsed)
@@ -361,7 +228,8 @@ def predict_batch_details(rows: list[dict[str, str]], force_think: bool = False,
     for row in rows:
         qid = row.get("qid", "")
         votes = [ans.get(qid, "N/A") for ans in all_answers]
-        valid_votes = [v for v in votes if v in VALID_ANSWERS and v != "N/A"]
+        valid_choices = {k for k in row.keys() if len(k) == 1 and k.isupper() and row.get(k)}
+        valid_votes = [v for v in votes if v in VALID_ANSWERS and v != "N/A" and (not valid_choices or v in valid_choices)]
         
         if not valid_votes:
             final_answers[qid] = "N/A"
@@ -373,7 +241,7 @@ def predict_batch_details(rows: list[dict[str, str]], force_think: bool = False,
         final_answers[qid] = best_answer
         confidence[qid] = best_count / n_samples
 
-    last_parsed = all_answers[-1] if all_answers else {}
+    last_parsed = parsed_original if len(rows) == 1 else (all_answers[-1] if all_answers else {})
     answer_quality = {
         row["qid"]: answer_quality_for(row, last_parsed, final_answers)
         for row in rows
@@ -408,7 +276,7 @@ def domain_retry_prompt(row: dict[str, str], subject: str) -> str:
 def predict_domain_retry(row: dict[str, str], subject: str) -> tuple[str, float]:
     prompt = domain_retry_prompt(row, subject)
     results = []
-    for _ in range(3):
+    for _ in range(1):
         model_output = agent(prompt, think=True, temperature=0.4)
         answers = apply_single_row_fallback(row, model_output, parse_model_answers(model_output))
         answer = answers.get(row.get("qid", ""), "N/A")
@@ -420,7 +288,7 @@ def predict_domain_retry(row: dict[str, str], subject: str) -> tuple[str, float]
     
     counter = collections.Counter(valid_results)
     best_answer, count = counter.most_common(1)[0]
-    return best_answer, count / 3.0
+    return best_answer, count / 1.0
 
 
 def retry_domain_rows(
@@ -521,8 +389,10 @@ def confidence_for(row: dict[str, str], answer: str, answer_source: str = "batch
         return "0.40"
     if answer_source == "single_retry":
         return "0.55"
-    if answer_source in ("domain_retry_changed", "domain_retry_same"):
-        return f"{domain_ratio:.2f}" if domain_ratio is not None else "0.70"
+    if answer_source == "domain_retry_changed":
+        return "0.60"
+    if answer_source == "domain_retry_same":
+        return "0.80"
     return "0.70"
 
 
@@ -566,7 +436,7 @@ def run(
     search_client: WebSearchClient | None = None,
     audit_output_path: Path | None = None,
     show_progress: bool = False,
-    samples: int = 3,
+    samples: int = 1,
 ) -> Path:
     source_rows = load_source_rows(input_path)
 

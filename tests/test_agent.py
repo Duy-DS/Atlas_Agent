@@ -5,9 +5,20 @@ import unittest
 from unittest.mock import patch
 
 
+class FakeClient:
+    def __init__(self, *args, **kwargs):
+        pass
+    def chat(self, *args, **kwargs):
+        return {"message": {"content": ""}}
+
 def load_agent_module():
-    sys.modules.setdefault("ollama", types.SimpleNamespace(chat=lambda **kwargs: None))
+    sys.modules.setdefault("ollama", types.SimpleNamespace(Client=FakeClient, chat=lambda **kwargs: None))
+    # If already loaded, reload it to apply new mock
+    if "agents.agent" in sys.modules:
+        return importlib.reload(sys.modules["agents.agent"])
     return importlib.import_module("agents.agent")
+
+
 
 
 class AgentResponseTest(unittest.TestCase):
@@ -26,7 +37,7 @@ class AgentResponseTest(unittest.TestCase):
         def fake_chat(**kwargs):
             return {"message": {"content": "<think>phan tich noi bo</think>qid,answer\n1,A"}}
 
-        with patch.object(agent_module.ollama, "chat", fake_chat):
+        with patch.object(agent_module._client, "chat", fake_chat):
             self.assertEqual(agent_module.agent("1,1+1=?,2,4,5,7"), "qid,answer\n1,A")
 
     def test_agent_does_not_retry_when_response_has_no_answer(self):
@@ -37,7 +48,7 @@ class AgentResponseTest(unittest.TestCase):
             calls.append(kwargs)
             return {"message": {"content": "<think>van dang suy nghi</think>"}}
 
-        with patch.object(agent_module.ollama, "chat", fake_chat):
+        with patch.object(agent_module._client, "chat", fake_chat):
             self.assertEqual(agent_module.agent("1,1+1=?,2,4,5,7"), "")
 
         self.assertEqual(len(calls), 1)
@@ -50,7 +61,7 @@ class AgentResponseTest(unittest.TestCase):
             calls.append(kwargs)
             return {"message": {"content": "qid,answer\n1,A"}}
 
-        with patch.object(agent_module.ollama, "chat", fake_chat):
+        with patch.object(agent_module._client, "chat", fake_chat):
             agent_module.chat_once("1,1+1=?,2,4,5,7")
 
         self.assertIs(calls[0]["think"], False)

@@ -25,18 +25,27 @@ def final_answer(content: str) -> str:
     return (content or "").strip()
 
 
-def chat_once(user_message: str):
+def chat_once(user_message: str, think: bool = False, temperature: float = 0.0, num_predict: int | None = None):
+    opts = {
+        "temperature": temperature,
+        "num_ctx": NUM_CTX,
+        "top_p": 1
+    }
+    if num_predict is not None:
+        opts["num_predict"] = num_predict
+    elif not think:
+        opts["num_predict"] = 128
+    else:
+        opts["num_predict"] = NUM_PREDICT
+
     return _client.chat(
         model=MODEL_NAME,
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": user_message},
         ],
-        think=False,
-        options={"num_predict": NUM_PREDICT,
-                 "temperature" : 0,
-                 "top_p" : 1 
-                 },
+        think=think,
+        options=opts,
     )
 
 
@@ -44,6 +53,6 @@ def response_content(response) -> str:
     return response["message"]["content"]
 
 
-def agent(user_message: str, think: bool = False, temperature: float = 0.0) -> str:
-    response = chat_once(user_message, think=think, temperature=temperature)
+def agent(user_message: str, think: bool = False, temperature: float = 0.0, num_predict: int | None = None) -> str:
+    response = chat_once(user_message, think=think, temperature=temperature, num_predict=num_predict)
     return final_answer(response_content(response))

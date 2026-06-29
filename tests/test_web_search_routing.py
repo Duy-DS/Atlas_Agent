@@ -3,7 +3,13 @@ import types
 import unittest
 from unittest.mock import patch
 
-sys.modules.setdefault("ollama", types.SimpleNamespace(chat=lambda **kwargs: None))
+class FakeClient:
+    def __init__(self, *args, **kwargs):
+        pass
+    def chat(self, *args, **kwargs):
+        return {"message": {"content": ""}}
+
+sys.modules.setdefault("ollama", types.SimpleNamespace(Client=FakeClient, chat=lambda **kwargs: None))
 
 
 class _FakeTool:
@@ -71,6 +77,13 @@ import main
 
 
 class WebSearchRoutingTest(unittest.TestCase):
+    def setUp(self):
+        self.patcher = patch.object(main, "extract_search_keywords", lambda q: q)
+        self.patcher.start()
+
+    def tearDown(self):
+        self.patcher.stop()
+
     def test_should_not_search_stable_question_with_valid_answer(self):
         row = {"qid": "1", "question": "1+1 bằng bao nhiêu?"}
 
@@ -93,21 +106,15 @@ class WebSearchRoutingTest(unittest.TestCase):
         self.assertFalse(result.enabled)
 
     def test_duckduckgo_search_parses_html_results(self):
-        class FakeResponse:
-            def __enter__(self):
-                return self
+        class FakeDDGS:
+            def text(self, query, max_results=None):
+                return [{"body": "Result One"}]
 
-            def __exit__(self, exc_type, exc, tb):
-                return False
-
-            def read(self):
-                return b'<a rel="nofollow" class="result__a" href="/">Result One</a>'
-
-        with patch("agents.web_search.urlopen", return_value=FakeResponse()):
+        with patch("duckduckgo_search.DDGS", FakeDDGS):
             result = DuckDuckGoHtmlSearch().search("query")
 
         self.assertTrue(result.enabled)
-        self.assertEqual(result.source, "duckduckgo")
+        self.assertEqual(result.source, "duckduckgo_search")
         self.assertIn("Result One", result.context)
 
     def test_default_search_uses_duckduckgo_when_enabled_without_endpoint(self):
@@ -127,7 +134,7 @@ class WebSearchRoutingTest(unittest.TestCase):
         search = StaticWebSearch({"CEO hiện nay là ai?": "Nguồn web: đáp án là C."})
         calls = []
 
-        def fake_agent(prompt):
+        def fake_agent(prompt, *args, **kwargs):
             calls.append(prompt)
             return "qid,answer\n7,C\n"
 

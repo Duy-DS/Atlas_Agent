@@ -21,7 +21,7 @@ services:
       ollama:
         condition: service_healthy
     environment:
-      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
+      - MODEL_NAME=${MODEL_NAME:-gemma2:9b}
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
@@ -46,7 +46,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - OLLAMA_BASE_URL=http://ollama:11434
-      - MODEL_NAME=${MODEL_NAME:-qwen3.5:4b}
+      - MODEL_NAME=${MODEL_NAME:-gemma2:9b}
       - BATCH_SIZE=${BATCH_SIZE:-20}
       - OLLAMA_NUM_PREDICT=${OLLAMA_NUM_PREDICT:-512}
       - OLLAMA_NUM_CTX=${OLLAMA_NUM_CTX:-8192}

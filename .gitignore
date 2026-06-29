@@ -49,3 +49,15 @@ Thesis/*
 
 #Chặn tất cả các file từ thư mục Output
 #output/*
+
+# Bỏ qua các tài liệu ghi chú lập trình cũ không dùng
+docs/confidence_score.md
+docs/domain_retry.md
+docs/flow_agent.md
+docs/flow_web_search.md
+docs/new_ver_flow.md
+docs/ollama_run_linux.md
+docs/ollama_run_win.md
+docs/speed_optimization.md
+docs/web_search_agent.md
+docs/superpowers/

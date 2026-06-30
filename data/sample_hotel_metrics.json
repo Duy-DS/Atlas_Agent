@@ -1,0 +1,43 @@
+{
+  "date": "2026-06-30",
+  "data_source": "mock",
+  "properties": {
+    "property_a_hanoi": {
+      "occupancy": 0.78,
+      "adr": 150.0,
+      "revenue": 17550.0,
+      "bookings_today": 12,
+      "cancellations_today": 2,
+      "lead_time_days": 14.5,
+      "booking_pace": 1.05
+    },
+    "property_b_danang": {
+      "occupancy": 0.96,
+      "adr": 180.0,
+      "revenue": 30600.0,
+      "bookings_today": 25,
+      "cancellations_today": 8,
+      "lead_time_days": 28.0,
+      "booking_pace": 0.88
+    },
+    "property_c_hcmc": {
+      "occupancy": 0.62,
+      "adr": -10.0,
+      "revenue": 6820.0,
+      "bookings_today": 8,
+      "cancellations_today": 1,
+      "lead_time_days": 6.2,
+      "booking_pace": 1.02
+    }
+  },
+  "budget_targets": {
+    "occupancy_target": 0.8,
+    "adr_target": 145.0,
+    "revenue_target": 50000.0
+  },
+  "last_year_benchmarks": {
+    "occupancy": 0.74,
+    "adr": 138.0,
+    "revenue": 45000.0
+  }
+}
